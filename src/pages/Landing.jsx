@@ -89,7 +89,7 @@ const Landing = () => {
         <h4 className='info fade-in'>
           I love to work with a team to build together the future.
         </h4>
-        <button className='btn contact' onClick={() => copyEmail()}>
+        <button className='btn contact fade-in' onClick={() => copyEmail()}>
           <h1 className='btnText'>reach out</h1>
         </button>
       </div>
