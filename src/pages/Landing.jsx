@@ -45,7 +45,7 @@ const Landing = () => {
             See my Resume
           </div>
         </div>
-        <div className='landing-img'>
+        <div className='landing-img fade-in'>
           <img src={Floyd} alt='' />
         </div>
       </div>
