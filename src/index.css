@@ -297,6 +297,7 @@ PROJECT CSS
   gap: 2rem;
 }
 .tags {
+  flex-wrap: wrap;
   display: flex;
   margin-top: 1rem;
   gap: 0.5rem;
@@ -684,6 +685,10 @@ PROJECT CSS
 }
 
 @media screen and (max-width: 1024px) {
+  .abouts {
+    gap: 1rem !important;
+    margin: 0 auto !important;
+  }
   .section {
     display: block;
     border-top: none;
@@ -727,6 +732,25 @@ PROJECT CSS
   .project-syn {
     font-size: 1rem;
     margin: 0;
+  }
+  .project {
+    grid-template-columns: 1fr;
+  }
+  .abouth2 {
+    margin: 1rem !important;
+  }
+  .sectionh1 {
+    margin: 2rem auto !important;
+  }
+  .skill {
+    padding: 0 !important;
+  }
+  .skill-item {
+    padding: 0.8rem !important;
+    font-size: 1rem !important;
+  }
+  .projbut {
+    margin: 1rem 0;
   }
 }
 
