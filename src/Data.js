@@ -1,4 +1,9 @@
-const resumeData = [
+import bh from './assets/bh.jpg';
+import Miami from './assets/Miami.jpeg';
+import world from './assets/world.gif';
+import unsplash from './assets/unsplash.jpg';
+
+export const resumeData = [
   {
     id: 1,
     title: 'education',
@@ -62,4 +67,45 @@ const resumeData = [
   },
 ];
 
-export default resumeData;
+export const portfolio = [
+  {
+    id: 1,
+    title: 'my old personal webpage',
+    img: bh,
+    git: 'https://github.com/Floydbene/personal_webpage',
+    live: 'https://floydbene.github.io/meetfloyd/',
+    information:
+      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+  {
+    id: 2,
+    title: 'unsplash API retriever',
+    img: unsplash,
+    git: 'https://github.com/Floydbene/API_Example_project',
+    live: 'https://api-example-unsplash.netlify.app/',
+    information:
+      'This is a simple web application to use APIs thats pulls images from the unsplash API database.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Axios', 'API', 'React'],
+  },
+  {
+    id: 3,
+    title: 'restcountries API retriever',
+    img: world,
+    git: 'https://github.com/Floydbene/Countries',
+    live: 'https://moonlit-cobbler-9fa07e.netlify.app/',
+    information:
+      'This is a simple web application that uses APIs to pull information about all of the countries in the RestCountries API database.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'Axios', 'API', 'React'],
+  },
+  {
+    id: 4,
+    title: 'Miami fan page',
+    img: Miami,
+    git: 'https://github.com/Floydbene/MiamiPage',
+    live: 'https://miamifanpage.netlify.app/',
+    information:
+      'This is a sample advertising application where I used the city of Miami as a subject.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'React'],
+  },
+];

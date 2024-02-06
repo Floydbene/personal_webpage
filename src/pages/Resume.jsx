@@ -3,7 +3,7 @@ import { MdOutlineAlternateEmail } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResumeSection from '../components/ResumeSection';
-import resumeData from '../Data';
+import { resumeData } from '../Data';
 
 const Resume = () => {
   const copyEmail = () => {

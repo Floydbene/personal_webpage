@@ -13,6 +13,26 @@ html {
 } /*16px*/
 
 :root {
+  /* CSS HEX */
+  /* CSS HEX */
+  --rich-black: #001219ff;
+  --midnight-green: #005f73ff;
+  --dark-cyan: #0a9396ff;
+  --tiffany-blue: #94d2bdff;
+  --vanilla: #e9d8a6ff;
+  --gamboge: #ee9b00ff;
+  --alloy-orange: #ca6702ff;
+  --rust: #bb3e03ff;
+  --rufous: #ae2012ff;
+  --auburn: rgb(240, 35, 42);
+  --black: #000000ff;
+  --card: #223247;
+
+  --prim: #fca311ff;
+  --platinum: #e5e5e5ff;
+  --white: #ffffffff;
+  --background: #001219ff;
+
   /* colors */
   --primary-100: #c4b3b5;
   --primary-200: #c4aaad;
@@ -53,7 +73,7 @@ html {
   --small-text: 0.875rem;
   --extra-small-text: 0.7em;
   /* rest of the vars */
-  --backgroundColor: #253d5b;
+  --backgroundColor: var(--background);
   --textColor: var(--grey-900);
   --borderRadius: 0.25rem;
   --letterSpacing: 1px;
@@ -72,8 +92,15 @@ html {
 }
 
 body {
+  height: 150vh;
   transition: 0.3s linear;
-  background: var(--backgroundColor);
+  background: var(--background);
+  background-image: radial-gradient(
+    circle 25vh at 5vh 50vh,
+    rgba(255, 255, 255, 0.1) 1vh,
+    transparent
+  );
+  background-repeat: no-repeat, repeat, repeat;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 400;
@@ -161,53 +188,6 @@ ul {
   display: block;
   object-fit: cover;
 }
-/* buttons */
-
-.btn {
-  cursor: pointer;
-  color: var(--white);
-  background: var(--primary-500);
-  border: transparent;
-  border-radius: var(--borderRadius);
-  letter-spacing: var(--letterSpacing);
-  padding: 0.375rem 0.75rem;
-  box-shadow: var(--shadow-1);
-  transition: var(--transition);
-  text-transform: capitalize;
-  display: inline-block;
-}
-.btn:hover {
-  background: var(--primary-700);
-  box-shadow: var(--shadow-3);
-}
-.btn-hipster {
-  color: var(--primary-500);
-  background: var(--primary-200);
-}
-.btn-hipster:hover {
-  color: var(--primary-200);
-  background: var(--primary-700);
-}
-.btn-block {
-  width: 100%;
-}
-
-/* alerts */
-.alert {
-  padding: 0.375rem 0.75rem;
-  margin-bottom: 1rem;
-  border-color: transparent;
-  border-radius: var(--borderRadius);
-}
-
-.alert-danger {
-  color: var(--red-dark);
-  background: var(--red-light);
-}
-.alert-success {
-  color: var(--green-dark);
-  background: var(--green-light);
-}
 /* form */
 
 .form {
@@ -264,22 +244,37 @@ ul {
   height: 6rem;
   border: 5px solid var(--grey-400);
   border-radius: 50%;
-  border-top-color: var(--primary-500);
+  border-top-color: var(--prim);
   animation: spinner 0.6s linear infinite;
 }
 
 /* title */
 
-.title {
-  text-align: center;
-}
-
 .title-underline {
-  background: var(--primary-500);
+  background: var(--prim);
   width: 4rem;
   height: 0.25rem;
   margin: 0 auto;
   margin-top: 1rem;
+}
+.title {
+  font-size: 5rem;
+  text-align: center;
+}
+.hello {
+  width: 90vw;
+  margin: 0 auto;
+  display: grid;
+  gap: 5rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.landing-img img {
+  width: 25vw;
+  transform: rotate(-20deg);
+  object-fit: contain;
+  border: solid 2px var(--prim);
+  box-shadow: 10px 10px 0px var(--prim);
 }
 
 /* 
@@ -293,10 +288,6 @@ PROJECT CSS
   margin: 0 auto;
   padding: 2rem 1rem;
 }
-
-.projects {
-  padding: 3vw 0;
-}
 .projects-center {
   width: 90vw;
   max-width: var(--max-width);
@@ -305,22 +296,63 @@ PROJECT CSS
   display: grid;
   gap: 2rem;
 }
+.tags {
+  display: flex;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+.tag {
+  color: var(--prim);
+  font-weight: 150;
+  font-size: 1rem;
+  background: var(--card);
+  padding: 0.5rem;
+}
 .project {
-  background: var(--primary-300);
-  display: block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 50% 50%;
   border-radius: var(--borderRadius);
   box-shadow: var(--shadow-2);
   transition: var(--transition);
 }
-.project:hover {
-  transform: scale(1.05);
-  box-shadow: var(--shadow-4);
+.project-image {
+  border-radius: 10px;
+  border: solid 2px var(--prim);
 }
-
-.project .img {
-  height: 15rem;
+.tech-used {
+  color: #bbb;
+  font-weight: 150;
+}
+.right {
+  display: grid;
+  grid-auto-rows: min-content;
+  gap: 1rem;
+}
+.project-title {
+  color: white;
+  font-weight: 100;
+}
+.project-para {
+  color: white;
+  font-weight: 100;
+  font-size: 1.5rem;
+}
+.project img {
+  transition: 0.3s linear;
+  border-radius: 0.5rem;
+  filter: brightness(80%);
+  height: 20rem;
+  width: 100%;
+  object-fit: cover;
   border-top-right-radius: var(--borderRadius);
   border-top-left-radius: var(--borderRadius);
+}
+.project:hover img {
+  filter: brightness(100%);
 }
 
 .project h5 {
@@ -333,44 +365,11 @@ PROJECT CSS
   min-width: '300px';
   margin: '0 auto 3vw auto';
 }
-@media (min-width: 768px) {
-  .projects-center {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-@media (min-width: 992px) {
-  .projects-center {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 /* ========= Landing Page ========== */
 
-.contact {
-  background-color: var(--primary-500);
-  margin: 5rem auto;
-  display: block;
-  padding: 1.4rem 2rem;
-  border-radius: 1rem;
-}
-
-@media screen and (max-width: 1024px) {
-  .contact {
-    padding: 1rem 2rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .contact {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-  }
-  .btnText {
-    font-size: 1rem !important;
-  }
-}
-.contact:hover {
-  background-color: var(--primary-600);
+.contact-header {
+  text-align: center;
+  color: var(--prim);
 }
 #text {
   animation: fill 0.5s ease forwards 2.2s;
@@ -419,10 +418,118 @@ PROJECT CSS
     fill: transparent;
   }
   to {
-    fill: #c6878f;
+    fill: var(--prim);
+  }
+}
+.btn {
+  background: transparent;
+  width: fit-content;
+
+  font-weight: 150;
+  padding: 0.5rem;
+
+  border-radius: 0rem;
+  border: solid 1px var(--prim);
+  color: var(--prim);
+}
+.btn:hover {
+  background: var(--prim);
+  color: var(--background);
+  transition: 0.3s linear;
+  cursor: pointer;
+  border: solid 2px transparent;
+}
+.resumebut {
+  font-size: 2rem;
+  margin: 2.5rem 0;
+}
+.btn svg {
+  vertical-align: bottom;
+  margin-right: 0.5rem;
+}
+.projbut {
+  font-size: 1.4rem;
+}
+.btns {
+  display: flex;
+  gap: 1.5rem;
+}
+.scrollicon {
+  display: grid;
+  justify-items: center;
+  color: var(--prim);
+  font-size: 2rem;
+  font-weight: 100;
+  text-align: center;
+  margin: 10vh auto;
+}
+.vibing {
+  animation: MoveUpDown 1s linear infinite;
+  position: relative;
+  left: 0;
+  bottom: 0;
+}
+
+@keyframes MoveUpDown {
+  0%,
+  100% {
+    bottom: -10px;
+  }
+  50% {
+    bottom: 0px;
   }
 }
 
+@media screen and (max-width: 1024px) {
+  .btn {
+    background: transparent;
+    margin: 2rem 0;
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    border-radius: 0rem;
+    border: solid 2px var(--prim);
+    color: var(--prim);
+  }
+  .btn:hover {
+    background: var(--prim);
+    color: var(--background);
+    transition: 0.3s linear;
+    cursor: pointer;
+    border: solid 2px transparent;
+  }
+  .hello {
+    grid-template-columns: 1fr;
+  }
+  .hello svg {
+    height: 15vw;
+  }
+  .hello img {
+    visibility: hidden;
+    position: absolute;
+  }
+  .info {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .btn {
+    background: transparent;
+    margin: 2rem 0;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    border-radius: 0rem;
+    border: solid 1.3px var(--prim);
+    color: var(--prim);
+  }
+  .btn:hover {
+    background: var(--prim);
+    color: var(--background);
+    transition: 0.3s linear;
+    cursor: pointer;
+    border: solid 2px transparent;
+  }
+}
 @keyframes dash {
   to {
     stroke-dashoffset: 0;
@@ -435,6 +542,7 @@ PROJECT CSS
   margin: 2rem 0rem;
 }
 .info {
+  width: 100%;
   color: white;
   text-transform: initial;
   font-weight: 300;
@@ -495,12 +603,7 @@ PROJECT CSS
 .title {
   font-size: (1.5rem, 3vw, 3rem);
   font-weight: 700;
-  color: var(--primary-500);
-}
-
-.btnText {
-  text-transform: lowercase;
-  font-size: 3rem;
+  color: var(--prim);
 }
 
 /* ====== RESUME ============== */
@@ -568,8 +671,15 @@ PROJECT CSS
 
 .hover:hover {
   transform: scale(1.05, 1.05);
-  transition: 0.5s linear;
-  color: var(--pblue-light);
+  transition: 0.1s linear;
+  color: var(--background);
+  cursor: pointer;
+}
+
+.hover-2:hover {
+  transform: scale(1.05, 1.05);
+  transition: 0.1s linear;
+  color: var(--dark);
   cursor: pointer;
 }
 
@@ -618,4 +728,107 @@ PROJECT CSS
     font-size: 1rem;
     margin: 0;
   }
+}
+
+/* THREJS */
+
+/* Canvas {
+  position: absolute !important;
+  z-index: 1000;
+} */
+.socialLand {
+  display: grid;
+  margin: 0 auto;
+}
+
+.inTouch {
+  margin-top: 4vw;
+}
+
+/* ==== About My ======= */
+
+.sectionh1 {
+  color: white;
+  margin: 5rem auto 3rem auto;
+  font-weight: 100;
+  text-align: center;
+}
+
+.abouts {
+  z-index: 2;
+  width: 80vw;
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin: 3rem auto;
+}
+.about {
+  /* display: flex; */
+  align-content: flex-start;
+  margin-top: 0;
+  text-align: center;
+  width: 500px;
+}
+.skillh2 {
+  color: white;
+  font-weight: 100;
+}
+.skill {
+  width: 80vw;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0 3rem;
+}
+.skills {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.skill-item {
+  padding: 1rem;
+  border-radius: 2px;
+  color: var(--prim);
+  font-size: 1.5rem;
+  font-weight: 100;
+  background-color: var(--card);
+}
+.abouth2 {
+  margin: 1.5rem 0;
+  font-weight: 100;
+  color: var(--prim);
+  text-transform: initial;
+}
+.aboutp {
+  color: white;
+  font-weight: 100;
+  line-height: 2rem;
+  font-size: 1.7rem;
+}
+.bottomrow {
+  display: grid;
+  margin: 5rem auto;
+  color: white;
+  text-align: center;
+  width: 80vw;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.social {
+  font-weight: 100;
+  cursor: pointer;
+}
+.social:hover {
+  color: var(--prim);
+}
+footer {
+  color: white;
+  align-content: center;
+  margin: 3rem auto;
+  font-weight: 100;
+  text-align: center;
 }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.nav`
-  background: var(--pblue-med);
+  background: var(--background);
   transition: 0.3s linear;
   .nav-center {
     width: var(--view-width);
@@ -13,7 +13,7 @@ const Wrapper = styled.nav`
   }
   .logo {
     font-size: clamp(1.5rem, 3vw, 3rem);
-    color: var(--primary-500);
+    color: var(--prim);
     font-weight: 100;
     letter-spacing: 2px;
   }
@@ -31,10 +31,10 @@ const Wrapper = styled.nav`
     letter-spacing: 2px;
   }
   .nav-link:hover {
-    color: var(--primary-500);
+    color: var(--prim);
   }
   .active {
-    color: var(--primary-500);
+    color: var(--prim);
   }
   @media (min-width: 768px) {
     .nav-center {

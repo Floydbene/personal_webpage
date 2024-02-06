@@ -1,15 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import {
-  Portfolio,
-  HomeLayout,
-  Landing,
-  Error,
-  Resume,
-  Cocktail,
-  SinglePageError,
-} from './pages';
+import { HomeLayout, Landing, Error, Resume, SinglePageError } from './pages';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,10 +27,6 @@ const router = createBrowserRouter([
         element: <Resume />,
         errorElement: <SinglePageError />,
       },
-      {
-        path: 'portfolio',
-        element: <Portfolio />,
-      },
     ],
   },
 ]);
@@ -46,7 +34,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
