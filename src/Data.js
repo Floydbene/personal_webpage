@@ -2,6 +2,7 @@ import bh from './assets/bh.jpg';
 import Miami from './assets/Miami.jpeg';
 import world from './assets/world.gif';
 import unsplash from './assets/unsplash.jpg';
+import lloyd from './assets/lloyd.png';
 
 export const resumeData = [
   {
@@ -69,14 +70,24 @@ export const resumeData = [
 
 export const portfolio = [
   {
+    id: 0,
+    title: 'Lloyd relaxation with Voronoi stippling',
+    img: lloyd,
+    git: 'https://github.com/Floydbene/Voronoi-Lloyd-relaxation',
+    live: 'https://floyds-lloyd.netlify.app/',
+    information:
+      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+  {
     id: 1,
     title: 'my old personal webpage',
     img: bh,
     git: 'https://github.com/Floydbene/personal_webpage',
     live: 'https://floydbene.github.io/meetfloyd/',
     information:
-      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
-    tags: ['HTML', 'CSS', 'JavaScript'],
+      "This web application dynamically visualizes Lloyd's Relaxation on Voronoi diagrams and Delaunay triangulation. It enables interactive exploration of computational geometry's elegance and utility.",
+    tags: ['HTML', 'CSS', 'JavaScript', 'TailWindCSS'],
   },
   {
     id: 2,
