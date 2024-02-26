@@ -60,7 +60,7 @@ const Landing = () => {
       <AboutMy />
       <Skills id="skills"/>
       <Projects id="projects"/>
-      <Research id="research"/>
+      {/* <Research id="research"/> */}
       <Contact id="contact" />
       <div className='bottomrow fade-in'>
         <h4 className='social' onClick={() => copyEmail()}>
