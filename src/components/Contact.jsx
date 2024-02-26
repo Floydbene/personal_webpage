@@ -9,7 +9,7 @@ const Contact = () => {
   }, []);
   return (
     <>
-      <h1 className='sectionh1'>Contact me!</h1>
+      <h1 className='sectionh1' id="contact">Contact me!</h1>
       <div className='abouts'>
         <div className='about' data-aos='fade-right'>
           <div>

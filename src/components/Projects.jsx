@@ -12,7 +12,7 @@ const Projects = () => {
   }, []);
   return (
     <section className='projects-center'>
-      <h1 className='sectionh1'>My Projects</h1>
+      <h1 className='sectionh1' id="projects">My Projects</h1>
       {portfolio.map((project) => {
         const { id, img, information, title, live, git, tags } = project;
         return (

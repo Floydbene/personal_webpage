@@ -1,6 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Navbar';
 const Navbar = () => {
+  const scrollto = (element)=>{   
+    var ele = document.getElementById(element);   
+    window.scrollTo({
+      top: ele.offsetTop -50,
+      left: 100,
+      behavior: "smooth",
+    });
+  }
   return (
     <Wrapper>
       <div className='nav-center'>

@@ -120,3 +120,22 @@ export const portfolio = [
     tags: ['HTML', 'CSS', 'JavaScript', 'React'],
   },
 ];
+
+export const researches = [
+  {
+    id: 0,
+    link: "research/crypto",
+    title: 'Researching causation of social media impressions on Cryptocurrencies',
+    information:
+      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+  {
+    id: 1,
+    link: "research/caching",
+    title: 'Researching efficiency of ML-based caching algorithms',
+    information:
+      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
+    tags: ['HTML', 'CSS', 'JavaScript'],
+  },
+];

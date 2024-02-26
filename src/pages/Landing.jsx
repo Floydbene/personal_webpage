@@ -9,6 +9,7 @@ import AboutMy from '../components/AboutMy';
 import Skills from '../components/Skills';
 import Contact from '../components/Contact';
 import Floyd from '../assets/floyd_lowersize.jpg';
+import Research from '../components/Research';
 
 const Landing = () => {
   const copyEmail = () => {
@@ -34,7 +35,7 @@ const Landing = () => {
         <div className='hello-left'>
           <SVG />
           <h4 className='info fade-in'>
-            I'm a passionate Full-Stack Developer based in Miami. I'm committed
+            I'm a passionate Full-Stack Developer based in London, UK. I'm committed
             to creating visually stunning and user-friendly websites, and I'm
             looking forward to exploring new opportunities to enhance my skills.
           </h4>
@@ -55,9 +56,10 @@ const Landing = () => {
         <TfiAngleDoubleDown className='vibing' />
       </div>
       <AboutMy />
-      <Skills />
-      <Projects />
-      <Contact />
+      <Skills id="skills"/>
+      <Projects id="projects"/>
+      <Research id="research"/>
+      <Contact id="contact" />
       <div className='bottomrow fade-in'>
         <h4 className='social' onClick={() => copyEmail()}>
           Email

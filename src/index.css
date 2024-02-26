@@ -856,3 +856,43 @@ footer {
   font-weight: 100;
   text-align: center;
 }
+
+
+/* Research */
+.research-title {
+  color: white;
+  font-weight: 100;
+  cursor: pointer;
+}
+.research-title:hover {
+  color: var(--prim);
+}
+
+.rs-title{
+  color: var(--prim);
+  font-weight: 100;
+  text-align: center;
+}
+
+.name{
+  text-align: center;
+  font-weight: 100;
+  margin: 2rem 0;
+  color: var(--prim);
+}
+
+.para{
+  text-indent: 1rem;
+  color: white;
+  font-size: large;
+  line-height: 1.5rem;
+  margin: 1rem auto;
+  width: 90%;
+  text-align:justify;
+}
+
+.bib{
+  color: white;
+  width: 88%;
+  margin: 0.5rem auto;
+}
