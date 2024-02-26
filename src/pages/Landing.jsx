@@ -35,16 +35,18 @@ const Landing = () => {
         <div className='hello-left'>
           <SVG />
           <h4 className='info fade-in'>
-            I'm a passionate Full-Stack Developer based in London, UK. I'm committed
-            to creating visually stunning and user-friendly websites, and I'm
+            I'm a passionate Full-Stack Developer based in London, UK.</h4>
+          <h4 className='info fade-in'>
+            I'm committed
+            to creating visually appealing and user-friendly websites, and I'm
             looking forward to exploring new opportunities to enhance my skills.
           </h4>
-          <div
+          {/* <div
             className='resumebut btn fade-in'
             onClick={() => window.open('resume', '_self')}
           >
             See my Resume
-          </div>
+          </div> */}
         </div>
         <div className='landing-img fade-in'>
           <img src={Floyd} alt='' />
