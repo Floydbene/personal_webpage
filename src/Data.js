@@ -70,13 +70,22 @@ export const resumeData = [
 
 export const portfolio = [
   {
+    id: 5,
+    title: 'TRINI: adaptive load balancing strategy in GoLang',
+    img: trini,
+    git: 'https://github.com/Floydbene/GC-Load-Balancer',
+    information:
+      'A high-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent server nodes—with coordinated garbage-collection locking, asynchronous service responses, and a real-time React/WebSocket dashboard for live system visualization.',
+    tags: ['GoLang', 'React', 'Zustand', 'Load Balancer'],
+  },
+  {
     id: 0,
     title: 'Lloyd relaxation with Voronoi stippling',
     img: lloyd,
     git: 'https://github.com/Floydbene/Voronoi-Lloyd-relaxation',
     live: 'https://floyds-lloyd.netlify.app/',
     information:
-      'Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.',
+      "This web application dynamically visualizes Lloyd's Relaxation on Voronoi diagrams and Delaunay triangulation. It enables interactive exploration of computational geometry's elegance and utility.",
     tags: ['HTML', 'CSS', 'JavaScript'],
   },
   {
@@ -86,7 +95,7 @@ export const portfolio = [
     git: 'https://github.com/Floydbene/personal_webpage',
     live: 'https://floydbene.github.io/meetfloyd/',
     information:
-      "This web application dynamically visualizes Lloyd's Relaxation on Voronoi diagrams and Delaunay triangulation. It enables interactive exploration of computational geometry's elegance and utility.",
+      "Before generating the current page, I bootstrapped a portfolio using only HTML, CSS and JS. This was an introduction to web development, as well as a fun way to present.",
     tags: ['HTML', 'CSS', 'JavaScript', 'TailWindCSS'],
   },
   {
