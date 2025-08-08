@@ -3,6 +3,7 @@ import Miami from './assets/Miami.jpeg';
 import world from './assets/world.gif';
 import unsplash from './assets/unsplash.jpg';
 import lloyd from './assets/lloyd.png';
+import golangGC from './assets/GolangGC.png';
 
 export const resumeData = [
   {
@@ -72,7 +73,7 @@ export const portfolio = [
   {
     id: 5,
     title: 'TRINI: adaptive load balancing strategy in GoLang',
-    img: trini,
+    img: golangGC,
     git: 'https://github.com/Floydbene/GC-Load-Balancer',
     information:
       'A high-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent server nodes—with coordinated garbage-collection locking, asynchronous service responses, and a real-time React/WebSocket dashboard for live system visualization.',
