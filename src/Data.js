@@ -4,6 +4,7 @@ import world from './assets/world.gif';
 import unsplash from './assets/unsplash.jpg';
 import lloyd from './assets/lloyd.png';
 import golangGC from './assets/GolangGC.png';
+import spaceEaters from './assets/SpaceEaters.png';
 
 export const resumeData = [
   {
@@ -78,6 +79,15 @@ export const portfolio = [
     information:
       'A high-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent server nodes—with coordinated garbage-collection locking, asynchronous service responses, and a real-time React/WebSocket dashboard for live system visualization.',
     tags: ['GoLang', 'React', 'Zustand', 'Load Balancer'],
+  },
+  {
+    id: 6,
+    title: 'Space Eaters: An classic arcade game written in C++',
+    img: spaceEaters,
+    git: 'https://github.com/Floydbene/space-invaders',
+    information:
+      'Space Eaters is a lightning fast, lightweight video game written in C++. Come try it out!',
+    tags: ['C++', 'SFML'],
   },
   {
     id: 0,
