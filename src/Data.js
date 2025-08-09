@@ -1,6 +1,5 @@
 import voronoi from "./assets/voronoi.gif";
-import golangGC from "./assets/GolangGC.png";
-import spaceEaters from "./assets/SpaceEaters.png";
+import taskBalancerGif from "./assets/taskBalancerGif.gif";
 import mechanism from "./assets/mechanism_ventures_logo.jpg";
 import carts from "./assets/carts.jpg";
 import proda from "./assets/proda_ltd_logo.jpg";
@@ -99,7 +98,7 @@ export const portfolio = [
   {
     id: 5,
     title: "TRINI: adaptive load balancing strategy in GoLang",
-    img: golangGC,
+    img: taskBalancerGif,
     git: "https://github.com/Floydbene/GC-Load-Balancer",
     information:
       "A high-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent server nodes—with coordinated garbage-collection locking, asynchronous service responses, and a real-time React/WebSocket dashboard for live system visualization.",
