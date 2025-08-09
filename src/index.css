@@ -670,6 +670,10 @@ PROJECT CSS
   text-transform: lowercase;
 }
 
+.subsection-subtitle {
+  margin-bottom: 0.8rem;
+}
+
 .hover:hover {
   transform: scale(1.05, 1.05);
   transition: 0.1s linear;

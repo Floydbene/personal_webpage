@@ -18,7 +18,7 @@ export const resumeData = [
         imgUrl:
           "https://upload.wikimedia.org/wikipedia/commons/d/d0/Princeton_seal.svg",
         title: "B.Sc. (Hons) in Computer Science (2019–2023)",
-        text: "Coursework included Machine Learning, Blockchains, Algorithm Design, Server & Website Programming, Multivariable Calculus, Linear Algebra, Convex Optimisation, Statistics, and Computation Theory.",
+        text: "Coursework: Machine Learning, Blockchains, Algorithm Design, Server & Website Programming and Design, Multivariable Calculus, Linear Algebra, Convex Optimisation, Statistics, Computation Theory.",
       },
     ],
   },
@@ -31,21 +31,21 @@ export const resumeData = [
         imgLink: "https://www.proda.com/",
         imgUrl: proda,
         title: "Full-Stack Engineer — London, UK",
-        text: "Built a core React (TypeScript, Vite, Zustand) frontend for standardising and mapping messy datasets with in-house ML models. Added real-time WebSocket channels with scalable polymorphic message handlers for async processing updates, and set up CI/CD with GitHub Actions. Led a hackathon-winning project using LLMs to validate uploads and notify users asynchronously.",
+        text: "Built a core React frontend (TypeScript, Vite, Zustand) that lets users upload, standardise, and map unstandardised data with in-house ML models; added real-time WebSockets with scalable polymorphic handlers for async processing updates; set up CI/CD with GitHub Actions; and led an inaugural hackathon win with an LLM-powered external validation tool that parses uploads and notifies users asynchronously.",
       },
       {
         subtitle: "Mechanism Ventures",
         imgLink: "https://mechanism.com/",
         imgUrl: mechanism,
         title: "Startup Generalist — Miami, FL",
-        text: "Shipped product features and interactive UIs in React with Jest, boosting engagement for startups with $20M+ run rates. Drove measurable gains via social growth strategies, introduced team productivity systems (Airtable, Asana, Google Sheets), and produced brand assets with DALL·E/Midjourney to accelerate GTM.",
+        text: "Shipped React.js features with Jest that improved engagement and conversion for startups with $20M+ run rates; drove growth via targeted social strategies; introduced team productivity systems (Airtable, Asana, Google Sheets); and produced creative assets with Dall-E/MidJourney to speed brand rollout and reduce early marketing spend.",
       },
       {
         subtitle: "CARTS",
         title: "Full-Stack Developer — Princeton, NJ",
         imgLink: "https://www.cartsmobility.com/",
         imgUrl: carts,
-        text: "As part of the Trenton MOVES initiative, I simulated millions of person trips across the United States and designing a network to accommodate as many passengers travels with self-driving cars as possible. Problems include kiosk placement, ride-sharing heuristics, and empty vehicle repositioning heuristics.",
+        text: "Project experience retained for portfolio; not currently detailed in the 2025 CV.",
       },
     ],
   },
@@ -59,11 +59,11 @@ export const resumeData = [
       },
       {
         subtitle: "frameworks & tools",
-        text: "React (+TypeScript), Vite, Zustand, WebSockets, GitHub Actions, Jest, Flask, SQLite, Docker, Auth0, Duo, Airtable, Asana, Google Sheets, DALL·E, Midjourney.",
+        text: "React (+TypeScript), Vite, Zustand, WebSockets, GitHub Actions, Jest, Flask, SQLite, Docker, Auth0, Duo, Airtable, Asana, Google Sheets, Dall-E, MidJourney.",
       },
       {
         subtitle: "languages",
-        text: "English, German, Italian (native proficiency).",
+        text: "English, German, Italian (professional proficiency).",
       },
     ],
   },
@@ -74,21 +74,21 @@ export const resumeData = [
       {
         subtitle: "TigerMealX",
         title: "Full-stack platform for 3,000+ students",
-        text: "Designed and deployed a Python/Flask + React app integrating Auth0/Duo and multiple university systems. Migrated legacy schemas with an adaptive data model to preserve integrity and UX; implemented secure, robust auth flows aligned with university standards.",
+        text: "Developed and deployed a Python/Flask + React app serving 3,000+ students, integrating Auth0/Duo, university scanning applications, and legacy schema migrations; designed an adaptive data model for a seamless transition; and implemented robust authentication aligned with Princeton’s authorisation framework.",
       },
       {
         subtitle: "GC Load Balancer",
         title: "Go + React load-balancing system with GC-aware routing",
         imgLink: "https://github.com/Floydbene/GC-Load-Balancer",
         imgUrl: golang,
-        text: "Built a distributed task processor: Go backend with round-robin, memory-aware server selection and simulated garbage collection, a rate-limited REST API, and a React dashboard for real-time status/metrics. One-command Makefile spins up FE/BE locally.",
+        text: "Distributed task processor with a Go backend (round-robin + memory-aware server selection and simulated GC), rate-limited REST API, and a React dashboard for live metrics; one-command Makefile to run frontend/backend locally.",
       },
       {
         subtitle: "Space Invaders",
         title: "Retro arcade clone",
         imgLink: "https://github.com/Floydbene/space-invaders",
         imgUrl: spaceInvaders,
-        text: "From-scratch remake of the classic with a tight game loop, keyboard controls, sprite rendering, collision detection, enemy waves with increasing difficulty, and score/lives tracking.",
+        text: "From-scratch remake featuring a tight game loop, keyboard controls, sprite rendering, collision detection, progressive enemy waves, and score/lives tracking.",
       },
     ],
   },
@@ -101,7 +101,7 @@ export const portfolio = [
     img: taskBalancerGif,
     git: "https://github.com/Floydbene/GC-Load-Balancer",
     information:
-      "A high-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent server nodes—with coordinated garbage-collection locking, asynchronous service responses, and a real-time React/WebSocket dashboard for live system visualization.",
+      "High-performance Golang load-balancer simulation that dynamically distributes tasks across concurrent nodes with coordinated GC locking, asynchronous responses, and a React/WebSocket dashboard for live visuals.",
     tags: ["GoLang", "React", "Zustand", "Load Balancer"],
   },
   {
@@ -110,7 +110,7 @@ export const portfolio = [
     img: spaceInvadersGif,
     git: "https://github.com/Floydbene/space-invaders",
     information:
-      "Space Eaters is a lightning fast, lightweight video game written in C++. Come try it out!",
+      "Lightweight, fast C++ arcade game—playable demo with smooth controls and classic mechanics.",
     tags: ["C++", "SFML"],
   },
   {
@@ -120,7 +120,7 @@ export const portfolio = [
     git: "https://github.com/Floydbene/Voronoi-Lloyd-relaxation",
     live: "https://floyds-lloyd.netlify.app/",
     information:
-      "This web application dynamically visualizes Lloyd's Relaxation on Voronoi diagrams and Delaunay triangulation. It enables interactive exploration of computational geometry's elegance and utility.",
+      "Interactive visualisation of Lloyd’s Relaxation on Voronoi diagrams and Delaunay triangulation for hands-on exploration of computational geometry.",
     tags: ["HTML", "CSS", "JavaScript"],
   },
 ];
