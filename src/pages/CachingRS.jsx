@@ -6,7 +6,8 @@ const CachingRS = () => {
       <style>{`body{background-color: #ffffff;} nav{background-color:#fff!important;} .logo{color:black!important} .nav-link{color:black!important} .active{color:var(--primary-900)!important} 
         .rs-title,
         .name,
-        .para {
+        .para,
+        .bib {
           color: #000 !important;
         }`}</style>
       <h2 className="rs-title">
