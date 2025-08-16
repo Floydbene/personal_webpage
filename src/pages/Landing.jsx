@@ -5,10 +5,8 @@ import Projects from "../components/Projects";
 import React from "react";
 import { TfiMouse } from "react-icons/tfi";
 import { TfiAngleDoubleDown } from "react-icons/tfi";
-import AboutMy from "../components/AboutMy";
 import Skills from "../components/Skills";
 import Contact from "../components/Contact";
-import Floyd from "../assets/floydAku.png";
 import Research from "../components/Research";
 
 const Landing = () => {

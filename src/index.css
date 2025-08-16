@@ -183,6 +183,13 @@ ul {
   padding: 0;
 }
 
+/* Show bullets for work experience lists */
+.section-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
 .img {
   width: 100%;
   display: block;
@@ -659,6 +666,13 @@ PROJECT CSS
   line-height: 1.5;
   font-size: 1.25rem;
   color: rgb(75, 75, 75);
+}
+
+.bullet-text {
+  line-height: 1.1;
+  font-size: 1.1rem;
+  color: rgb(75, 75, 75);
+  margin-bottom: 0.5rem;
 }
 
 .res-section-title {
