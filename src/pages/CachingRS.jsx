@@ -15,15 +15,15 @@ const CachingRS = () => {
       </h2>
       <h4 className="name">Floyd Benedikter</h4>
       <p className="para">
-        For this project, I surveyed the differences in performance betIen five
+        For this project, I surveyed the differences in performance between five
         caching heuristics: LRB<sup>1</sup>, LeCaR<sup>2</sup>, AdaptSize
         <sup>3</sup>, S4LRU<sup>4</sup>, and Hyperbolic<sup>5</sup>. I chose
-        these because their heuristics Ire non-trivial, meaning they use machine
+        these because their heuristics are non-trivial, meaning they use machine
         learning or other non-trivial heuristics. I analyzed the performance of
         each of these heuristics with four different traces, one of which was a
-        14-day Wikipedia trace and the other three of which Ire smaller
+        14-day Wikipedia trace and the other three of which were smaller
         synthetic traces I designed to simulate various use-cases. I used a
-        caching simulation built on the Ibcachesim V2 simulator<sup>6</sup> to
+        caching simulation built on the libcachesim V2 simulator<sup>6</sup> to
         evaluate each of the heuristics. I then analyzed the byte miss-rate
         (BMR) output variable for each heuristic-trace combination and ran this
         analysis for various cache sizes. The goal of this survey was to measure
@@ -33,7 +33,7 @@ const CachingRS = () => {
       </p>
       <p className="para">
         First, I considered Learning Relaxed Belady (LRB). This algorithm is
-        named after the Belady anomaly in Ib page caching, where in some cases,
+        named after the Belady anomaly in web page caching, where in some cases,
         using LFU, an increase in cache size can decrease the cache hit
         percentage. LRB uses a Machine Learning (ML)-based architecture to
         predict good eviction decisions. Specifically, LRB uses a subset of
@@ -41,76 +41,76 @@ const CachingRS = () => {
         will be able to discern patterns which indicate whether an item is
         likely to be used in the future or not. The output of the ML model is a
         predicted time point at which the item will be requested again in the
-        future<sup>1</sup>. If this time is later than a specific threshold, I
-        assume that the item better be evicted for another item. Song. et. al.
+        future<sup>1</sup>. If this time is later than a specific threshold, we
+        assume that the item should be evicted for another item. Song et al.
         state that the main challenges are specifying this threshold and
-        figuring out an apt ML architecture. I could imagine that the ML model
-        will be able to predict some patterns with greater accuracy while
-        underperforming in more random settings. Furthermore if the working set
+        figuring out an appropriate ML architecture. I could imagine that the ML
+        model will be able to predict some patterns with greater accuracy while
+        underperforming in more random settings. Furthermore, if the working set
         (small subset of items that are called on frequently) changes
-        frequently, then I expect to see a comparatively low performance form
+        frequently, then I expect to see a comparatively low performance from
         LRB.
       </p>
       <p className="para">
-        Next, I consider Learning Cache Replacement (LeCaR) algorithm. This one
-        is also ML based with an eviction pattern that considers frequency and
-        recency. Namely, when traversing requests, I hold two ghost-caches with
-        LRU and LFU heuristic, respectively. When an item is added to the cache,
-        I check whether either the LFU or the LRU ghost-cache contains a
-        reference to that item. If so, I add Iight to the heuristic with which
+        Next, I consider the Learning Cache Replacement (LeCaR) algorithm. This
+        one is also ML-based with an eviction pattern that considers frequency
+        and recency. Namely, when traversing requests, we hold two ghost-caches
+        with LRU and LFU heuristics, respectively. When an item is added to the
+        cache, we check whether either the LFU or the LRU ghost-cache contains a
+        reference to that item. If so, we add weight to the heuristic with which
         the item would have been cached. The idea is that there is some optimal
-        balance betIen evicting based off of recency and evicting based off of
+        balance between evicting based on recency and evicting based on
         frequency, and by training the cache to consider the factor which is
         more relevant in the last few requests, that optimal balance will remain
-        for the next few requests. This idea is very poIrful and can adapt Ill
-        to a specific environment. In their paper, Vietri et. al. emphasize the
-        “ARChilles’ heel”<sup>2</sup>, namely the tendency for Adaptive Caches
-        to underperform when the cache size is smaller than the working set.
+        for the next few requests. This idea is very powerful and can adapt well
+        to a specific environment. In their paper, Vietri et al. emphasize the
+        "Achilles' heel"<sup>2</sup>, namely the tendency for Adaptive Caches to
+        underperform when the cache size is smaller than the working set.
         Furthermore, they specify that LeCaR outperforms Adaptive caches with
         small caches and is competitive also when the cache size is larger. In
         my analysis, I will focus strongly on the relative performance of
         AdaptSize and LeCaR with variable cache sizes.
       </p>
       <p className="para">
-        In their presentation of AdaptSize caching, Berger et. al. focus on
-        admission heuristic. The idea behind this is that admitting large items
+        In their presentation of AdaptSize caching, Berger et al. focus on
+        admission heuristics. The idea behind this is that admitting large items
         forces many small items to be evicted from the cache and that oftentimes
         very large items are not frequently reused and thus should not be cached
         at all. This heuristic can be very helpful in environments where the
         cache size is only large enough to fit the working set, but admission of
         a large item into the cache might force the eviction of parts of this
-        working set, leading to an unfavorable exchange<sup>3</sup>. HoIver, I
+        working set, leading to an unfavorable exchange<sup>3</sup>. However, I
         would like to test the performance of this heuristic when the item that
         happens to be used frequently is large and the smaller items are
         temporary.
       </p>
       <p className="para">
-        Huang et. al. inspected the Facebook Photo Caching systems, suggesting
+        Huang et al. inspected the Facebook Photo Caching systems, suggesting
         that S4LRU might be a worthwhile research topic. The idea of S4LRU is to
         use 4 layers of LRU<sup>4</sup>, where upon hit, an item is promoted up
         one layer of the cache, and upon eviction the item is demoted one layer.
         The idea seems very intuitive in that items with high frequency are
-        promoted to a more stable layer and those which are seldomly called on
-        get evicted rather quickly. My main concern with this kind of caching
+        promoted to a more stable layer and those which are seldom called on get
+        evicted rather quickly. My main concern with this kind of caching
         algorithm is when the working set is shifted repeatedly, then the
         previous working set lingers in the medium-tier (2/3) of the cache,
         wasting space for items that are not called often enough to be promoted
-        to those caches, because they get evicted from the loIr cache rather
+        to those caches, because they get evicted from the lower cache rather
         quickly. Specifically, I designed a trace for this case as described in
         more detail below.
       </p>
       <p className="para">
-        Finally, Blankenstein et. al. designed a caching system that evicts
-        items based on priority, which they define as the number of hits
-        received within the cache, relative to the amount of time spent in the
-        cache. They call the model hyperbolic, because generally, the priority
-        function tends to have a hyperbolic shape, with frequent calls upon
-        admission and more and more infrequent calls as time goes on<sup>5</sup>
-        . Intuitively it seems good to evict items that have been in the cache
-        for a long time without getting called, or ones that have been called
-        infrequently or once since admission. A seemingly great benefit of this
-        approach is the very low overhead. For every item in the cache, I only
-        hold 2 variables: time of admission and number of calls since admission.
+        Finally, Blankstein et al. designed a caching system that evicts items
+        based on priority, which they define as the number of hits received
+        within the cache, relative to the amount of time spent in the cache.
+        They call the model hyperbolic, because generally, the priority function
+        tends to have a hyperbolic shape, with frequent calls upon admission and
+        more and more infrequent calls as time goes on<sup>5</sup>. Intuitively
+        it seems good to evict items that have been in the cache for a long time
+        without getting called, or ones that have been called infrequently or
+        once since admission. A seemingly great benefit of this approach is the
+        very low overhead. For every item in the cache, we only hold 2
+        variables: time of admission and number of calls since admission.
       </p>
       <p className="para">
         To test the performance of these different caching algorithms, I used
@@ -125,7 +125,7 @@ const CachingRS = () => {
         the first trace will check whether the algorithm does a good job of
         predicting the frequent usage of the working set among many requests
         that are used only once or twice. Testing with the second trace will
-        check whether the algorithm does a good job of switching betIen working
+        check whether the algorithm does a good job of switching between working
         sets abruptly and adapting quickly to different kinds of request
         schemes. Testing with the third trace will check whether the algorithms
         correctly identify the high cost of evicting the very large item from
@@ -137,46 +137,47 @@ const CachingRS = () => {
         the abstraction of an infinitely large cache.
       </p>
       <p className="para">
-        My tests on the Wikipedia trace shoId a very clear tendency of Belady to
-        strongly outperform all other algorithms. The FIFO caching algorithm
+        My tests on the Wikipedia trace showed a very clear tendency of Belady
+        to strongly outperform all other algorithms. The FIFO caching algorithm
         seemed to have abnormal behavior in that it had a dip in performance for
-        small cache sizes and performed Ill with larger caches. This is possibly
-        exactly the Belady effect described above, where a slight increase in
-        cache size counterintuitively decreases performance. The adaptive cache
-        algorithm also seems to underperform at very small cache sizes, possibly
-        reinforcing the idea of an “ARChilles’s heel” as described by Vietri et.
-        al. Beyond these observations, I see rather consistent performances.
-        Another interesting observation is that when using a bloom filter, LRU
-        performs Ill with a somewhat small cache of 5GB compared to LRU without
-        the bloom filter, but then seems to be worse off with a cache of size
-        50GB. This is likely because for a small cache, potentially rarely used,
-        large items will waste valuable space, whereas with a larger cache, such
-        items are best cached to save time retrieving the large item again.
+        small cache sizes and performed well with larger caches. This is
+        possibly exactly the Belady effect described above, where a slight
+        increase in cache size counterintuitively decreases performance. The
+        adaptive cache algorithm also seems to underperform at very small cache
+        sizes, possibly reinforcing the idea of an "Achilles' heel" as described
+        by Vietri et al. Beyond these observations, I see rather consistent
+        performances. Another interesting observation is that when using a bloom
+        filter, LRU performs well with a somewhat small cache of 5GB compared to
+        LRU without the bloom filter, but then seems to be worse off with a
+        cache of size 50GB. This is likely because for a small cache,
+        potentially rarely used, large items will waste valuable space, whereas
+        with a larger cache, such items are best cached to save time retrieving
+        the large item again.
       </p>
       <p className="para">
-        My test on the simulated matrix operation shoId very interesting
+        My test on the simulated matrix operation showed very interesting
         results. S4LRU was a very strong outlier in its poor performance. This
-        can be attributed to the strong dichotomy betIen highly volatile and
+        can be attributed to the strong dichotomy between highly volatile and
         highly static items. The static items are likely cached in the level-4
         cache, whereas the volatile items are stuck in the small level-1 cache,
         thus inhibiting performance benefit even with larger total cache size.
-        Again the Adaptive Size algorithm shoId poor performance with a small
+        Again the Adaptive Size algorithm showed poor performance with a small
         cache size, but excellent performance with a large enough cache. As
-        predicted by Vietri. Et. al. LeCaR is very strong compared to AdaptSize
+        predicted by Vietri et al., LeCaR is very strong compared to AdaptSize
         with a small cache size, and the margin decreases with a larger cache.
         FIFO shows relatively poor results, likely because it has no bias for
         the relative frequency of items. On the contrary, Hyperbolic uses this
-        frequency as the primary key and thus performs very Ill. Again, LRB
+        frequency as the primary key and thus performs very well. Again, LRB
         outperformed the other algorithms significantly.
       </p>
       <p className="para">
-        My test with the chunky variable trace19 shoId the shortcomings of the
-        S4LRU in an environment with highly variable requests. Belady shoId a
+        My test with the chunky variable trace showed the shortcomings of the
+        S4LRU in an environment with highly variable requests. Belady showed a
         massive margin of performance to the next-best algorithm. All other
         algorithms seemed to perform similarly.
       </p>
       <p className="para">
-        My final and likely most informative trace simulation20 show a few
+        My final and likely most informative trace simulation shows a few
         caching algorithms actually outperforming Belady for a small cache size.
         When the cache can just barely fit the very large, repeating file,
         Belady seems to evict it rather often. This is because the algorithm
@@ -184,8 +185,8 @@ const CachingRS = () => {
         the file accounts for 5% of requests but more than 60% of all bytes.
         With a slightly larger cache, Belady again clearly outperforms all other
         caches, as it is likely quick to pick up on the fact that the large file
-        is called frequently enough as though evicting it is a bad decision.
-        Beyond Belady, no other caching algorithm presented seems to behave Ill
+        is called frequently enough such that evicting it is a bad decision.
+        Beyond Belady, no other caching algorithm presented seems to behave well
         given this task.
       </p>
       <p className="bib">

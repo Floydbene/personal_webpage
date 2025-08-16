@@ -23,12 +23,7 @@ const Resume = () => {
     <>
       <style>{`body{background-color: #ffffff;} nav{background-color:#fff!important;} .logo{color:black!important} .nav-link{color:black!important} .active{color:var(--primary-900)!important}`}</style>
       <div className="resume fade-in-quick">
-        <h1 className="resume-title">
-          Computer scientist, startup generalist,
-        </h1>
-        <h1 className="resume-title">
-          Marketing analyst, passionate web developer
-        </h1>
+        <h1 className="resume-title">Software Engineer, Startup Generalist</h1>
         {resumeData.map((datapoint) => {
           return <ResumeSection info={datapoint} key={datapoint.id} />;
         })}

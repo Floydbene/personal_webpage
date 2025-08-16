@@ -8,7 +8,7 @@ import { TfiAngleDoubleDown } from "react-icons/tfi";
 import AboutMy from "../components/AboutMy";
 import Skills from "../components/Skills";
 import Contact from "../components/Contact";
-import Floyd from "../assets/floyd_lowersize.jpg";
+import Floyd from "../assets/floydAku.png";
 import Research from "../components/Research";
 
 const Landing = () => {
@@ -28,20 +28,18 @@ const Landing = () => {
   return (
     <>
       <div className="hello">
-        <div className="hello-left">
-          <SVG />
-          <h4 className="info fade-in">
-            I'm a London-based Full-Stack Engineer with a passion for practical
-            ML to solve real problems.
-          </h4>
-          <h4 className="info fade-in">
-            I turn data-heavy challenges into clean, user-friendly experiences
-            and I'm excited to join teams where I can scale ML features.
-          </h4>
+        <div className="svg-container">
+          <SVG className="svg-frame" />
         </div>
-        <div className="landing-img fade-in">
-          <img src={Floyd} alt="" />
-        </div>
+        <h4 className="info fade-in">
+          I'm a London-based Full-Stack Engineer who enjoys working across the
+          stack (frontend, backend, and infrastructure) to ship real solutions.
+        </h4>
+        <h4 className="info fade-in">
+          I turn complex, data-heavy challenges into clean, user-friendly
+          experiences and enjoy owning features end-to-end—from database and
+          APIs to polished UIs.
+        </h4>
       </div>
       <div className="scrollicon fade-in">
         <TfiMouse />

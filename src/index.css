@@ -262,19 +262,15 @@ ul {
   text-align: center;
 }
 .hello {
-  width: 90vw;
+  width: 80vw;
   margin: 0 auto;
-  display: grid;
-  gap: 5rem;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.landing-img img {
-  width: 25vw;
-  transform: rotate(-20deg);
-  object-fit: contain;
-  border: solid 2px var(--prim);
-  box-shadow: 10px 10px 0px var(--prim);
+.hello svg {
+  height: 15vw;
 }
 
 /* 
