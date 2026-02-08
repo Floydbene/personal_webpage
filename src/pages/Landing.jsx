@@ -1,15 +1,18 @@
-import { SVG } from "../components/SVG";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Projects from "../components/Projects";
 import React from "react";
-import { TfiMouse } from "react-icons/tfi";
-import { TfiAngleDoubleDown } from "react-icons/tfi";
-import Skills from "../components/Skills";
-import Contact from "../components/Contact";
 import Research from "../components/Research";
+import floydImage from "../assets/floyd.jpeg";
+import CodeWindow from "../components/CodeWindow";
+import Journey from "../components/Journey";
+import SkillsShowcase from "../components/SkillsShowcase";
+import SkillsRain from "../components/SkillsRain";
 
 const Landing = () => {
+  const heroRef = React.useRef(null);
+  const imgRef = React.useRef(null);
+
   const copyEmail = () => {
     toast.success("Copied email to clipboard", {
       position: "bottom-center",
@@ -25,29 +28,29 @@ const Landing = () => {
   };
   return (
     <>
-      <div className="hello">
-        <div className="svg-container">
-          <SVG className="svg-frame" />
+      <div className="hello" ref={heroRef}>
+        <SkillsRain containerRef={heroRef} targetRef={imgRef} />
+        <div className="profile-image-container fade-in">
+          <img
+            src={floydImage}
+            alt="Floyd Benedikter"
+            className="profile-image"
+            ref={imgRef}
+          />
         </div>
-        <h4 className="info fade-in">
-          I'm a London-based Full-Stack Engineer who enjoys working across the
-          stack (frontend, backend, and infrastructure) to ship real solutions.
-        </h4>
-        <h4 className="info fade-in">
-          I turn complex, data-heavy challenges into clean, user-friendly
-          experiences and enjoy owning features end-to-end—from database and
-          APIs to polished UIs.
-        </h4>
-      </div>
-      <div className="scrollicon fade-in">
-        <TfiMouse />
-        <TfiAngleDoubleDown className="vibing" />
+        <h1 className="greeting fade-in">
+          Hello! I'm <span className="primary-name">Floyd</span>
+        </h1>
+        <h2 className="subtitle fade-in">
+          Forward Deployed Software Engineer (FDSE)
+        </h2>
       </div>
       {/* <AboutMy /> */}
+      <CodeWindow />
+      <Journey />
+      <SkillsShowcase />
       <Projects id="projects" />
-      <Skills id="skills" />
       <Research id="research" />
-      <Contact id="contact" />
       <div className="bottomrow fade-in">
         <h4 className="social" onClick={() => copyEmail()}>
           Email

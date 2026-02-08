@@ -2,14 +2,7 @@ import React from "react";
 
 const CachingRS = () => {
   return (
-    <>
-      <style>{`body{background-color: #ffffff;} nav{background-color:#fff!important;} .logo{color:black!important} .nav-link{color:black!important} .active{color:var(--primary-900)!important} 
-        .rs-title,
-        .name,
-        .para,
-        .bib {
-          color: #000 !important;
-        }`}</style>
+    <div className="research-page">
       <h2 className="rs-title">
         Survey of several non-trivial caching algorithms
       </h2>
@@ -221,7 +214,7 @@ const CachingRS = () => {
         Jason Liu, Raju Rangaswami, Ming Zhao, and Giri Narasimhan. n.d.
         “Driving Cache Replacement with ML-based LeCaR.” 7.
       </p>
-    </>
+    </div>
   );
 };
 

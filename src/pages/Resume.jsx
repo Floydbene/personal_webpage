@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ResumeSection from "../components/ResumeSection";
 import { resumeData } from "../Data";
+import { useTheme } from "../context/ThemeContext";
 
 const Resume = () => {
+  const { isDarkMode } = useTheme();
+
   const copyEmail = () => {
     toast.success("Copied email to clipboard", {
       position: "bottom-center",
@@ -19,11 +22,22 @@ const Resume = () => {
     });
     navigator.clipboard.writeText("floyd.benedikter@gmail.com");
   };
+
   return (
     <>
-      <style>{`body{background-color: #ffffff;} nav{background-color:#fff!important;} .logo{color:black!important} .nav-link{color:black!important} .active{color:var(--primary-900)!important}`}</style>
       <div className="resume fade-in-quick">
-        <h1 className="resume-title">Software Engineer, Startup Generalist</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "2rem",
+          }}
+        >
+          <h1 className="resume-title">
+            Software Engineer, Startup Generalist
+          </h1>
+        </div>
         {resumeData.map((datapoint) => {
           return <ResumeSection info={datapoint} key={datapoint.id} />;
         })}
