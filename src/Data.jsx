@@ -3,6 +3,7 @@ import taskBalancerGif from "./assets/taskBalancerGif.gif";
 import mechanism from "./assets/mechanism_ventures_logo.jpg";
 import carts from "./assets/carts.jpg";
 import proda from "./assets/proda_ltd_logo.jpg";
+import northslope from "./assets/northslope_technologies_logo.jpeg";
 import spaceInvadersGif from "./assets/Space_Eaters_DEMO_trimmed.gif";
 import spaceInvaders from "./assets/space_invaders.png";
 import golang from "./assets/golang.png";
@@ -32,6 +33,35 @@ export const resumeData = [
     id: 2,
     title: "work",
     subtitles: [
+      {
+        subtitle: "Northslope Technologies",
+        imgLink: "https://www.northslope.tech/",
+        imgUrl: northslope,
+        title: "Forward Deployed Engineer",
+        timeFrame: "Present",
+        text: (
+          <ul>
+            <li>
+              <p className="bullet-text">
+                Deployed on-site to integrate cutting-edge technology solutions
+                directly with client operations
+              </p>
+            </li>
+            <li>
+              <p className="bullet-text">
+                Collaborated closely with customer teams to understand
+                requirements and deliver tailored technical solutions
+              </p>
+            </li>
+            <li>
+              <p className="bullet-text">
+                Bridged the gap between product development and customer success
+                through hands-on implementation and support
+              </p>
+            </li>
+          </ul>
+        ),
+      },
       {
         subtitle: "PRODA",
         imgLink: "https://www.proda.com/",
@@ -268,5 +298,67 @@ export const researches = [
     link: "research/caching",
     title: "Researching efficiency of ML-based caching algorithms",
     tags: ["Caching", "Machine Learning", "Algorithms"],
+  },
+];
+
+export const journeyData = [
+  {
+    id: 1,
+    title: "Princeton University",
+    subtitle: "B.Sc. (Hons) in Computer Science",
+    type: "Education",
+    date: "2019-2023",
+    dateLabel: "2019-2023",
+    side: "left",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/d/d0/Princeton_seal.svg",
+  },
+  {
+    id: 2,
+    title: "CARTS",
+    subtitle: "Full-Stack Developer",
+    type: "Experience",
+    date: "May 2022 - Sep 2022",
+    dateLabel: "May 2022 - Sep 2022",
+    side: "right",
+    logo: carts,
+  },
+  {
+    id: 3,
+    title: "TigerMealX",
+    subtitle: "Full-stack platform for 3,000+ students",
+    type: "Project",
+    date: "2023",
+    dateLabel: "2023",
+    side: "left",
+  },
+  {
+    id: 4,
+    title: "Mechanism Ventures",
+    subtitle: "Startup Generalist",
+    type: "Experience",
+    date: "Sep 2023 - Feb 2024",
+    dateLabel: "Sep 2023 - Feb 2024",
+    side: "right",
+    logo: mechanism,
+  },
+  {
+    id: 5,
+    title: "PRODA",
+    subtitle: "Full-Stack Engineer",
+    type: "Experience",
+    date: "June 2024 - Present",
+    dateLabel: "June 2024 - Present",
+    side: "left",
+    logo: proda,
+  },
+  {
+    id: 6,
+    title: "Northslope Technologies",
+    subtitle: "Forward Deployed Engineer",
+    type: "Experience",
+    date: "November 2025 - Present",
+    dateLabel: "November 2025 - Present",
+    side: "right",
+    logo: northslope,
   },
 ];

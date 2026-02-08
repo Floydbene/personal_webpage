@@ -1,7 +1,7 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.nav`
-  background: var(--background);
+  background: var(--theme-navBackground);
   transition: 0.3s linear;
   .nav-center {
     width: var(--view-width);
@@ -13,7 +13,7 @@ const Wrapper = styled.nav`
   }
   .logo {
     font-size: clamp(1.5rem, 3vw, 3rem);
-    color: var(--prim);
+    color: var(--theme-text);
     font-weight: 100;
     letter-spacing: 2px;
   }
@@ -22,19 +22,20 @@ const Wrapper = styled.nav`
     flex-direction: row;
     gap: 0.5rem;
     margin-top: 1rem;
+    align-items: center;
   }
   .nav-link {
     text-transform: lowercase;
-    color: white;
+    color: var(--theme-text);
     padding: 0.5rem 0.5rem 0.5rem 0;
     transition: var(--transition);
     letter-spacing: 2px;
   }
   .nav-link:hover {
-    color: var(--prim);
+    color: var(--theme-accent);
   }
   .active {
-    color: var(--prim);
+    color: var(--theme-accent);
   }
   @media (min-width: 768px) {
     .nav-center {
