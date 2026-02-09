@@ -34,9 +34,7 @@ const Resume = () => {
             marginBottom: "2rem",
           }}
         >
-          <h1 className="resume-title">
-            Software Engineer, Startup Generalist
-          </h1>
+          <h1 className="resume-title">Forward Deployed Software Engineer</h1>
         </div>
         {resumeData.map((datapoint) => {
           return <ResumeSection info={datapoint} key={datapoint.id} />;

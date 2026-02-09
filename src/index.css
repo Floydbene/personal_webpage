@@ -333,6 +333,7 @@ PROJECT CSS
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  padding-bottom: 3rem;
 }
 .projects-subtitle {
   text-align: center;
@@ -461,11 +462,19 @@ PROJECT CSS
 }
 .tag--professional {
   color: var(--theme-primary);
-  border-color: color-mix(in srgb, var(--theme-primary) 60%, var(--theme-border) 40%);
+  border-color: color-mix(
+    in srgb,
+    var(--theme-primary) 60%,
+    var(--theme-border) 40%
+  );
 }
 .tag--project {
   color: var(--theme-accent);
-  border-color: color-mix(in srgb, var(--theme-accent) 60%, var(--theme-border) 40%);
+  border-color: color-mix(
+    in srgb,
+    var(--theme-accent) 60%,
+    var(--theme-border) 40%
+  );
 }
 .project {
   width: 100%;
@@ -813,7 +822,7 @@ PROJECT CSS
 .hover:hover {
   transform: scale(1.05, 1.05);
   transition: 0.1s linear;
-  color: var(--background);
+  color: var(--theme-primary);
   cursor: pointer;
 }
 
@@ -948,16 +957,17 @@ PROJECT CSS
   font-size: 1.7rem;
 }
 .bottomrow {
-  display: grid;
+  display: flex;
+  justify-content: space-between;
   margin: 5rem auto;
   color: white;
-  text-align: center;
   width: 80vw;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .social {
   font-weight: 100;
+  width: min-content;
   cursor: pointer;
 }
 .social:hover {
@@ -1113,7 +1123,11 @@ footer {
 
 .tag:not(.tag--professional):not(.tag--project) {
   color: var(--theme-accent);
-  border-color: color-mix(in srgb, var(--theme-accent) 60%, var(--theme-border) 40%);
+  border-color: color-mix(
+    in srgb,
+    var(--theme-accent) 60%,
+    var(--theme-border) 40%
+  );
 }
 
 /* Research */

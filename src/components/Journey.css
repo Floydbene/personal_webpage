@@ -39,12 +39,12 @@
 
 .timeline-item.left {
   justify-content: flex-end;
-  padding-right: calc(50% + 40px);
+  padding-left: calc(50% + 20px);
 }
 
 .timeline-item.right {
-  justify-content: flex-start;
-  padding-left: calc(50% + 40px);
+  justify-content: flex-end;
+  padding-right: calc(50% + 20px);
 }
 
 .timeline-content-link {

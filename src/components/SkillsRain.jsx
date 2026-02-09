@@ -25,13 +25,17 @@ function clamp(v, min, max) {
 
 function cssVar(name, fallback) {
   if (typeof window === "undefined") return fallback;
-  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const v = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
   return v || fallback;
 }
 
 function prefersReducedMotion() {
   if (typeof window === "undefined") return false;
-  return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  return (
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false
+  );
 }
 
 export default function SkillsRain({
@@ -87,9 +91,15 @@ export default function SkillsRain({
       if (nowMs - styleCacheRef.current.lastStyleUpdateMs < 750) return;
       styleCacheRef.current.lastStyleUpdateMs = nowMs;
       styleCacheRef.current.accent = cssVar("--theme-primary", "#6366f1");
-      styleCacheRef.current.chipFill = cssVar("--theme-cardBackground", "#111827");
+      styleCacheRef.current.chipFill = cssVar(
+        "--theme-cardBackground",
+        "#111827",
+      );
       styleCacheRef.current.chipText = cssVar("--theme-text", "#ffffff");
-      styleCacheRef.current.chipStroke = cssVar("--theme-border", "rgba(255,255,255,0.18)");
+      styleCacheRef.current.chipStroke = cssVar(
+        "--theme-border",
+        "rgba(255,255,255,0.18)",
+      );
       styleCacheRef.current.fontFamily = (
         cssVar("--font-primary", "") ||
         "system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif"
@@ -119,7 +129,7 @@ export default function SkillsRain({
 
     const spawnParticle = (
       i,
-      { x, y, spawnAt = performance.now(), active = true } = {}
+      { x, y, spawnAt = performance.now(), active = true } = {},
     ) => {
       const label = skillPool[i % skillPool.length];
       const chip = measureChip(label);
@@ -141,7 +151,7 @@ export default function SkillsRain({
         r,
         label,
         rot: (Math.random() - 0.5) * 0.25,
-        omega: (Math.random() - 0.5) * 0.65,
+        omega: (Math.random() - 0.5) * 1.65,
         spawnAt,
         active,
       };
@@ -158,8 +168,9 @@ export default function SkillsRain({
       particlesRef.current = Array.from({ length: count }, (_, i) => {
         const pairIndex = Math.floor(i / 2);
         const side = i % 2 === 0 ? -1 : 1;
-        const baseX = cx + side * (18 + Math.random() * 18) + (Math.random() - 0.5) * 10;
-        const delayMs = pairIndex * 260 + (Math.random() * 40);
+        const baseX =
+          cx + side * (18 + Math.random() * 18) + (Math.random() - 0.5) * 10;
+        const delayMs = pairIndex * 260 + Math.random() * 40;
         return spawnParticle(i, {
           x: clamp(baseX, 24, w - 24),
           y: -70 - Math.random() * 220,
@@ -282,7 +293,12 @@ export default function SkillsRain({
     const onPointerMove = (evt) => {
       const d = dragRef.current;
       if (!d.active) return;
-      if (d.pointerId != null && evt.pointerId != null && d.pointerId !== evt.pointerId) return;
+      if (
+        d.pointerId != null &&
+        evt.pointerId != null &&
+        d.pointerId !== evt.pointerId
+      )
+        return;
 
       const now = performance.now();
       const { x, y } = pointerPos(evt);
@@ -434,10 +450,14 @@ export default function SkillsRain({
     });
     roRef.current.observe(containerEl);
 
-    containerEl.addEventListener("pointerdown", onPointerDown, { passive: true });
+    containerEl.addEventListener("pointerdown", onPointerDown, {
+      passive: true,
+    });
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     window.addEventListener("pointerup", onPointerUp, { passive: true });
-    window.addEventListener("pointercancel", onPointerCancel, { passive: true });
+    window.addEventListener("pointercancel", onPointerCancel, {
+      passive: true,
+    });
 
     rafRef.current = requestAnimationFrame(step);
 
@@ -454,6 +474,7 @@ export default function SkillsRain({
     };
   }, [containerRef, targetRef, skillPool, count]);
 
-  return <canvas ref={canvasRef} className="skills-rain-canvas" aria-hidden="true" />;
+  return (
+    <canvas ref={canvasRef} className="skills-rain-canvas" aria-hidden="true" />
+  );
 }
-

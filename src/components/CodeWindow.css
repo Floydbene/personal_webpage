@@ -7,54 +7,29 @@
   min-height: 600px;
 }
 
-/* Dark mode styling (inverted - light on dark page) */
-.code-window-container.dark {
-  background: transparent;
-}
-
-.code-window-container.dark .code-window-wrapper {
-  background: var(--grey-50);
+.code-window-container .code-window-wrapper {
+  background: var(--theme-cardBackground);
+  border: 1px solid var(--theme-border);
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.18),
+    0 2px 0 rgba(255, 255, 255, 0.25) inset;
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
 }
 
-.code-window-container.dark .about-section {
-  background: var(--grey-50);
-  color: var(--grey-900);
-}
-
-.code-window-container.dark .about-text {
-  color: var(--grey-900);
-}
-
-.code-window-container.dark .code-window-section {
-  background: var(--grey-50);
-}
-
-/* Light mode styling (inverted - dark on light page) */
-.code-window-container.light {
+.code-window-container .about-section {
   background: transparent;
+  color: var(--theme-text);
 }
 
-.code-window-container.light .code-window-wrapper {
-  background: #1e1e1e;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+.code-window-container .about-text {
+  color: var(--theme-text);
 }
 
-.code-window-container.light .about-section {
-  background: #1e1e1e;
-  color: #e5e5e5;
-}
-
-.code-window-container.light .about-text {
-  color: #e5e5e5;
-}
-
-.code-window-container.light .code-window-section {
-  background: #1e1e1e;
+.code-window-container .code-window-section {
+  background: transparent;
 }
 
 .code-window-wrapper {
@@ -77,7 +52,7 @@
   font-weight: 700;
   margin-bottom: 2rem;
   letter-spacing: -0.02em;
-  color: var(--prim);
+  color: var(--theme-primary);
 }
 
 .about-text {
@@ -91,40 +66,28 @@
   margin-bottom: 0;
 }
 
-/* Frontend technologies - Blue/Cyan */
-.tech-frontend {
-  color: #0ea5e9;
+/* Backend technologies - Purple/Violet */
+.tech-blue {
+  color: var(--theme-codeType);
   font-weight: 600;
   transition: color 0.2s ease;
   cursor: default;
-}
-
-.tech-frontend:hover {
-  color: #0284c7;
 }
 
 /* Backend technologies - Purple/Violet */
-.tech-backend {
-  color: #8b5cf6;
+.tech-green {
+  color: var(--theme-codeString);
   font-weight: 600;
   transition: color 0.2s ease;
   cursor: default;
 }
 
-.tech-backend:hover {
-  color: #7c3aed;
-}
-
-/* Infrastructure technologies - Orange/Amber */
-.tech-infra {
-  color: #f59e0b;
+/* Backend technologies - Purple/Violet */
+.tech-red {
+  color: var(--theme-codeKeyword);
   font-weight: 600;
   transition: color 0.2s ease;
   cursor: default;
-}
-
-.tech-infra:hover {
-  color: #d97706;
 }
 
 .tech-highlight {
@@ -148,19 +111,46 @@
 .code-window {
   width: 100%;
   max-width: 800px;
-  background: #1e1e1e;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 20, 22, 0.96),
+    rgba(16, 16, 18, 0.92)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.04) inset;
   font-family: "Fira Code", "Consolas", "Monaco", monospace;
 }
 
+.code-window::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  transform: translate(14px, 14px);
+  filter: blur(18px);
+  opacity: 0.45;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .window-header {
-  background: #323232;
+  background: linear-gradient(
+    180deg,
+    rgba(54, 54, 58, 0.95),
+    rgba(42, 42, 46, 0.95)
+  );
   padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #1e1e1e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .window-controls {
@@ -194,7 +184,7 @@
 }
 
 .window-title {
-  color: #cccccc;
+  color: rgba(229, 229, 229, 0.92);
   font-size: 0.85rem;
   flex: 1;
   text-align: center;
@@ -207,9 +197,9 @@
 .window-content {
   display: flex;
   padding: 1.5rem 0;
-  background: #1e1e1e;
+  background: transparent;
   min-height: 400px;
-  color: #d4d4d4;
+  color: rgba(212, 212, 212, 0.95);
   font-size: 0.95rem;
   line-height: 1.6;
   overflow-x: auto;
@@ -217,10 +207,10 @@
 
 .line-numbers {
   padding: 0 1rem;
-  color: #858585;
+  color: rgba(133, 133, 133, 0.9);
   text-align: right;
   user-select: none;
-  border-right: 1px solid #333;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   flex: 0 0 auto;
 }
 

@@ -37,8 +37,8 @@ export const resumeData = [
         subtitle: "Northslope Technologies",
         imgLink: "https://www.northslope.tech/",
         imgUrl: northslope,
-        title: "Forward Deployed Engineer",
-        timeFrame: "Present",
+        title: "Forward Deployed Software Engineer",
+        timeFrame: "November 2025 - Present",
         text: (
           <ul>
             <li>
@@ -67,7 +67,7 @@ export const resumeData = [
         imgLink: "https://www.proda.com/",
         imgUrl: proda,
         title: "Full-Stack Engineer — London, UK",
-        timeFrame: "June 2024 - Present",
+        timeFrame: "June 2024 - November 2025",
         text: (
           <ul>
             <li>
@@ -197,19 +197,14 @@ export const resumeData = [
         subtitle: "frameworks & tools",
         text: (
           <p className="subText">
-            React (+TypeScript), Vite, Zustand, WebSockets, GitHub Actions,
-            Jest, Flask, SQLite, Docker, Auth0, Duo, Airtable, Asana, Google
-            Sheets, Dall-E, MidJourney.
+            React (+TypeScript), Vite, Zustand, WebSockets, Jest, Flask, SQLite,
+            Docker, Auth0.
           </p>
         ),
       },
       {
         subtitle: "languages",
-        text: (
-          <p className="subText">
-            English, German, Italian (professional proficiency).
-          </p>
-        ),
+        text: <p className="subText">English, German, Italian.</p>,
       },
     ],
   },
