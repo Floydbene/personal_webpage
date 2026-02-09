@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Projects from "../components/Projects";
 import React from "react";
-import Research from "../components/Research";
 import floydImage from "../assets/floyd.jpeg";
 import CodeWindow from "../components/CodeWindow";
 import Journey from "../components/Journey";
@@ -50,7 +49,6 @@ const Landing = () => {
       <Journey />
       <SkillsShowcase />
       <Projects id="projects" />
-      <Research id="research" />
       <div className="bottomrow fade-in">
         <h4 className="social" onClick={() => copyEmail()}>
           Email
