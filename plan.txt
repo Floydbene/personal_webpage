@@ -1,0 +1,115 @@
+Personal Website with Auth-Protected Routes
+=============================================
+
+Goal: Add private routes to your website that only you (and maybe one other person)
+can access. Auth via Supabase, API on Render, frontend wherever it already lives.
+
+---
+
+1. SUPABASE PROJECT SETUP
+   - Create new Supabase project (free tier)
+   - In Supabase dashboard: Auth > Settings
+     - Disable "Allow new signups" (you'll create accounts manually)
+     - Or keep signups open, create your 1-2 accounts, then disable
+   - Create your user accounts via Supabase dashboard or SQL editor
+   - Grab: SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_JWT_SECRET, DATABASE_URL
+
+2. DATABASE SCHEMA (Supabase Postgres)
+   - Probably minimal — depends on what the private routes do
+   - Could be as simple as a "users" table that mirrors Supabase auth users
+   - Add whatever tables you need for private content (notes, files, admin data, etc.)
+   - Use Drizzle ORM like taskflow, or just raw SQL — your call
+
+3. API (Express on Render)
+   - New repo or folder: e.g. my-site-api/
+   - Express + cors + helmet
+   - Auth middleware: verify Supabase JWT (same pattern as taskflow)
+     - Extract token from Authorization header
+     - Verify against Supabase JWKS or JWT secret
+     - Attach user to request
+   - Routes:
+     - GET  /api/health          (public — for Render health checks)
+     - GET  /api/auth/me         (protected — return current user)
+     - ... whatever private endpoints you need
+   - CORS config: allow your website origin + localhost for dev
+   - Deploy to Render (free tier, same setup as taskflow)
+   - Env vars: DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY,
+     SUPABASE_JWT_SECRET, CORS_ORIGIN
+
+4. FRONTEND (your existing website)
+   - Add dependencies: @supabase/supabase-js, react-router (if not already)
+   - Supabase client: init with SUPABASE_URL + SUPABASE_ANON_KEY
+   - API client: same pattern as taskflow (attach Bearer token to requests)
+   - Auth provider:
+     - Context with user, login, logout
+     - Check session on mount
+     - Listen to auth state changes
+   - ProtectedRoute component:
+     - If loading → spinner
+     - If no user → redirect to /login
+     - If user → render children
+   - Login page:
+     - Simple email + password form
+     - No register link (you don't want random signups)
+     - Optional: "Forgot password?" if you want it
+
+5. ROUTE STRUCTURE
+
+   Public routes (anyone can see):
+   /                    → homepage
+   /about               → about page
+   /projects            → portfolio/projects
+   /login               → login form
+   ... whatever your site already has
+
+   Protected routes (auth required):
+   /admin               → private dashboard / landing
+   /admin/notes         → personal notes, drafts, etc.
+   /admin/analytics     → site analytics or whatever
+   /admin/settings      → account settings
+   ... whatever you want behind auth
+
+6. ROUTER SETUP (React Router)
+
+   <Routes>
+     {/* Public */}
+     <Route path="/" element={<HomePage />} />
+     <Route path="/about" element={<AboutPage />} />
+     <Route path="/login" element={<LoginPage />} />
+
+     {/* Protected — wrapped in ProtectedRoute */}
+     <Route element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
+       <Route path="/admin" element={<AdminDashboard />} />
+       <Route path="/admin/notes" element={<NotesPage />} />
+       <Route path="/admin/settings" element={<SettingsPage />} />
+     </Route>
+   </Routes>
+
+7. DEPLOYMENT CHECKLIST
+
+   Supabase:
+   [ ] Create project
+   [ ] Create user accounts (1-2)
+   [ ] Disable public signups
+   [ ] Note all env vars
+
+   Render (API):
+   [ ] Create web service (free tier)
+   [ ] Connect repo, set build/start commands
+   [ ] Add env vars: DATABASE_URL, SUPABASE_URL, SUPABASE_ANON_KEY,
+       SUPABASE_JWT_SECRET, CORS_ORIGIN, API_PORT=10000
+   [ ] Verify /api/health returns 200
+
+   Frontend:
+   [ ] Add VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_API_URL
+       (no trailing slash on API URL!)
+   [ ] Deploy and verify login works
+
+8. NOTES
+   - Render free tier sleeps after 15min idle (~30s cold start)
+   - Since only 1-2 users, this is totally fine
+   - Supabase free tier: 2 projects, 500MB DB, 50k auth users — more than enough
+   - If you want even simpler: skip the custom API entirely and use
+     Supabase Row Level Security (RLS) to protect data directly from the
+     frontend. No Render needed. Only worth it if you don't need custom
+     backend logic.

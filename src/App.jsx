@@ -1,10 +1,21 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { HomeLayout, Landing, Error, Resume, SinglePageError } from "./pages";
+import {
+  HomeLayout,
+  Landing,
+  Error,
+  Resume,
+  SinglePageError,
+  Login,
+  AdminLayout,
+  TodoList,
+} from "./pages";
 import CachingRS from "./pages/CachingRS";
 import CryptoRS from "./pages/CryptoRS";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,6 +57,26 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "login",
+        element: <Login />,
+        errorElement: <SinglePageError />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <ProtectedRoute />,
+    children: [
+      {
+        element: <AdminLayout />,
+        children: [
+          {
+            index: true,
+            element: <TodoList />,
+          },
+        ],
+      },
     ],
   },
 ]);
@@ -53,10 +84,12 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <ThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 };
