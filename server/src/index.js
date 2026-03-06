@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import todosRouter from './routes/todos.js';
+import notesRouter from './routes/notes.js';
 import { auth } from './middleware/auth.js';
 import { db } from './db/index.js';
 
@@ -28,6 +29,7 @@ app.get('/api/health', async (_req, res) => {
 });
 
 app.use('/api/todos', auth, todosRouter);
+app.use('/api/notes', auth, notesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
