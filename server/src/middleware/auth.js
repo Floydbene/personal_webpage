@@ -15,7 +15,8 @@ export const auth = async (req, res, next) => {
     const { payload } = await jwtVerify(token, JWKS);
     req.user = { id: payload.sub, email: payload.email };
     next();
-  } catch {
-    return res.status(401).json({ error: 'Invalid token' });
+  } catch (err) {
+    console.error('Auth error:', err);
+    return res.status(401).json({ error: 'Invalid token', detail: err.message });
   }
 };

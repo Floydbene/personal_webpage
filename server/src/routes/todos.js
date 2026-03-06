@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     res.json(userTodos);
   } catch (err) {
     console.error('Failed to fetch todos:', err);
-    res.status(500).json({ error: 'Failed to fetch todos' });
+    res.status(500).json({ error: 'Failed to fetch todos', detail: err.message });
   }
 });
 
