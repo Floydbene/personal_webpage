@@ -20,15 +20,14 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { title } = req.body;
+  const { title, assignedTo } = req.body;
   if (!title?.trim()) {
     return res.status(400).json({ error: 'Title is required' });
   }
   try {
-    const [todo] = await db
-      .insert(todos)
-      .values({ userId: req.user.id, title: title.trim() })
-      .returning();
+    const values = { userId: req.user.id, title: title.trim() };
+    if (assignedTo?.trim()) values.assignedTo = assignedTo.trim();
+    const [todo] = await db.insert(todos).values(values).returning();
     res.status(201).json(todo);
   } catch (err) {
     console.error('Failed to create todo:', err);
@@ -38,11 +37,15 @@ router.post('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, completed } = req.body;
+  const { title, completed, assignedTo } = req.body;
   try {
     const updates = { updatedAt: new Date() };
     if (title !== undefined) updates.title = title.trim();
-    if (completed !== undefined) updates.completed = completed;
+    if (completed !== undefined) {
+      updates.completed = completed;
+      updates.completedBy = completed ? req.user.email : null;
+    }
+    if (assignedTo !== undefined) updates.assignedTo = assignedTo?.trim() || null;
 
     const [todo] = await db
       .update(todos)
