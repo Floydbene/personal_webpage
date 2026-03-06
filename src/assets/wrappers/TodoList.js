@@ -109,6 +109,49 @@ const Wrapper = styled.section`
     padding: 2rem;
     font-style: italic;
   }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .todo-form {
+      input {
+        padding: 0.75rem;
+        font-size: 1rem;
+      }
+
+      button {
+        padding: 0.75rem 1.25rem;
+        font-size: 1rem;
+      }
+    }
+
+    .todo-item {
+      padding: 1rem 0.75rem;
+      gap: 0.75rem;
+
+      input[type='checkbox'] {
+        width: 1.35rem;
+        height: 1.35rem;
+        flex-shrink: 0;
+      }
+
+      .todo-title {
+        font-size: 1rem;
+        word-break: break-word;
+      }
+
+      .delete-btn {
+        font-size: 1.1rem;
+        padding: 0.5rem;
+        flex-shrink: 0;
+      }
+    }
+  }
 `;
 
 export default Wrapper;

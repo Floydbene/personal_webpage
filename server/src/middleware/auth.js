@@ -17,6 +17,6 @@ export const auth = async (req, res, next) => {
     next();
   } catch (err) {
     console.error('Auth error:', err);
-    return res.status(401).json({ error: 'Invalid token', detail: err.message });
+    return res.status(401).json({ error: 'Invalid token' });
   }
 };
