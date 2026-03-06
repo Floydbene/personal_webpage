@@ -1,6 +1,10 @@
-import jwt from 'jsonwebtoken';
+import { createRemoteJWKSet, jwtVerify } from 'jose';
 
-export const auth = (req, res, next) => {
+const JWKS = createRemoteJWKSet(
+  new URL(`${process.env.SUPABASE_URL}/auth/v1/.well-known/jwks.json`)
+);
+
+export const auth = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Missing authorization header' });
@@ -8,8 +12,8 @@ export const auth = (req, res, next) => {
 
   const token = authHeader.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.SUPABASE_JWT_SECRET);
-    req.user = { id: decoded.sub, email: decoded.email };
+    const { payload } = await jwtVerify(token, JWKS);
+    req.user = { id: payload.sub, email: payload.email };
     next();
   } catch {
     return res.status(401).json({ error: 'Invalid token' });
