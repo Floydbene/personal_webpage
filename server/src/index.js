@@ -4,6 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import todosRouter from './routes/todos.js';
 import { auth } from './middleware/auth.js';
+import { db } from './db/index.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,8 +17,14 @@ app.use(
 );
 app.use(express.json());
 
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok' });
+app.get('/api/health', async (_req, res) => {
+  try {
+    await db.execute('SELECT 1');
+    res.json({ status: 'ok', db: 'connected' });
+  } catch (err) {
+    console.error('Health check DB error:', err);
+    res.status(500).json({ status: 'error', db: 'disconnected', message: err.message });
+  }
 });
 
 app.use('/api/todos', auth, todosRouter);

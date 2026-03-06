@@ -13,7 +13,8 @@ router.get('/', async (req, res) => {
       .where(eq(todos.userId, req.user.id))
       .orderBy(todos.createdAt);
     res.json(userTodos);
-  } catch {
+  } catch (err) {
+    console.error('Failed to fetch todos:', err);
     res.status(500).json({ error: 'Failed to fetch todos' });
   }
 });
@@ -29,7 +30,8 @@ router.post('/', async (req, res) => {
       .values({ userId: req.user.id, title: title.trim() })
       .returning();
     res.status(201).json(todo);
-  } catch {
+  } catch (err) {
+    console.error('Failed to create todo:', err);
     res.status(500).json({ error: 'Failed to create todo' });
   }
 });
@@ -52,7 +54,8 @@ router.patch('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Todo not found' });
     }
     res.json(todo);
-  } catch {
+  } catch (err) {
+    console.error('Failed to update todo:', err);
     res.status(500).json({ error: 'Failed to update todo' });
   }
 });
@@ -69,7 +72,8 @@ router.delete('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Todo not found' });
     }
     res.status(204).send();
-  } catch {
+  } catch (err) {
+    console.error('Failed to delete todo:', err);
     res.status(500).json({ error: 'Failed to delete todo' });
   }
 });
