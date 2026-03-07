@@ -5,4 +5,4 @@ export { default as Error } from './Error';
 export { default as SinglePageError } from './SinglePageError';
 export { default as Login } from './Login';
 export { default as AdminLayout } from './AdminLayout';
-export { default as TodoList } from './TodoList';
+export { default as Tickets } from './Tickets';

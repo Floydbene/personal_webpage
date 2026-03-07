@@ -1,9 +1,11 @@
 import { useState, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { FaBars, FaTimes, FaEllipsisH, FaPaw } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/Navbar';
 import ThemeSelector from './ThemeSelector';
 import { useAuth } from '../context/AuthContext';
+import api from '../lib/api';
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -11,6 +13,16 @@ const Navbar = () => {
   const navigate = useNavigate();
   const tapCount = useRef(0);
   const tapTimer = useRef(null);
+
+  const { data: dogAccess } = useQuery({
+    queryKey: ['dog-access'],
+    queryFn: async () => {
+      const { data } = await api.get('/api/dog/access');
+      return data;
+    },
+    enabled: !!user,
+    staleTime: 60 * 1000,
+  });
 
   const handleLogoTap = () => {
     if (user) return;
@@ -48,13 +60,13 @@ const Navbar = () => {
             Resume
           </NavLink>
           <ThemeSelector />
-          {user?.email === 'annadebernardi22@gmail.com' && (
+          {dogAccess?.hasAccess && (
             <NavLink to="/dog" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Your pup">
               <FaPaw />
             </NavLink>
           )}
           {user && (
-            <NavLink to="/admin" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Open todos">
+            <NavLink to="/admin" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Open tickets">
               <FaEllipsisH />
             </NavLink>
           )}
