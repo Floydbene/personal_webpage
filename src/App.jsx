@@ -8,9 +8,9 @@ import {
   Resume,
   SinglePageError,
   Login,
-  AdminLayout,
   TodoList,
 } from "./pages";
+import Dog from "./pages/Dog";
 import CachingRS from "./pages/CachingRS";
 import CryptoRS from "./pages/CryptoRS";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -62,6 +62,10 @@ const router = createBrowserRouter([
         element: <Login />,
         errorElement: <SinglePageError />,
       },
+      {
+        path: "dog",
+        element: <Dog />,
+      },
     ],
   },
   {
@@ -69,13 +73,8 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        element: <AdminLayout />,
-        children: [
-          {
-            index: true,
-            element: <TodoList />,
-          },
-        ],
+        index: true,
+        element: <TodoList />,
       },
     ],
   },

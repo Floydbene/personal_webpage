@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     const userTodos = await db
       .select()
       .from(todos)
-      .where(eq(todos.userId, req.user.id))
       .orderBy(todos.createdAt);
     res.json(userTodos);
   } catch (err) {
@@ -25,8 +24,12 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: 'Title is required' });
   }
   try {
-    const values = { userId: req.user.id, title: title.trim() };
-    if (assignedTo?.trim()) values.assignedTo = assignedTo.trim();
+    const values = {
+      userId: req.user.id,
+      title: title.trim(),
+      createdBy: req.user.email,
+      assignedTo: assignedTo?.trim() || req.user.email,
+    };
     const [todo] = await db.insert(todos).values(values).returning();
     res.status(201).json(todo);
   } catch (err) {
@@ -50,7 +53,7 @@ router.patch('/:id', async (req, res) => {
     const [todo] = await db
       .update(todos)
       .set(updates)
-      .where(and(eq(todos.id, id), eq(todos.userId, req.user.id)))
+      .where(eq(todos.id, id))
       .returning();
 
     if (!todo) {
@@ -68,7 +71,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const [todo] = await db
       .delete(todos)
-      .where(and(eq(todos.id, id), eq(todos.userId, req.user.id)))
+      .where(eq(todos.id, id))
       .returning();
 
     if (!todo) {

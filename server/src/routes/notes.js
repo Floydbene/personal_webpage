@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
     const userNotes = await db
       .select()
       .from(notes)
-      .where(eq(notes.userId, req.user.id))
       .orderBy(notes.createdAt);
     res.json(userNotes);
   } catch (err) {
@@ -45,7 +44,7 @@ router.delete('/:id', async (req, res) => {
   try {
     const [note] = await db
       .delete(notes)
-      .where(and(eq(notes.id, id), eq(notes.userId, req.user.id)))
+      .where(eq(notes.id, id))
       .returning();
 
     if (!note) {

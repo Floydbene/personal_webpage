@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, useLocation, Navigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import Wrapper from '../assets/wrappers/LoginPage';
 
@@ -8,25 +7,26 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
   const { signIn, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || '/admin';
+  const from = location.state?.from?.pathname || '/';
 
   if (user) {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+    setError('');
     try {
       await signIn(email, password);
-      toast.success('Signed in successfully');
       navigate(from, { replace: true });
-    } catch (error) {
-      toast.error(error.message || 'Failed to sign in');
+    } catch (err) {
+      setError(err.message || 'Failed to sign in');
     } finally {
       setSubmitting(false);
     }
@@ -36,6 +36,7 @@ const Login = () => {
     <Wrapper>
       <form onSubmit={handleSubmit} className="login-form">
         <h3>Login</h3>
+        {error && <p className="error-msg">{error}</p>}
         <div className="form-row">
           <label htmlFor="email">Email</label>
           <input

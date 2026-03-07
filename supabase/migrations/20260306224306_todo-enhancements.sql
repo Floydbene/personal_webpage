@@ -1,4 +1,5 @@
 -- Add new columns to todos table
+ALTER TABLE todos ADD COLUMN IF NOT EXISTS created_by TEXT;
 ALTER TABLE todos ADD COLUMN IF NOT EXISTS completed_by TEXT;
 ALTER TABLE todos ADD COLUMN IF NOT EXISTS assigned_to TEXT;
 
