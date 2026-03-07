@@ -1,6 +1,5 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { FaListUl, FaArrowLeft, FaSignOutAlt } from 'react-icons/fa';
-import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import Wrapper from '../assets/wrappers/AdminLayout';
 
@@ -9,13 +8,8 @@ const AdminLayout = () => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
-    try {
-      await signOut();
-      toast.success('Signed out');
-      navigate('/login');
-    } catch (error) {
-      toast.error('Failed to sign out');
-    }
+    await signOut();
+    navigate('/');
   };
 
   return (

@@ -21,6 +21,13 @@ const Wrapper = styled.section`
     }
   }
 
+  .error-msg {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
   .form-row {
     margin-bottom: 1rem;
 
