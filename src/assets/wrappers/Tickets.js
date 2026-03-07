@@ -143,7 +143,8 @@ const Wrapper = styled.div`
     -webkit-overflow-scrolling: touch;
   }
 
-  .todo-form {
+  /* Quick-add form */
+  .ticket-form {
     display: flex;
     gap: 0.5rem;
     margin-bottom: 1rem;
@@ -184,127 +185,278 @@ const Wrapper = styled.div`
     }
   }
 
-  .todo-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  /* Filter tabs */
+  .filter-tabs {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.25rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
-  .todo-item {
+  .filter-tab {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--theme-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--theme-textMuted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+
+    &.active {
+      background: var(--theme-accent);
+      color: #fff;
+      border-color: var(--theme-accent);
+      font-weight: 600;
+    }
+
+    &:not(.active):hover {
+      border-color: var(--theme-textMuted);
+    }
+
+    .filter-count {
+      font-size: 0.65rem;
+      opacity: 0.7;
+    }
+  }
+
+  /* Ticket cards */
+  .ticket-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ticket-card {
+    border: 1px solid var(--theme-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+
+    &.expanded {
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    }
+  }
+
+  .ticket-card-header {
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--theme-border);
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    min-height: 48px;
 
-    input[type='checkbox'] {
-      accent-color: var(--theme-accent);
-      width: 1.2rem;
-      height: 1.2rem;
-      cursor: pointer;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
+    &:active {
+      background: rgba(0, 0, 0, 0.03);
     }
+  }
 
-    .todo-content {
-      flex: 1;
-      min-width: 0;
-    }
+  .priority-bar {
+    width: 4px;
+    align-self: stretch;
+    border-radius: 2px;
+    flex-shrink: 0;
+    min-height: 32px;
+  }
 
-    .todo-title {
-      color: var(--theme-text);
-      display: block;
-      font-size: 0.95rem;
-    }
+  .ticket-summary {
+    flex: 1;
+    min-width: 0;
+  }
 
-    .todo-title.completed {
+  .ticket-title {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--theme-text);
+    font-weight: 500;
+    line-height: 1.3;
+
+    &.resolved {
       text-decoration: line-through;
       color: var(--theme-textMuted);
     }
+  }
 
-    .todo-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.2rem;
+  .ticket-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+    align-items: center;
+  }
+
+  .status-badge {
+    font-size: 0.6rem;
+    padding: 0.12rem 0.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+
+    &.status-open {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
     }
-
-    .meta-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2rem;
-      font-size: 0.7rem;
-      padding: 0.1rem 0.35rem;
-      border-radius: 4px;
-      color: var(--theme-textMuted);
-
-      svg {
-        font-size: 0.6rem;
-      }
+    &.status-in_progress {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
     }
-
-    .clickable {
-      cursor: pointer;
-
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-
-    .creator-tag {
-      background: rgba(251, 191, 36, 0.15);
-      color: #fbbf24;
-    }
-
-    .assign-tag {
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
-    }
-
-    .completed-tag {
+    &.status-done {
       background: rgba(34, 197, 94, 0.15);
-      color: #4ade80;
+      color: #22c55e;
     }
-
-    .assign-select {
-      display: block;
-      width: 100%;
-      margin-top: 0.4rem;
-      padding: 0.35rem 0.5rem;
-      border: 1px solid var(--theme-border);
-      border-radius: var(--borderRadius);
-      background: var(--theme-background);
-      color: var(--theme-text);
-      font-size: 0.85rem;
-
-      &:focus {
-        outline: none;
-        border-color: var(--theme-accent);
-      }
-    }
-
-    .delete-btn {
-      background: none;
-      border: none;
-      color: var(--theme-textMuted);
-      cursor: pointer;
-      font-size: 0.9rem;
-      padding: 0.35rem;
-      transition: var(--transition);
-      flex-shrink: 0;
-
-      &:hover {
-        color: #e74c3c;
-      }
-
-      &.confirm {
-        color: #e74c3c;
-        font-size: 0.75rem;
-        font-weight: 600;
-      }
+    &.status-closed {
+      background: rgba(107, 114, 128, 0.15);
+      color: #6b7280;
     }
   }
 
+  .assignee-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.7rem;
+    color: var(--theme-textMuted);
+
+    .avatar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--theme-accent);
+      color: var(--theme-background);
+      font-size: 0.55rem;
+      font-weight: 700;
+    }
+  }
+
+  .time-ago {
+    font-size: 0.7rem;
+    color: var(--theme-textMuted);
+  }
+
+  .due-date {
+    font-size: 0.7rem;
+    color: var(--theme-textMuted);
+
+    &.overdue {
+      color: #ef4444;
+      font-weight: 600;
+    }
+  }
+
+  .expand-icon {
+    color: var(--theme-textMuted);
+    font-size: 0.65rem;
+    flex-shrink: 0;
+    padding: 0.25rem;
+  }
+
+  /* Ticket detail (expanded view) */
+  .ticket-detail {
+    padding: 0.75rem;
+    border-top: 1px solid var(--theme-border);
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .detail-field {
+    margin-bottom: 0.65rem;
+
+    label {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--theme-textMuted);
+      margin-bottom: 0.2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+  }
+
+  .detail-input,
+  .detail-select,
+  .detail-textarea {
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--theme-border);
+    border-radius: 0.375rem;
+    background: var(--theme-background);
+    color: var(--theme-text);
+    font-size: 0.85rem;
+    font-family: inherit;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: var(--theme-accent);
+    }
+  }
+
+  .detail-textarea {
+    resize: vertical;
+    min-height: 60px;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .detail-info {
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.7rem;
+    color: var(--theme-textMuted);
+    line-height: 1.5;
+  }
+
+  .delete-ticket-btn {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--theme-border);
+    border-radius: 0.375rem;
+    background: transparent;
+    color: var(--theme-textMuted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: all 0.2s;
+    min-height: 48px;
+
+    &:hover {
+      color: #e74c3c;
+      border-color: #e74c3c;
+    }
+
+    &.confirm {
+      background: #e74c3c;
+      color: white;
+      border-color: #e74c3c;
+    }
+  }
+
+  /* Empty state */
   .empty-state {
     text-align: center;
     color: var(--theme-textMuted);
@@ -313,6 +465,7 @@ const Wrapper = styled.div`
     font-size: 0.9rem;
   }
 
+  /* Notes section */
   .notes-section {
     margin-top: 1.5rem;
     border-top: 2px solid var(--theme-border);
@@ -416,13 +569,25 @@ const Wrapper = styled.div`
       padding: 0.35rem;
       transition: var(--transition);
       flex-shrink: 0;
+      min-height: 48px;
+      min-width: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:hover {
         color: #e74c3c;
       }
+
+      &.confirm {
+        color: #e74c3c;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
     }
   }
 
+  /* Responsive */
   @media (min-width: 768px) {
     align-items: center;
 
@@ -433,7 +598,7 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 767px) {
-    .todo-form {
+    .ticket-form {
       flex-direction: column;
 
       input {
@@ -447,21 +612,15 @@ const Wrapper = styled.div`
       }
     }
 
-    .todo-item {
-      input[type='checkbox'] {
-        width: 1.35rem;
-        height: 1.35rem;
-      }
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
 
-      .delete-btn {
-        font-size: 1.1rem;
-        padding: 0.5rem;
-      }
-
-      .assign-select {
-        font-size: 1rem;
-        padding: 0.5rem;
-      }
+    .detail-input,
+    .detail-select,
+    .detail-textarea {
+      font-size: 1rem;
+      padding: 0.6rem;
     }
 
     .note-form {
@@ -489,11 +648,6 @@ const Wrapper = styled.div`
         .note-meta {
           text-align: center;
         }
-      }
-
-      .delete-btn {
-        font-size: 1.1rem;
-        padding: 0.5rem;
       }
     }
   }

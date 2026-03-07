@@ -8,7 +8,7 @@ import {
   Resume,
   SinglePageError,
   Login,
-  TodoList,
+  Tickets,
 } from "./pages";
 import Dog from "./pages/Dog";
 import CachingRS from "./pages/CachingRS";
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <TodoList />,
+        element: <Tickets />,
       },
     ],
   },
