@@ -8,15 +8,15 @@
 }
 
 .code-window-container .code-window-wrapper {
-  background: var(--theme-cardBackground);
-  border: 1px solid var(--theme-border);
-  border-radius: 24px;
+  background: color-mix(in srgb, var(--theme-cardBackground) 80%, transparent);
+  border: 1px solid color-mix(in srgb, var(--theme-border) 60%, transparent);
+  border-radius: 28px;
   overflow: hidden;
   box-shadow:
-    0 18px 60px rgba(0, 0, 0, 0.18),
-    0 2px 0 rgba(255, 255, 255, 0.25) inset;
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
+    0 24px 80px rgba(0, 0, 0, 0.15),
+    0 0 0 1px color-mix(in srgb, var(--theme-border) 30%, transparent) inset;
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
 }
 
 .code-window-container .about-section {

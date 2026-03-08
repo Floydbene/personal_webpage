@@ -26,6 +26,7 @@ export const themes = {
       codeNumber: "#b5cea8",
       codeControl: "#c586c0",
       codeOperator: "#d4d4d4",
+      noiseOpacity: "0.03",
     },
     legacy: {
       prim: "#569cd6",
@@ -40,7 +41,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Cascadia Code', 'Monaco', 'Courier New', monospace",
     },
   },
@@ -65,6 +68,7 @@ export const themes = {
       codeString: "#ce9178",
       codeFunction: "#dcdcaa",
       codeComment: "#6a9955",
+      noiseOpacity: "0.03",
     },
     legacy: {
       prim: "#88c0d0",
@@ -79,7 +83,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Cascadia Code', 'Monaco', 'Courier New', monospace",
     },
   },
@@ -104,6 +110,7 @@ export const themes = {
       codeString: "#c3e88d",
       codeFunction: "#ffd580",
       codeComment: "#5c7a99",
+      noiseOpacity: "0.03",
     },
     legacy: {
       prim: "#98c1d9",
@@ -118,7 +125,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Cascadia Code', 'Monaco', 'Courier New', monospace",
     },
   },
@@ -143,6 +152,7 @@ export const themes = {
       codeString: "#2aa198",
       codeFunction: "#b58900",
       codeComment: "#586e75",
+      noiseOpacity: "0.025",
     },
     legacy: {
       prim: "#2aa198",
@@ -157,7 +167,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Source Code Pro', 'Monaco', monospace",
     },
   },
@@ -182,6 +194,7 @@ export const themes = {
       codeString: "#a3be8c",
       codeFunction: "#88c0d0",
       codeComment: "#616e88",
+      noiseOpacity: "0.025",
     },
     legacy: {
       prim: "#8fbcbb",
@@ -196,7 +209,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'JetBrains Mono', 'Monaco', monospace",
     },
   },
@@ -221,6 +236,7 @@ export const themes = {
       codeString: "#f1fa8c",
       codeFunction: "#50fa7b",
       codeComment: "#6272a4",
+      noiseOpacity: "0.025",
     },
     legacy: {
       prim: "#ff79c6",
@@ -235,7 +251,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Cascadia Code', 'Monaco', monospace",
     },
   },
@@ -260,6 +278,7 @@ export const themes = {
       codeString: "#008000",
       codeFunction: "#795e26",
       codeComment: "#008000",
+      noiseOpacity: "0.015",
     },
     legacy: {
       prim: "#0080ff",
@@ -274,7 +293,9 @@ export const themes = {
     },
     fonts: {
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+        "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      heading:
+        "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       code: "'Fira Code', 'Cascadia Code', 'Monaco', monospace",
     },
   },

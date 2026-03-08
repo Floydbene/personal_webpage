@@ -1,9 +1,8 @@
 import { useState, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { FaBars, FaTimes, FaEllipsisH, FaPaw } from 'react-icons/fa';
+import { FaBars, FaTimes, FaEllipsisH, FaPaw, FaPalette } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/Navbar';
-import ThemeSelector from './ThemeSelector';
 import { useAuth } from '../context/AuthContext';
 import api from '../lib/api';
 
@@ -59,7 +58,10 @@ const Navbar = () => {
           <NavLink to="/resume" className="nav-link" onClick={() => setMenuOpen(false)}>
             Resume
           </NavLink>
-          <ThemeSelector />
+          <NavLink to="/themes" className="nav-link" onClick={() => setMenuOpen(false)}>
+            <FaPalette style={{ marginRight: '0.35rem', verticalAlign: 'middle' }} />
+            Themes
+          </NavLink>
           {dogAccess?.hasAccess && (
             <NavLink to="/dog" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Your pup">
               <FaPaw />
