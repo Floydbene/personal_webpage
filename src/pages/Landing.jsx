@@ -7,6 +7,7 @@ import CodeWindow from "../components/CodeWindow";
 import Journey from "../components/Journey";
 import SkillsShowcase from "../components/SkillsShowcase";
 import SkillsRain from "../components/SkillsRain";
+import { FaEnvelope, FaGithub, FaLinkedin, FaFileAlt } from "react-icons/fa";
 
 const Landing = () => {
   const heroRef = React.useRef(null);
@@ -29,7 +30,7 @@ const Landing = () => {
     <>
       <div className="hello" ref={heroRef}>
         <SkillsRain containerRef={heroRef} targetRef={imgRef} />
-        <div className="profile-image-container fade-in">
+        <div className="profile-image-container stagger-1">
           <img
             src={floydImage}
             alt="Floyd Benedikter"
@@ -37,39 +38,52 @@ const Landing = () => {
             ref={imgRef}
           />
         </div>
-        <h1 className="greeting fade-in">
+        <h1 className="greeting stagger-2">
           Hello! I'm <span className="primary-name">Floyd</span>
         </h1>
-        <h2 className="subtitle fade-in">
+        <h2 className="subtitle stagger-3">
           Forward Deployed Software Engineer (FDSE)
         </h2>
       </div>
-      {/* <AboutMy /> */}
       <CodeWindow />
       <Journey />
       <SkillsShowcase />
       <Projects id="projects" />
-      <div className="bottomrow fade-in">
-        <h4 className="social" onClick={() => copyEmail()}>
-          Email
-        </h4>
-        <h4
-          className="social"
-          onClick={() => window.open("https://www.github.com/floydbene")}
+      <div className="bottomrow stagger-4">
+        <button
+          className="social-icon-btn"
+          onClick={() => copyEmail()}
+          title="Copy email"
+          aria-label="Email"
         >
-          GitHub
-        </h4>
-        <h4
-          className="social"
+          <FaEnvelope />
+        </button>
+        <button
+          className="social-icon-btn"
+          onClick={() => window.open("https://www.github.com/floydbene")}
+          title="GitHub"
+          aria-label="GitHub"
+        >
+          <FaGithub />
+        </button>
+        <button
+          className="social-icon-btn"
           onClick={() =>
             window.open("https://www.linkedin.com/in/floydbenedikter")
           }
+          title="LinkedIn"
+          aria-label="LinkedIn"
         >
-          LinkedIn
-        </h4>
-        <h4 className="social" onClick={() => window.open("resume", "_self")}>
-          Resume
-        </h4>
+          <FaLinkedin />
+        </button>
+        <button
+          className="social-icon-btn"
+          onClick={() => window.open("resume", "_self")}
+          title="Resume"
+          aria-label="Resume"
+        >
+          <FaFileAlt />
+        </button>
       </div>
       <footer>&copy; Made with love by Floyd Benedikter</footer>
     </>

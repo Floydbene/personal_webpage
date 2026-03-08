@@ -10,6 +10,7 @@
 
 html {
   font-size: 100%;
+  scroll-behavior: smooth;
 } /*16px*/
 
 :root {
@@ -86,22 +87,38 @@ html {
     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-4:
     0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  /* Layout */
+  --section-gap: clamp(4rem, 8vw, 8rem);
+  --content-max-width: 1400px;
 }
 
 body {
-  height: 150vh;
-  transition: 0.3s linear;
+  min-height: 100vh;
+  transition: background-color 0.4s ease, color 0.4s ease;
   background: var(--theme-background);
-  background-image: radial-gradient(
-    circle 25vh at 5vh 50vh,
-    rgba(255, 255, 255, 0.05) 1vh,
-    transparent
-  );
-  background-repeat: no-repeat, repeat, repeat;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in srgb, var(--theme-primary) 6%, transparent) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 40% at 85% 100%, color-mix(in srgb, var(--theme-accent) 4%, transparent) 0%, transparent 70%);
   font-family: var(--font-primary);
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.6;
   color: var(--theme-text);
+  position: relative;
+}
+
+/* Subtle noise texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--theme-noiseOpacity, 0.03);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
 }
 p {
   margin: 0;
@@ -112,11 +129,11 @@ h3,
 h4,
 h5 {
   margin: 0;
-  font-family: var(--headingFont);
-  font-weight: 400;
-  line-height: 1;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
   text-transform: capitalize;
-  letter-spacing: var(--letterSpacing);
+  letter-spacing: -0.02em;
 }
 
 h1 {
@@ -240,18 +257,23 @@ ul {
 }
 
 .greeting {
-  font-size: 3rem;
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   text-align: center;
   color: var(--theme-text);
-  font-weight: 400;
-  margin-bottom: 1rem;
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
   position: relative;
   z-index: 6;
 }
 
 .primary-name {
-  color: var(--theme-primary);
-  font-weight: 600;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--theme-primary), var(--theme-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .title {
@@ -278,36 +300,45 @@ ul {
 
 .profile-image-container {
   position: relative;
-  width: 280px;
-  height: 280px;
-  margin-bottom: 1rem;
+  width: 260px;
+  height: 260px;
+  margin-bottom: 1.5rem;
   z-index: 4;
 }
 
 .profile-image-container::before {
   content: "";
   position: absolute;
-  top: -15px;
-  left: -15px;
-  right: 15px;
-  bottom: 15px;
-  background: linear-gradient(
-    135deg,
-    var(--theme-primary) 0%,
-    var(--theme-secondary, #6366f1) 100%
+  inset: -30%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--theme-primary) 25%, transparent) 0%,
+    color-mix(in srgb, var(--theme-accent) 10%, transparent) 40%,
+    transparent 70%
   );
-  border-radius: 20px;
+  filter: blur(40px);
   z-index: -1;
+  border-radius: 50%;
 }
 
 .profile-image {
   width: 100%;
   height: 100%;
-  border-radius: 15px;
+  border-radius: 24px;
   object-fit: cover;
   object-position: center 75%;
-  border: 3px solid var(--theme-primary);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border: 2px solid color-mix(in srgb, var(--theme-primary) 40%, transparent);
+  box-shadow:
+    0 24px 48px -12px rgba(0, 0, 0, 0.4),
+    0 0 0 1px color-mix(in srgb, var(--theme-border) 30%, transparent);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.profile-image:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 32px 64px -16px rgba(0, 0, 0, 0.5),
+    0 0 0 1px color-mix(in srgb, var(--theme-primary) 50%, transparent);
 }
 
 .hello svg {
@@ -319,11 +350,24 @@ ul {
 PROJECT CSS
 =============
 */
+/* Staggered entrance animations */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.stagger-1 { animation: fadeSlideUp 0.7s ease-out 0.1s both; }
+.stagger-2 { animation: fadeSlideUp 0.7s ease-out 0.25s both; }
+.stagger-3 { animation: fadeSlideUp 0.7s ease-out 0.4s both; }
+.stagger-4 { animation: fadeSlideUp 0.7s ease-out 0.55s both; }
+.stagger-5 { animation: fadeSlideUp 0.7s ease-out 0.7s both; }
+
 .page {
   width: var(--view-width);
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 2rem 1rem;
+  position: relative;
+  z-index: 1;
 }
 .projects-center {
   width: 90vw;
@@ -365,8 +409,9 @@ PROJECT CSS
 }
 
 .projectCard:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-3);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.3);
+  border-color: color-mix(in srgb, var(--theme-primary) 40%, var(--theme-border));
 }
 
 .projectCard__media {
@@ -461,20 +506,18 @@ PROJECT CSS
   color: var(--theme-textSecondary);
 }
 .tag--professional {
-  color: var(--theme-primary);
-  border-color: color-mix(
-    in srgb,
-    var(--theme-primary) 60%,
-    var(--theme-border) 40%
-  );
+  color: var(--theme-background);
+  background: var(--theme-primary);
+  border-color: var(--theme-primary);
+  font-weight: 500;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 .tag--project {
-  color: var(--theme-accent);
-  border-color: color-mix(
-    in srgb,
-    var(--theme-accent) 60%,
-    var(--theme-border) 40%
-  );
+  color: var(--theme-background);
+  background: var(--theme-accent);
+  border-color: var(--theme-accent);
+  font-weight: 500;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
 }
 .project {
   width: 100%;
@@ -502,13 +545,13 @@ PROJECT CSS
   gap: 1rem;
 }
 .project-title {
-  color: white;
-  font-weight: 100;
+  color: var(--theme-text);
+  font-weight: 600;
 }
 .project-para {
-  color: white;
-  font-weight: 100;
-  font-size: 1.5rem;
+  color: var(--theme-textSecondary);
+  font-weight: 400;
+  font-size: 1.05rem;
 }
 .project img {
   transition: 0.3s linear;
@@ -527,7 +570,7 @@ PROJECT CSS
 .project h5 {
   text-align: center;
   padding: 1rem 0;
-  color: black;
+  color: var(--theme-text);
 }
 .project-syn {
   width: 60%;
@@ -593,19 +636,21 @@ PROJECT CSS
 .btn {
   background: transparent;
   width: fit-content;
-  font-weight: 150;
-  padding: 0.5rem;
-  border-radius: 0rem;
-  border: solid 1px var(--prim);
-  color: var(--prim);
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--theme-accent);
+  color: var(--theme-text);
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
 .btn:hover {
-  background: var(--prim);
-  color: var(--background);
-  transition: 0.3s linear;
-  cursor: pointer;
-  border: solid 2px transparent;
+  background: var(--theme-accent);
+  color: var(--theme-background);
+  border-color: var(--theme-accent);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--theme-accent) 25%, transparent);
 }
 
 .resumebut {
@@ -697,21 +742,23 @@ PROJECT CSS
   }
 }
 .subtitle {
-  color: var(--theme-text);
+  color: var(--theme-textSecondary);
   text-transform: initial;
-  font-weight: 300;
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   opacity: 0.85;
-  margin: 2rem 0rem;
+  margin: 1rem 0rem;
   position: relative;
   z-index: 6;
+  letter-spacing: 0.02em;
 }
 .info {
   width: 100%;
-  color: white;
+  color: var(--theme-text);
   text-transform: initial;
   font-weight: 300;
-  line-height: 1.2;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  line-height: 1.5;
+  font-family: var(--font-primary);
 }
 
 .fade-in {
@@ -741,29 +788,26 @@ PROJECT CSS
 }
 
 .title {
-  font-size: (1.5rem, 3vw, 3rem);
+  font-size: clamp(1.5rem, 3vw, 3rem);
   font-weight: 700;
-  color: var(--prim);
+  color: var(--theme-primary);
 }
 
 /* ====== RESUME ============== */
 
 .resume-title {
   text-transform: initial;
-  line-height: 1;
+  line-height: 1.1;
   width: 80%;
   margin: 1rem 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "avenir next", avenir, helvetica,
-    "helvetica neue", ubuntu, roboto, noto, "segoe ui", arial, sans-serif;
-  font-weight: bold;
-  font-size: 3rem;
-  letter-spacing: -0.0275rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
 }
 
 .section {
-  border-top: solid black;
-  border-width: 1px;
+  border-top: 1px solid var(--theme-border);
   margin-top: 4rem;
   width: 100%;
   display: grid;
@@ -793,20 +837,19 @@ PROJECT CSS
   min-height: 10rem;
 }
 .section-content > .subsection ~ .subsection {
-  border-top: solid black;
-  border-width: 1px;
+  border-top: 1px solid var(--theme-border);
 }
 
 .subText {
   line-height: 1.5;
   font-size: 1.25rem;
-  color: rgb(75, 75, 75);
+  color: var(--theme-textSecondary);
 }
 
 .bullet-text {
-  line-height: 1.1;
+  line-height: 1.3;
   font-size: 1.1rem;
-  color: rgb(75, 75, 75);
+  color: var(--theme-textSecondary);
   margin-bottom: 0.5rem;
 }
 
@@ -843,14 +886,12 @@ PROJECT CSS
     border-top: none;
   }
   .subsection {
-    border-top: solid black;
-    border-width: 1px;
+    border-top: 1px solid var(--theme-border);
   }
   .subsection-social {
     margin: 0;
     width: 100%;
-    border-top: solid black;
-    border-width: 1px;
+    border-top: 1px solid var(--theme-border);
   }
   .res-section-title {
     font-size: 2rem;
@@ -922,9 +963,9 @@ PROJECT CSS
 /* ==== About My ======= */
 
 .sectionh1 {
-  color: white;
+  color: var(--theme-text);
   margin: 5rem auto 3rem auto;
-  font-weight: 100;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -951,34 +992,63 @@ PROJECT CSS
   text-transform: initial;
 }
 .aboutp {
-  color: white;
-  font-weight: 100;
+  color: var(--theme-textSecondary);
+  font-weight: 400;
   line-height: 2rem;
   font-size: 1.7rem;
 }
 .bottomrow {
   display: flex;
-  justify-content: space-between;
-  margin: 5rem auto;
-  color: white;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: var(--section-gap) auto 3rem auto;
   width: 80vw;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.social-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--theme-border);
+  background: color-mix(in srgb, var(--theme-cardBackground) 60%, transparent);
+  color: var(--theme-textSecondary);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.social-icon-btn:hover {
+  color: var(--theme-accent);
+  border-color: var(--theme-accent);
+  background: color-mix(in srgb, var(--theme-accent) 10%, transparent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--theme-accent) 20%, transparent);
 }
 
 .social {
   font-weight: 100;
   width: min-content;
   cursor: pointer;
+  color: var(--theme-textSecondary);
 }
 .social:hover {
-  color: var(--prim);
+  color: var(--theme-accent);
 }
 footer {
-  color: white;
+  color: var(--theme-textMuted);
   align-content: center;
-  margin: 3rem auto;
-  font-weight: 100;
+  margin: 2rem auto 3rem auto;
+  padding: 2rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--theme-border) 40%, transparent);
+  font-weight: 400;
+  font-size: 0.9rem;
   text-align: center;
+  width: 80vw;
+  max-width: var(--max-width);
 }
 
 /* Research */

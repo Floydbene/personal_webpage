@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   FaTrash,
@@ -8,9 +8,12 @@ import {
   FaPen,
   FaChevronDown,
   FaChevronUp,
+  FaArrowLeft,
+  FaSortAmountDown,
 } from 'react-icons/fa';
 import api from '../lib/api';
 import { useAuth } from '../context/AuthContext';
+import WeatherWidget from '../components/WeatherWidget';
 import Wrapper from '../assets/wrappers/Tickets';
 
 const FILTERS = [
@@ -20,6 +23,17 @@ const FILTERS = [
   { key: 'done', label: 'Done' },
   { key: 'all', label: 'All' },
 ];
+
+const SORT_OPTIONS = [
+  { key: 'newest', label: 'Newest first' },
+  { key: 'oldest', label: 'Oldest first' },
+  { key: 'priority', label: 'Priority' },
+  { key: 'due_date', label: 'Due date' },
+  { key: 'status', label: 'Status' },
+];
+
+const PRIORITY_ORDER = { urgent: 0, high: 1, medium: 2, low: 3 };
+const STATUS_ORDER = { open: 0, in_progress: 1, done: 2, closed: 3 };
 
 const PRIORITY_COLORS = {
   low: '#22c55e',
@@ -57,6 +71,22 @@ const isOverdue = (dueDate, status) => {
 const formatDateValue = (date) => {
   if (!date) return '';
   return new Date(date).toISOString().split('T')[0];
+};
+
+const getGreeting = () => {
+  const h = new Date().getHours();
+  if (h < 12) return 'Good morning';
+  if (h < 17) return 'Good afternoon';
+  return 'Good evening';
+};
+
+const getFormattedDate = () => {
+  return new Date().toLocaleDateString(undefined, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 };
 
 // --- TicketCard sub-component ---
@@ -231,7 +261,7 @@ const TicketCard = ({
             {ticket.createdBy && <span> by {displayName(ticket.createdBy)}</span>}
             {ticket.closedAt && (
               <>
-                <span> · Closed {timeAgo(ticket.closedAt)}</span>
+                <span> &middot; Closed {timeAgo(ticket.closedAt)}</span>
                 {ticket.completedBy && (
                   <span> by {displayName(ticket.completedBy)}</span>
                 )}
@@ -264,6 +294,8 @@ const Tickets = () => {
   const [title, setTitle] = useState('');
   const [noteContent, setNoteContent] = useState('');
   const [activeFilter, setActiveFilter] = useState('active');
+  const [creatorFilter, setCreatorFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest');
   const [expandedId, setExpandedId] = useState(null);
   const [editingName, setEditingName] = useState(false);
   const [nameInput, setNameInput] = useState('');
@@ -271,8 +303,6 @@ const Tickets = () => {
   const queryClient = useQueryClient();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-
-  const close = () => navigate(-1);
 
   const handleSignOut = async () => {
     await signOut();
@@ -323,9 +353,12 @@ const Tickets = () => {
     return nameMap[email] || email.split('@')[0];
   };
 
+  // --- Unique creators for filter ---
+  const creators = [...new Set(tickets.map((t) => t.createdBy).filter(Boolean))];
+
   // --- Filtering ---
-  const filterTickets = (filterKey) => {
-    return tickets.filter((t) => {
+  const filterByStatus = (list, filterKey) => {
+    return list.filter((t) => {
       switch (filterKey) {
         case 'active':
           return ['open', 'in_progress'].includes(t.status);
@@ -343,7 +376,40 @@ const Tickets = () => {
     });
   };
 
-  const filteredTickets = filterTickets(activeFilter);
+  const filterTickets = (filterKey) => filterByStatus(tickets, filterKey);
+
+  const sortTickets = (list) => {
+    return [...list].sort((a, b) => {
+      switch (sortBy) {
+        case 'oldest':
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        case 'priority':
+          return (PRIORITY_ORDER[a.priority] ?? 3) - (PRIORITY_ORDER[b.priority] ?? 3);
+        case 'due_date': {
+          if (!a.dueDate && !b.dueDate) return 0;
+          if (!a.dueDate) return 1;
+          if (!b.dueDate) return -1;
+          return new Date(a.dueDate) - new Date(b.dueDate);
+        }
+        case 'status':
+          return (STATUS_ORDER[a.status] ?? 4) - (STATUS_ORDER[b.status] ?? 4);
+        case 'newest':
+        default:
+          return new Date(b.createdAt) - new Date(a.createdAt);
+      }
+    });
+  };
+
+  const filteredTickets = sortTickets(
+    filterByStatus(tickets, activeFilter).filter(
+      (t) => creatorFilter === 'all' || t.createdBy === creatorFilter
+    )
+  );
+
+  // Quick stats
+  const openCount = tickets.filter((t) => t.status === 'open').length;
+  const inProgressCount = tickets.filter((t) => t.status === 'in_progress').length;
+  const doneCount = tickets.filter((t) => ['done', 'closed'].includes(t.status)).length;
 
   // --- Mutations ---
   const nameMutation = useMutation({
@@ -418,13 +484,17 @@ const Tickets = () => {
     }
   };
 
+  const userName = profile?.displayName || user?.email?.split('@')[0] || 'there';
+
   return (
     <Wrapper>
-      <div className="modal-backdrop" onClick={close} />
-      <div className="modal-panel">
-        <div className="modal-header">
-          <div className="header-left">
-            <h2>Tickets</h2>
+      <div className="dashboard-container">
+        {/* Top bar */}
+        <div className="dashboard-topbar">
+          <Link to="/" className="back-link">
+            <FaArrowLeft /> Back
+          </Link>
+          <div className="topbar-actions">
             {!editingName ? (
               <button
                 className="name-btn"
@@ -434,7 +504,7 @@ const Tickets = () => {
                 }}
                 title="Set display name"
               >
-                {profile?.displayName || user?.email?.split('@')[0]} <FaPen />
+                {userName} <FaPen />
               </button>
             ) : (
               <div className="name-edit">
@@ -452,18 +522,43 @@ const Tickets = () => {
                 <button onClick={handleNameSubmit}>Save</button>
               </div>
             )}
-          </div>
-          <div className="header-actions">
             <button className="sign-out-btn" onClick={handleSignOut} title="Sign out">
               <FaSignOutAlt />
-            </button>
-            <button className="close-btn" onClick={close}>
-              &times;
             </button>
           </div>
         </div>
 
-        <div className="modal-body">
+        {/* Dashboard widgets */}
+        <div className="dashboard-widgets">
+          <div className="widget-card greeting-widget">
+            <div className="widget-label">Dashboard</div>
+            <div className="greeting-text">{getGreeting()}, {userName}</div>
+            <div className="greeting-date">{getFormattedDate()}</div>
+          </div>
+
+          <WeatherWidget />
+
+          <div className="widget-card stats-widget">
+            <div className="widget-label">Tickets</div>
+            <div className="stats-grid">
+              <div className="stat-item">
+                <span className="stat-number stat-open">{openCount}</span>
+                <span className="stat-label">Open</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number stat-progress">{inProgressCount}</span>
+                <span className="stat-label">In Progress</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number stat-done">{doneCount}</span>
+                <span className="stat-label">Done</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Ticket form + list */}
+        <div className="tickets-section">
           <form onSubmit={handleSubmit} className="ticket-form">
             <input
               type="text"
@@ -476,17 +571,51 @@ const Tickets = () => {
             </button>
           </form>
 
-          <div className="filter-tabs">
-            {FILTERS.map((f) => (
-              <button
-                key={f.key}
-                className={`filter-tab ${activeFilter === f.key ? 'active' : ''}`}
-                onClick={() => setActiveFilter(f.key)}
-              >
-                {f.label}
-                <span className="filter-count">{filterTickets(f.key).length}</span>
-              </button>
-            ))}
+          <div className="filter-bar">
+            <div className="filter-tabs">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.key}
+                  className={`filter-tab ${activeFilter === f.key ? 'active' : ''}`}
+                  onClick={() => setActiveFilter(f.key)}
+                >
+                  {f.label}
+                  <span className="filter-count">{filterTickets(f.key).length}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="filter-controls">
+              {creators.length > 1 && (
+                <select
+                  className="filter-select"
+                  value={creatorFilter}
+                  onChange={(e) => setCreatorFilter(e.target.value)}
+                >
+                  <option value="all">All creators</option>
+                  {creators.map((email) => (
+                    <option key={email} value={email}>
+                      {displayName(email)}
+                    </option>
+                  ))}
+                </select>
+              )}
+
+              <div className="sort-control">
+                <FaSortAmountDown className="sort-icon" />
+                <select
+                  className="filter-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  {SORT_OPTIONS.map((o) => (
+                    <option key={o.key} value={o.key}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
           {isLoading ? (
@@ -549,7 +678,7 @@ const Tickets = () => {
                       <p>{note.content}</p>
                       <span className="note-meta">
                         {note.createdBy ? displayName(note.createdBy) : 'unknown'}
-                        {' — '}
+                        {' \u2014 '}
                         {new Date(note.createdAt).toLocaleDateString()}
                       </span>
                     </div>

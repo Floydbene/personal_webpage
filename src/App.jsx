@@ -9,6 +9,7 @@ import {
   SinglePageError,
   Login,
   Tickets,
+  ThemesPage,
 } from "./pages";
 import Dog from "./pages/Dog";
 import CachingRS from "./pages/CachingRS";
@@ -60,6 +61,11 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+        errorElement: <SinglePageError />,
+      },
+      {
+        path: "themes",
+        element: <ThemesPage />,
         errorElement: <SinglePageError />,
       },
       {
