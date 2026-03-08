@@ -6,3 +6,4 @@ export { default as SinglePageError } from './SinglePageError';
 export { default as Login } from './Login';
 export { default as AdminLayout } from './AdminLayout';
 export { default as Tickets } from './Tickets';
+export { default as ThemesPage } from './ThemesPage';

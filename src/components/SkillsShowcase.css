@@ -9,7 +9,7 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 3rem;
-  color: var(--prim);
+  color: var(--theme-primary);
   letter-spacing: -0.02em;
 }
 
@@ -24,26 +24,30 @@
   flex: 1;
   min-width: 300px;
   max-width: 550px;
-  background: var(--grey-800);
+  background: color-mix(in srgb, var(--theme-cardBackground) 85%, transparent);
+  border: 1px solid var(--theme-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .skills-category:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  border-color: color-mix(in srgb, var(--theme-primary) 40%, var(--theme-border));
 }
 
 .skills-category-title {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
-  color: var(--prim);
+  color: var(--theme-primary);
   text-align: center;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--prim);
+  border-bottom: 2px solid var(--theme-primary);
 }
 
 .skills-grid {

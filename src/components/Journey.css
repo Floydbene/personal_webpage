@@ -9,7 +9,7 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 4rem;
-  color: var(--prim);
+  color: var(--theme-primary);
   letter-spacing: -0.02em;
 }
 
@@ -24,7 +24,7 @@
   top: 0;
   bottom: 60px;
   width: 3px;
-  background: var(--prim);
+  background: var(--theme-primary);
   transform: translateX(-50%);
   z-index: 0;
 }
@@ -57,10 +57,13 @@
 .timeline-content {
   position: relative;
   z-index: 3;
-  background: var(--grey-800);
+  background: color-mix(in srgb, var(--theme-cardBackground) 85%, transparent);
+  border: 1px solid var(--theme-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 400px;
   min-height: 140px;
   display: flex;
@@ -68,13 +71,15 @@
   justify-content: center;
   transition:
     transform 0.3s ease,
-    box-shadow 0.3s ease;
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
   cursor: pointer;
 }
 
 .timeline-content:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+  border-color: color-mix(in srgb, var(--theme-primary) 40%, var(--theme-border));
 }
 
 .timeline-header {
@@ -103,14 +108,14 @@
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--white);
+  color: var(--theme-text);
 }
 
 .timeline-item-subtitle {
   font-size: 1rem;
   font-weight: 400;
   margin-bottom: 0.75rem;
-  color: var(--grey-300);
+  color: var(--theme-textSecondary);
   font-style: italic;
 }
 
@@ -135,7 +140,7 @@
 
 .timeline-item-date {
   font-size: 0.9rem;
-  color: var(--grey-400);
+  color: var(--theme-textMuted);
   margin: 0;
 }
 
@@ -144,8 +149,8 @@
   left: 50%;
   width: 20px;
   height: 20px;
-  background: var(--prim);
-  border: 4px solid var(--background);
+  background: var(--theme-primary);
+  border: 4px solid var(--theme-background);
   border-radius: 50%;
   transform: translateX(-50%);
   z-index: 2;
@@ -179,8 +184,8 @@
 .timeline-final-content {
   width: 500px;
   min-height: 160px;
-  background: var(--grey-800);
-  border: 3px solid var(--prim);
+  background: var(--theme-cardBackground);
+  border: 3px solid var(--theme-primary);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   position: relative;
   z-index: 3;
@@ -198,8 +203,8 @@
   left: 50%;
   width: 24px;
   height: 24px;
-  background: var(--prim);
-  border: 4px solid var(--background);
+  background: var(--theme-primary);
+  border: 4px solid var(--theme-background);
   transform: translate(-50%, -32px);
   z-index: 2;
 }
