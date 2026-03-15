@@ -70,25 +70,27 @@ struct SettingsView: View {
                         .foregroundStyle(theme.textMuted)
                 }
 
-                // Notifications section
-                Section {
-                    @Bindable var nm = notificationManager
-                    Toggle(isOn: $nm.pushEnabled) {
-                        HStack {
-                            Image(systemName: "bell")
-                                .foregroundStyle(theme.accent)
-                            Text("Push Notifications")
-                                .foregroundStyle(theme.text)
+                // Notifications section (shown only when push is available)
+                if pushNotificationsAvailable {
+                    Section {
+                        @Bindable var nm = notificationManager
+                        Toggle(isOn: $nm.pushEnabled) {
+                            HStack {
+                                Image(systemName: "bell")
+                                    .foregroundStyle(theme.accent)
+                                Text("Push Notifications")
+                                    .foregroundStyle(theme.text)
+                            }
                         }
+                        .tint(theme.primary)
+                        .listRowBackground(theme.cardBackground)
+                    } header: {
+                        Text("Notifications")
+                            .foregroundStyle(theme.textMuted)
+                    } footer: {
+                        Text("When disabled, you won't receive push notifications for ticket activity.")
+                            .foregroundStyle(theme.textMuted)
                     }
-                    .tint(theme.primary)
-                    .listRowBackground(theme.cardBackground)
-                } header: {
-                    Text("Notifications")
-                        .foregroundStyle(theme.textMuted)
-                } footer: {
-                    Text("When disabled, you won't receive push notifications for ticket activity.")
-                        .foregroundStyle(theme.textMuted)
                 }
 
                 // Sign out section
