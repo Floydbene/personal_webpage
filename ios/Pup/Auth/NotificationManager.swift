@@ -8,10 +8,30 @@ final class NotificationManager: NSObject {
     private(set) var isAuthorized = false
     private(set) var deviceToken: String?
 
+    /// User-controlled opt-out. When false, the device token is removed
+    /// from the server so no pushes are delivered, even if OS permission is granted.
+    var pushEnabled: Bool {
+        get { UserDefaults.standard.bool(forKey: "pushEnabled") }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "pushEnabled")
+            Task {
+                if newValue {
+                    await reregisterToken()
+                } else {
+                    await removeToken()
+                }
+            }
+        }
+    }
+
     private var authManager: AuthManager?
 
     func configure(auth: AuthManager) {
         self.authManager = auth
+        // Default to enabled on first launch
+        if UserDefaults.standard.object(forKey: "pushEnabled") == nil {
+            UserDefaults.standard.set(true, forKey: "pushEnabled")
+        }
     }
 
     @MainActor
@@ -31,7 +51,9 @@ final class NotificationManager: NSObject {
     func handleDeviceToken(_ tokenData: Data) {
         let token = tokenData.map { String(format: "%02x", $0) }.joined()
         self.deviceToken = token
-        Task { await upsertToken(token) }
+        if pushEnabled {
+            Task { await upsertToken(token) }
+        }
     }
 
     func handleRegistrationError(_ error: Error) {
@@ -50,6 +72,17 @@ final class NotificationManager: NSObject {
             self.deviceToken = nil
         } catch {
             print("Failed to remove push token: \(error)")
+        }
+    }
+
+    /// Re-registers the current device token after the user re-enables push.
+    @MainActor
+    private func reregisterToken() async {
+        if let token = deviceToken {
+            await upsertToken(token)
+        } else {
+            // No cached token — re-request from APNs
+            UIApplication.shared.registerForRemoteNotifications()
         }
     }
 
