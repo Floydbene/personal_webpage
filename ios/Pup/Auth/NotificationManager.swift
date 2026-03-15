@@ -3,6 +3,11 @@ import UserNotifications
 import UIKit
 import Supabase
 
+// Set to true once enrolled in the paid Apple Developer Program.
+// Push notifications require the APNs entitlement which is unavailable
+// on personal (free) development teams.
+let pushNotificationsAvailable = false
+
 @Observable
 final class NotificationManager: NSObject {
     private(set) var isAuthorized = false
@@ -11,8 +16,9 @@ final class NotificationManager: NSObject {
     /// User-controlled opt-out. When false, the device token is removed
     /// from the server so no pushes are delivered, even if OS permission is granted.
     var pushEnabled: Bool {
-        get { UserDefaults.standard.bool(forKey: "pushEnabled") }
+        get { pushNotificationsAvailable && UserDefaults.standard.bool(forKey: "pushEnabled") }
         set {
+            guard pushNotificationsAvailable else { return }
             UserDefaults.standard.set(newValue, forKey: "pushEnabled")
             Task {
                 if newValue {
@@ -28,7 +34,6 @@ final class NotificationManager: NSObject {
 
     func configure(auth: AuthManager) {
         self.authManager = auth
-        // Default to enabled on first launch
         if UserDefaults.standard.object(forKey: "pushEnabled") == nil {
             UserDefaults.standard.set(true, forKey: "pushEnabled")
         }
@@ -36,6 +41,7 @@ final class NotificationManager: NSObject {
 
     @MainActor
     func requestPermission() async {
+        guard pushNotificationsAvailable else { return }
         let center = UNUserNotificationCenter.current()
         do {
             let granted = try await center.requestAuthorization(options: [.alert, .sound, .badge])
@@ -49,6 +55,7 @@ final class NotificationManager: NSObject {
     }
 
     func handleDeviceToken(_ tokenData: Data) {
+        guard pushNotificationsAvailable else { return }
         let token = tokenData.map { String(format: "%02x", $0) }.joined()
         self.deviceToken = token
         if pushEnabled {
@@ -61,6 +68,7 @@ final class NotificationManager: NSObject {
     }
 
     func removeToken() async {
+        guard pushNotificationsAvailable else { return }
         guard let token = deviceToken, let auth = authManager, let userId = auth.userId else { return }
         do {
             try await auth.client
@@ -75,13 +83,12 @@ final class NotificationManager: NSObject {
         }
     }
 
-    /// Re-registers the current device token after the user re-enables push.
     @MainActor
     private func reregisterToken() async {
+        guard pushNotificationsAvailable else { return }
         if let token = deviceToken {
             await upsertToken(token)
         } else {
-            // No cached token — re-request from APNs
             UIApplication.shared.registerForRemoteNotifications()
         }
     }
