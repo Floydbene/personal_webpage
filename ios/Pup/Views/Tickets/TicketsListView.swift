@@ -4,6 +4,7 @@ struct TicketsListView: View {
     @Environment(TicketsViewModel.self) private var vm
     @Environment(\.appTheme) private var theme
     @State private var selectedTicket: Ticket?
+    @Namespace private var filterNamespace
 
     var body: some View {
         @Bindable var vm = vm
@@ -22,7 +23,9 @@ struct TicketsListView: View {
                     HStack(spacing: 8) {
                         ForEach(TicketFilter.allCases, id: \.self) { filter in
                             Button {
-                                vm.activeFilter = filter
+                                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                                    vm.activeFilter = filter
+                                }
                             } label: {
                                 HStack(spacing: 4) {
                                     Text(filter.rawValue)
@@ -41,11 +44,13 @@ struct TicketsListView: View {
                                 )
                                 .padding(.horizontal, 12)
                                 .padding(.vertical, 6)
-                                .background(
-                                    vm.activeFilter == filter
-                                    ? theme.primary.opacity(0.12) : Color.clear,
-                                    in: Capsule()
-                                )
+                                .background {
+                                    if vm.activeFilter == filter {
+                                        Capsule()
+                                            .fill(theme.primary.opacity(0.12))
+                                            .matchedGeometryEffect(id: "activeFilter", in: filterNamespace)
+                                    }
+                                }
                             }
                         }
                     }
@@ -65,17 +70,20 @@ struct TicketsListView: View {
                     Spacer()
                 } else if vm.filteredTickets.isEmpty {
                     Spacer()
-                    Text(
-                        vm.activeFilter == .all
-                        ? "No tickets yet. Add one above!"
-                        : "No \(vm.activeFilter.rawValue.lowercased()) tickets."
-                    )
-                    .font(.subheadline)
+                    ContentUnavailableView {
+                        Label("No Tickets", systemImage: "ticket")
+                    } description: {
+                        Text(
+                            vm.activeFilter == .all
+                            ? "No tickets yet. Create one above to get started!"
+                            : "No \(vm.activeFilter.rawValue.lowercased()) tickets."
+                        )
+                    }
                     .foregroundStyle(theme.textMuted)
                     Spacer()
                 } else {
                     ScrollView {
-                        LazyVStack(spacing: 6) {
+                        LazyVStack(spacing: 8) {
                             ForEach(vm.filteredTickets) { ticket in
                                 TicketRowView(
                                     ticket: ticket,
@@ -85,7 +93,7 @@ struct TicketsListView: View {
                             }
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 90)
                     }
                     .refreshable {
                         await vm.loadTickets()
@@ -108,6 +116,8 @@ struct TicketsListView: View {
                         await vm.deleteTicket(id: ticket.id)
                     }
                 )
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(20)
             }
             .task {
                 await vm.loadTickets()

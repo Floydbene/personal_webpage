@@ -24,13 +24,27 @@ struct StatusBadge: View {
         }
     }
 
+    private var icon: String {
+        switch status {
+        case "open": "circle"
+        case "in_progress": "arrow.clockwise"
+        case "done": "checkmark.circle"
+        case "closed": "archivebox"
+        default: "circle"
+        }
+    }
+
     var body: some View {
-        Text(label)
-            .font(.caption2)
-            .fontWeight(.medium)
-            .foregroundStyle(badgeColor)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 2)
-            .background(badgeColor.opacity(0.15), in: Capsule())
+        HStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 8))
+            Text(label)
+        }
+        .font(.caption2)
+        .fontWeight(.medium)
+        .foregroundStyle(badgeColor)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 3)
+        .background(badgeColor.opacity(0.15), in: Capsule())
     }
 }

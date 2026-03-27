@@ -27,6 +27,7 @@ struct ConfirmDeleteButton: View {
         .padding(.horizontal, confirming ? 12 : 8)
         .padding(.vertical, 6)
         .background(confirming ? Color(hex: "#ef4444") : Color.clear, in: Capsule())
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: confirming)
         .onDisappear { confirming = false }
     }
 }

@@ -13,6 +13,30 @@ struct AppTheme: Identifiable, Equatable {
     let border: Color
     let cardBackground: Color
 
+    // MARK: - Computed Properties
+
+    var primaryGradient: LinearGradient {
+        LinearGradient(colors: [primary, accent], startPoint: .topLeading, endPoint: .bottomTrailing)
+    }
+
+    var backgroundGradient: LinearGradient {
+        LinearGradient(colors: [background, backgroundSecondary], startPoint: .top, endPoint: .bottom)
+    }
+
+    var shimmerGradient: LinearGradient {
+        LinearGradient(colors: [primary.opacity(0.3), accent.opacity(0.3), primary.opacity(0.3)], startPoint: .leading, endPoint: .trailing)
+    }
+
+    var success: Color { Color(hex: "#22c55e") }
+    var warning: Color { Color(hex: "#f59e0b") }
+    var error: Color { Color(hex: "#ef4444") }
+    var info: Color { Color(hex: "#3b82f6") }
+
+    var cardShadow: Color { isDark ? Color.black.opacity(0.3) : Color.black.opacity(0.08) }
+    var subtleShadow: Color { isDark ? Color.black.opacity(0.2) : Color.black.opacity(0.04) }
+
+    var isDark: Bool { id != "light" }
+
     static let allThemes: [AppTheme] = [
         .darkPlus, .cursorDark, .midnightBlue, .solarizedDark,
         .nordDark, .dracula, .light
