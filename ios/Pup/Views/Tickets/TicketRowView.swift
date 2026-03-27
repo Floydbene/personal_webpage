@@ -5,19 +5,39 @@ struct TicketRowView: View {
     let displayName: (String?) -> String
     @Environment(\.appTheme) private var theme
 
+    private var isCompleted: Bool {
+        ticket.status == "done" || ticket.status == "closed"
+    }
+
+    private var priorityColor: Color {
+        switch ticket.priority {
+        case "low": Color(hex: "#22c55e")
+        case "medium": Color(hex: "#3b82f6")
+        case "high": Color(hex: "#f97316")
+        case "urgent": Color(hex: "#ef4444")
+        default: Color(hex: "#3b82f6")
+        }
+    }
+
     var body: some View {
-        HStack(spacing: 12) {
-            PriorityBadge(priority: ticket.priority)
+        HStack(spacing: 14) {
+            // Gradient priority bar
+            RoundedRectangle(cornerRadius: 2)
+                .fill(
+                    LinearGradient(
+                        colors: [priorityColor.opacity(0.8), priorityColor.opacity(0.4)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+                .frame(width: 4)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(ticket.title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .foregroundStyle(
-                        (ticket.status == "done" || ticket.status == "closed")
-                        ? theme.textMuted : theme.text
-                    )
-                    .strikethrough(ticket.status == "done" || ticket.status == "closed")
+                    .foregroundStyle(isCompleted ? theme.textMuted : theme.text)
+                    .strikethrough(isCompleted)
 
                 HStack(spacing: 8) {
                     StatusBadge(status: ticket.status)
@@ -28,7 +48,7 @@ struct TicketRowView: View {
                                 .font(.system(size: 9, weight: .bold))
                                 .foregroundStyle(.white)
                                 .frame(width: 16, height: 16)
-                                .background(theme.primary, in: Circle())
+                                .background(theme.primaryGradient, in: Circle())
                             Text(displayName(assignee))
                                 .font(.caption2)
                                 .foregroundStyle(theme.textMuted)
@@ -56,6 +76,6 @@ struct TicketRowView: View {
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 12)
-        .background(theme.cardBackground, in: RoundedRectangle(cornerRadius: 10))
+        .premiumCard()
     }
 }

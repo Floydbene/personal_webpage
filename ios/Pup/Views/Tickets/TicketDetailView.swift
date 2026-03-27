@@ -40,69 +40,69 @@ struct TicketDetailView: View {
         self._hasDueDate = State(initialValue: ticket.dueDate != nil)
     }
 
+    private var statusSteps: [(String, String)] {
+        [("open", "Open"), ("in_progress", "In Progress"), ("done", "Done"), ("closed", "Closed")]
+    }
+
+    private var currentStepIndex: Int {
+        statusSteps.firstIndex(where: { $0.0 == status }) ?? 0
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    // Title
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Title")
-                            .font(.caption)
-                            .foregroundStyle(theme.textMuted)
+                VStack(spacing: 16) {
+                    // Title + Description Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        sectionHeader("Title")
                         TextField("Title", text: $title)
                             .foregroundStyle(theme.text)
                             .padding(10)
                             .background(theme.backgroundSecondary, in: RoundedRectangle(cornerRadius: 8))
-                    }
 
-                    // Description
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Description")
-                            .font(.caption)
-                            .foregroundStyle(theme.textMuted)
+                        sectionHeader("Description")
                         TextField("Add a description...", text: $description, axis: .vertical)
                             .lineLimit(3...6)
                             .foregroundStyle(theme.text)
                             .padding(10)
                             .background(theme.backgroundSecondary, in: RoundedRectangle(cornerRadius: 8))
                     }
+                    .padding(16)
+                    .premiumCard()
 
-                    // Status + Priority
-                    HStack(spacing: 16) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Status")
-                                .font(.caption)
-                                .foregroundStyle(theme.textMuted)
-                            Picker("Status", selection: $status) {
-                                Text("Open").tag("open")
-                                Text("In Progress").tag("in_progress")
-                                Text("Done").tag("done")
-                                Text("Closed").tag("closed")
-                            }
-                            .pickerStyle(.menu)
-                            .tint(theme.primary)
-                        }
+                    // Status + Priority Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        sectionHeader("Status")
+                        statusProgressIndicator
 
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Priority")
-                                .font(.caption)
-                                .foregroundStyle(theme.textMuted)
-                            Picker("Priority", selection: $priority) {
-                                Text("Low").tag("low")
-                                Text("Medium").tag("medium")
-                                Text("High").tag("high")
-                                Text("Urgent").tag("urgent")
-                            }
-                            .pickerStyle(.menu)
-                            .tint(theme.primary)
+                        Picker("Status", selection: $status) {
+                            Text("Open").tag("open")
+                            Text("In Progress").tag("in_progress")
+                            Text("Done").tag("done")
+                            Text("Closed").tag("closed")
                         }
+                        .pickerStyle(.menu)
+                        .tint(theme.primary)
+
+                        Divider()
+                            .overlay(theme.border.opacity(0.5))
+
+                        sectionHeader("Priority")
+                        Picker("Priority", selection: $priority) {
+                            Text("Low").tag("low")
+                            Text("Medium").tag("medium")
+                            Text("High").tag("high")
+                            Text("Urgent").tag("urgent")
+                        }
+                        .pickerStyle(.menu)
+                        .tint(theme.primary)
                     }
+                    .padding(16)
+                    .premiumCard()
 
-                    // Assignee
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Assignee")
-                            .font(.caption)
-                            .foregroundStyle(theme.textMuted)
+                    // Assignee Section
+                    VStack(alignment: .leading, spacing: 12) {
+                        sectionHeader("Assignee")
                         Picker("Assignee", selection: $assignedTo) {
                             Text("Unassigned").tag("")
                             ForEach(users, id: \.email) { user in
@@ -113,13 +113,13 @@ struct TicketDetailView: View {
                         .pickerStyle(.menu)
                         .tint(theme.primary)
                     }
+                    .padding(16)
+                    .premiumCard()
 
-                    // Due Date
-                    VStack(alignment: .leading, spacing: 4) {
+                    // Due Date Section
+                    VStack(alignment: .leading, spacing: 12) {
                         Toggle(isOn: $hasDueDate) {
-                            Text("Due Date")
-                                .font(.caption)
-                                .foregroundStyle(theme.textMuted)
+                            sectionHeader("Due Date")
                         }
                         .tint(theme.primary)
 
@@ -136,10 +136,17 @@ struct TicketDetailView: View {
                             .tint(theme.primary)
                         }
                     }
+                    .padding(16)
+                    .premiumCard()
 
-                    // Info
-                    VStack(alignment: .leading, spacing: 4) {
+                    // Metadata Section
+                    VStack(alignment: .leading, spacing: 8) {
+                        sectionHeader("Details")
+
                         HStack(spacing: 4) {
+                            Image(systemName: "clock")
+                                .font(.caption2)
+                                .foregroundStyle(theme.textMuted)
                             Text("Created \(ticket.createdAt.timeAgo)")
                             if let createdBy = ticket.createdBy {
                                 Text("by \(displayName(createdBy))")
@@ -150,6 +157,9 @@ struct TicketDetailView: View {
 
                         if let closedAt = ticket.closedAt {
                             HStack(spacing: 4) {
+                                Image(systemName: "checkmark.circle")
+                                    .font(.caption2)
+                                    .foregroundStyle(theme.textMuted)
                                 Text("Closed \(closedAt.timeAgo)")
                                 if let completedBy = ticket.completedBy {
                                     Text("by \(displayName(completedBy))")
@@ -159,8 +169,10 @@ struct TicketDetailView: View {
                             .foregroundStyle(theme.textMuted)
                         }
                     }
+                    .padding(16)
+                    .premiumCard()
 
-                    // Delete
+                    // Delete Section
                     Button(role: .destructive) {
                         showDeleteConfirm = true
                     } label: {
@@ -170,9 +182,14 @@ struct TicketDetailView: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(12)
-                        .background(Color(hex: "#ef4444").opacity(0.1), in: RoundedRectangle(cornerRadius: 8))
                     }
                     .foregroundStyle(Color(hex: "#ef4444"))
+                    .padding(4)
+                    .background(Color(hex: "#ef4444").opacity(0.08), in: RoundedRectangle(cornerRadius: 14))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(Color(hex: "#ef4444").opacity(0.2), lineWidth: 0.5)
+                    )
                 }
                 .padding()
             }
@@ -224,5 +241,54 @@ struct TicketDetailView: View {
                 Text("This action cannot be undone.")
             }
         }
+    }
+
+    // MARK: - Section Header
+
+    private func sectionHeader(_ text: String) -> some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(theme.textMuted)
+            .fontWeight(.semibold)
+    }
+
+    // MARK: - Status Progress Indicator
+
+    private var statusProgressIndicator: some View {
+        HStack(spacing: 0) {
+            ForEach(Array(statusSteps.enumerated()), id: \.offset) { index, step in
+                let isPast = index <= currentStepIndex
+                let isCurrent = index == currentStepIndex
+
+                // Circle
+                VStack(spacing: 4) {
+                    Circle()
+                        .fill(isPast ? theme.primary : theme.border.opacity(0.5))
+                        .frame(width: isCurrent ? 14 : 10, height: isCurrent ? 14 : 10)
+                        .overlay {
+                            if isCurrent {
+                                Circle()
+                                    .stroke(theme.primary.opacity(0.3), lineWidth: 2)
+                                    .frame(width: 20, height: 20)
+                            }
+                        }
+                    Text(step.1)
+                        .font(.system(size: 9))
+                        .foregroundStyle(isPast ? theme.text : theme.textMuted)
+                        .fontWeight(isCurrent ? .semibold : .regular)
+                }
+                .frame(maxWidth: .infinity)
+
+                // Line connector
+                if index < statusSteps.count - 1 {
+                    Rectangle()
+                        .fill(index < currentStepIndex ? theme.primary : theme.border.opacity(0.3))
+                        .frame(height: 2)
+                        .frame(maxWidth: .infinity)
+                        .offset(y: -8)
+                }
+            }
+        }
+        .padding(.vertical, 8)
     }
 }

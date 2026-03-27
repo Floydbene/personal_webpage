@@ -24,11 +24,13 @@
 		9BC871D476B15F41B83D18A6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFB489C0ADDC34ABEA718B0 /* ContentView.swift */; };
 		9ED67BBCD7F854DAFEDB85A8 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E6B69DBA3DB76DE9929019 /* AppTheme.swift */; };
 		A0FCF301B34AB22139736BCA /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE71CF099727B9FCFB0F7148 /* Config.swift */; };
+		A5C329699C37F9998A84D319 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607CE7A6C8D74BE1DFC2224B /* AppDelegate.swift */; };
 		A91FD4A2320727E2800C3153 /* View+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732E6DB7D9FCE969C0C96C2C /* View+Theme.swift */; };
 		AFDAB8717B45EF211A3B4FB7 /* Ticket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11777CFED8826D9BD16B5CEF /* Ticket.swift */; };
 		B09AE0F8700AB9156E152781 /* ThemeSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8603E6045528674BF2639841 /* ThemeSelectorView.swift */; };
 		BB90935B1B2E7B54FE32D1BE /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 64848FA08471D55EE10A8434 /* Supabase */; };
 		BE8A375F82C1F61B067E1F29 /* CreateTicketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90C367FB06FDE81B278A661 /* CreateTicketView.swift */; };
+		C53DAA24A174550FB6BB3182 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E0150F80E8F8294AA7E367 /* NotificationManager.swift */; };
 		C5A3196C906E56E524169EAE /* TicketsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CF046188894863975819CD /* TicketsViewModel.swift */; };
 		C684F41C16018ACC2710C5D3 /* PupApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA18E3DB10ED19724853D14F /* PupApp.swift */; };
 		CDE8836378B8F633CFC33337 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BEF6DDE54478164D34740F /* AuthManager.swift */; };
@@ -36,6 +38,7 @@
 		DAC6452B974BACFB4ACEF2CD /* DogAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E33EA3D90F68CAE9F53939 /* DogAccessView.swift */; };
 		DBD4158C819936A63C2E4BAB /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B557C7B179A159AD59DFAD3 /* ProfileViewModel.swift */; };
 		E25052B52BD53C2AACF20110 /* NoteRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6C0F265858E09258A11B44 /* NoteRowView.swift */; };
+		E388B4832FCE79C72C2A373A /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F518E24FCBCA11C5D60DEA6 /* ViewModifiers.swift */; };
 		E759068E744410182B1A01C5 /* DogAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5621EF32A084535B2B00FE7D /* DogAccess.swift */; };
 		F28D849FAC15ABA6136DC49B /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16534DA219D7E71B4912868 /* NotesListView.swift */; };
 		F38F1B244BFFD0A77A226076 /* Date+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66B0CADA2F7095BD52841FC8 /* Date+Formatting.swift */; };
@@ -43,14 +46,13 @@
 		FCF069543EA675D89FDA9863 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937DD580D384754825136C43 /* LoginView.swift */; };
 		FD670D47E4F19F6A2C2993D6 /* TicketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC6E3B26225F772DB7A4A0D /* TicketDetailView.swift */; };
 		FF799B7F22527BBFC475BFED /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5495954BB2E9F16B5A01FAAF /* Color+Theme.swift */; };
-		D4E5F6A7B8C9D0E1F2A3B4C5 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* NotificationManager.swift */; };
-		E5F6A7B8C9D0E1F2A3B4C5D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		038EB749DA51EFD5260BC2C2 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		0B9D6184D302DF5DBF18C88C /* ErrorBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorBanner.swift; sourceTree = "<group>"; };
 		11777CFED8826D9BD16B5CEF /* Ticket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticket.swift; sourceTree = "<group>"; };
+		144E45F54884E5A66C444816 /* Pup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pup.entitlements; sourceTree = "<group>"; };
 		25E6B69DBA3DB76DE9929019 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
 		396E2E34D61EE24C46510500 /* TicketsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsListView.swift; sourceTree = "<group>"; };
 		47CF046188894863975819CD /* TicketsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewModel.swift; sourceTree = "<group>"; };
@@ -58,6 +60,8 @@
 		512B5A36D614CC914B3081D2 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		5495954BB2E9F16B5A01FAAF /* Color+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Theme.swift"; sourceTree = "<group>"; };
 		5621EF32A084535B2B00FE7D /* DogAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogAccess.swift; sourceTree = "<group>"; };
+		5F518E24FCBCA11C5D60DEA6 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		607CE7A6C8D74BE1DFC2224B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66B0CADA2F7095BD52841FC8 /* Date+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatting.swift"; sourceTree = "<group>"; };
 		6FC6E3B26225F772DB7A4A0D /* TicketDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketDetailView.swift; sourceTree = "<group>"; };
 		7191E5355BABE2B016F08BC9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -68,8 +72,9 @@
 		9427E3E59335EE33CEB606EC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		98FEC17C9918991091F1D0D5 /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		ABFB489C0ADDC34ABEA718B0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B4E0150F80E8F8294AA7E367 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		B6B7B030A5FE68D32BDC9950 /* ConfirmDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDeleteButton.swift; sourceTree = "<group>"; };
-		BB611A9184E40093DEB0BB77 /* Pup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB611A9184E40093DEB0BB77 /* Pup.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Pup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E5AD7213F42BAC8ED430B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3BEF6DDE54478164D34740F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C96BB303D14D9CAC8B56A323 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -84,9 +89,6 @@
 		FA18E3DB10ED19724853D14F /* PupApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PupApp.swift; sourceTree = "<group>"; };
 		FD91B514AC79AF679BE193FF /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		FEE31CF8938AA01F1C74DAC0 /* PriorityBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityBadge.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		B2C3D4E5F6A7B8C9D0E1F2A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C3D4E5F6A7B8C9D0E1F2A3B4 /* Pup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pup.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				25E6B69DBA3DB76DE9929019 /* AppTheme.swift */,
 				5495954BB2E9F16B5A01FAAF /* Color+Theme.swift */,
 				98FEC17C9918991091F1D0D5 /* ThemeManager.swift */,
+				5F518E24FCBCA11C5D60DEA6 /* ViewModifiers.swift */,
 			);
 			path = Theme;
 			sourceTree = "<group>";
@@ -134,9 +137,9 @@
 		29AD14350CDAAB505D8ABEB3 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				B2C3D4E5F6A7B8C9D0E1F2A3 /* AppDelegate.swift */,
+				607CE7A6C8D74BE1DFC2224B /* AppDelegate.swift */,
 				C3BEF6DDE54478164D34740F /* AuthManager.swift */,
-				A1B2C3D4E5F6A7B8C9D0E1F2 /* NotificationManager.swift */,
+				B4E0150F80E8F8294AA7E367 /* NotificationManager.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -203,7 +206,7 @@
 			children = (
 				C0E5AD7213F42BAC8ED430B6 /* Assets.xcassets */,
 				CE71CF099727B9FCFB0F7148 /* Config.swift */,
-				C3D4E5F6A7B8C9D0E1F2A3B4 /* Pup.entitlements */,
+				144E45F54884E5A66C444816 /* Pup.entitlements */,
 				FA18E3DB10ED19724853D14F /* PupApp.swift */,
 				29AD14350CDAAB505D8ABEB3 /* Auth */,
 				29C2AE854F7B9DB35F4C7742 /* Extensions */,
@@ -304,7 +307,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2630;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = 443689DFA15AE4220A712B56 /* Build configuration list for PBXProject "Pup" */;
 			developmentRegion = en;
@@ -344,7 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5F6A7B8C9D0E1F2A3B4C5D6 /* AppDelegate.swift in Sources */,
+				A5C329699C37F9998A84D319 /* AppDelegate.swift in Sources */,
 				9ED67BBCD7F854DAFEDB85A8 /* AppTheme.swift in Sources */,
 				CDE8836378B8F633CFC33337 /* AuthManager.swift in Sources */,
 				FF799B7F22527BBFC475BFED /* Color+Theme.swift in Sources */,
@@ -363,8 +368,8 @@
 				002D03F521E889F5E3EE303B /* Note.swift in Sources */,
 				E25052B52BD53C2AACF20110 /* NoteRowView.swift in Sources */,
 				F28D849FAC15ABA6136DC49B /* NotesListView.swift in Sources */,
-				D4E5F6A7B8C9D0E1F2A3B4C5 /* NotificationManager.swift in Sources */,
 				18BE0A97D4673218BE28AA69 /* NotesViewModel.swift in Sources */,
+				C53DAA24A174550FB6BB3182 /* NotificationManager.swift in Sources */,
 				9581CE2C1238E6A57F6FA47F /* PriorityBadge.swift in Sources */,
 				DBD4158C819936A63C2E4BAB /* ProfileViewModel.swift in Sources */,
 				C684F41C16018ACC2710C5D3 /* PupApp.swift in Sources */,
@@ -380,6 +385,7 @@
 				CFFFA18B51488A9FC14EBFE0 /* TimeAgoText.swift in Sources */,
 				95513528C1F4831CE916515D /* UserProfile.swift in Sources */,
 				A91FD4A2320727E2800C3153 /* View+Theme.swift in Sources */,
+				E388B4832FCE79C72C2A373A /* ViewModifiers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,7 +397,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pup/Pup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -400,7 +405,6 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,10 +453,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = SV3RA32PU6;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -473,7 +475,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -515,10 +516,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = SV3RA32PU6;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -532,7 +531,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
@@ -544,16 +542,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Pup/Pup.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
