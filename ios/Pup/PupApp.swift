@@ -10,6 +10,8 @@ struct PupApp: App {
     @State private var notesVM: NotesViewModel
     @State private var profileVM: ProfileViewModel
     @State private var dogAccessVM: DogAccessViewModel
+    @State private var shoppingVM: ShoppingViewModel
+    @State private var calendarVM: CalendarViewModel
 
     init() {
         let auth = AuthManager()
@@ -18,6 +20,8 @@ struct PupApp: App {
         _notesVM = State(initialValue: NotesViewModel(auth: auth))
         _profileVM = State(initialValue: ProfileViewModel(auth: auth))
         _dogAccessVM = State(initialValue: DogAccessViewModel(auth: auth))
+        _shoppingVM = State(initialValue: ShoppingViewModel(auth: auth))
+        _calendarVM = State(initialValue: CalendarViewModel(auth: auth))
     }
 
     var body: some Scene {
@@ -30,6 +34,8 @@ struct PupApp: App {
                 .environment(notesVM)
                 .environment(profileVM)
                 .environment(dogAccessVM)
+                .environment(shoppingVM)
+                .environment(calendarVM)
                 .appTheme(themeManager.currentTheme)
                 .preferredColorScheme(themeManager.currentTheme.id == "light" ? .light : .dark)
                 .onAppear {

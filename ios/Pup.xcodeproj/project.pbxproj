@@ -46,6 +46,20 @@
 		FCF069543EA675D89FDA9863 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937DD580D384754825136C43 /* LoginView.swift */; };
 		FD670D47E4F19F6A2C2993D6 /* TicketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FC6E3B26225F772DB7A4A0D /* TicketDetailView.swift */; };
 		FF799B7F22527BBFC475BFED /* Color+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5495954BB2E9F16B5A01FAAF /* Color+Theme.swift */; };
+		B10B10B10B10B10B10B10B10 /* ShoppingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10A10A10A10A10A10A10A10 /* ShoppingItem.swift */; };
+		B20B20B20B20B20B20B20B20 /* ScheduleBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20A20A20A20A20A20A20A20 /* ScheduleBlock.swift */; };
+		B30B30B30B30B30B30B30B30 /* ShoppingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30A30A30A30A30A30A30A30 /* ShoppingViewModel.swift */; };
+		B40B40B40B40B40B40B40B40 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40A40A40A40A40A40A40A40 /* CalendarViewModel.swift */; };
+		B50B50B50B50B50B50B50B50 /* ShoppingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50A50A50A50A50A50A50A50 /* ShoppingListView.swift */; };
+		B60B60B60B60B60B60B60B60 /* CreateShoppingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60A60A60A60A60A60A60A60 /* CreateShoppingItemView.swift */; };
+		B70B70B70B70B70B70B70B70 /* ShoppingItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70A70A70A70A70A70A70A70 /* ShoppingItemRowView.swift */; };
+		B80B80B80B80B80B80B80B80 /* ShoppingItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A80A80A80A80A80A80A80A80 /* ShoppingItemDetailView.swift */; };
+		B90B90B90B90B90B90B90B90 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90A90A90A90A90A90A90A90 /* CalendarView.swift */; };
+		BA0BA0BA0BA0BA0BA0BA0BA0 /* CalendarGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0AA0AA0AA0AA0AA0AA0AA0 /* CalendarGridView.swift */; };
+		BB0BB0BB0BB0BB0BB0BB0BB0 /* CalendarDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0AB0AB0AB0AB0AB0AB0AB0 /* CalendarDayCell.swift */; };
+		BC0BC0BC0BC0BC0BC0BC0BC0 /* DayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0AC0AC0AC0AC0AC0AC0AC0 /* DayDetailView.swift */; };
+		BD0BD0BD0BD0BD0BD0BD0BD0 /* CreateScheduleBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0AD0AD0AD0AD0AD0AD0AD0 /* CreateScheduleBlockView.swift */; };
+		BE0BE0BE0BE0BE0BE0BE0BE0 /* ScheduleBlockRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE0AE0AE0AE0AE0AE0AE0AE0 /* ScheduleBlockRowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,7 +88,7 @@
 		ABFB489C0ADDC34ABEA718B0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B4E0150F80E8F8294AA7E367 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		B6B7B030A5FE68D32BDC9950 /* ConfirmDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmDeleteButton.swift; sourceTree = "<group>"; };
-		BB611A9184E40093DEB0BB77 /* Pup.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Pup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB611A9184E40093DEB0BB77 /* Pup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0E5AD7213F42BAC8ED430B6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C3BEF6DDE54478164D34740F /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		C96BB303D14D9CAC8B56A323 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -89,6 +103,20 @@
 		FA18E3DB10ED19724853D14F /* PupApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PupApp.swift; sourceTree = "<group>"; };
 		FD91B514AC79AF679BE193FF /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
 		FEE31CF8938AA01F1C74DAC0 /* PriorityBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityBadge.swift; sourceTree = "<group>"; };
+		A10A10A10A10A10A10A10A10 /* ShoppingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItem.swift; sourceTree = "<group>"; };
+		A20A20A20A20A20A20A20A20 /* ScheduleBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleBlock.swift; sourceTree = "<group>"; };
+		A30A30A30A30A30A30A30A30 /* ShoppingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewModel.swift; sourceTree = "<group>"; };
+		A40A40A40A40A40A40A40A40 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		A50A50A50A50A50A50A50A50 /* ShoppingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListView.swift; sourceTree = "<group>"; };
+		A60A60A60A60A60A60A60A60 /* CreateShoppingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateShoppingItemView.swift; sourceTree = "<group>"; };
+		A70A70A70A70A70A70A70A70 /* ShoppingItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemRowView.swift; sourceTree = "<group>"; };
+		A80A80A80A80A80A80A80A80 /* ShoppingItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingItemDetailView.swift; sourceTree = "<group>"; };
+		A90A90A90A90A90A90A90A90 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		AA0AA0AA0AA0AA0AA0AA0AA0 /* CalendarGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarGridView.swift; sourceTree = "<group>"; };
+		AB0AB0AB0AB0AB0AB0AB0AB0 /* CalendarDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDayCell.swift; sourceTree = "<group>"; };
+		AC0AC0AC0AC0AC0AC0AC0AC0 /* DayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayDetailView.swift; sourceTree = "<group>"; };
+		AD0AD0AD0AD0AD0AD0AD0AD0 /* CreateScheduleBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleBlockView.swift; sourceTree = "<group>"; };
+		AE0AE0AE0AE0AE0AE0AE0AE0 /* ScheduleBlockRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleBlockRowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +147,8 @@
 			children = (
 				5621EF32A084535B2B00FE7D /* DogAccess.swift */,
 				038EB749DA51EFD5260BC2C2 /* Note.swift */,
+				A20A20A20A20A20A20A20A20 /* ScheduleBlock.swift */,
+				A10A10A10A10A10A10A10A10 /* ShoppingItem.swift */,
 				11777CFED8826D9BD16B5CEF /* Ticket.swift */,
 				512B5A36D614CC914B3081D2 /* UserProfile.swift */,
 			);
@@ -193,9 +223,11 @@
 		9BC0EFA9F6D6140B3BDDAA10 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				A40A40A40A40A40A40A40A40 /* CalendarViewModel.swift */,
 				F63424DE4CC82AE68B5B16BC /* DogAccessViewModel.swift */,
 				D5EB52FF8657E958D7DD4CD1 /* NotesViewModel.swift */,
 				4B557C7B179A159AD59DFAD3 /* ProfileViewModel.swift */,
+				A30A30A30A30A30A30A30A30 /* ShoppingViewModel.swift */,
 				47CF046188894863975819CD /* TicketsViewModel.swift */,
 			);
 			path = ViewModels;
@@ -230,12 +262,14 @@
 			isa = PBXGroup;
 			children = (
 				3DEA9101278FFFF6755D4ED3 /* Auth */,
+				C20C20C20C20C20C20C20C20 /* Calendar */,
 				D2ED78E4CD431D92F4201F22 /* Dog */,
 				894086EDC97FA7D000B8D6E6 /* Main */,
 				22FA6FF7FCBD0EC7EA99005F /* Notes */,
 				D9F744698FE58463C6E5CB8A /* Root */,
 				F8E1495A4A0EAE37009E51C2 /* Settings */,
 				311390FE5AB3C4890A076340 /* Shared */,
+				C10C10C10C10C10C10C10C10 /* Shopping */,
 				E116A0B1A3D6B1838C535126 /* Tickets */,
 			);
 			path = Views;
@@ -277,6 +311,30 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		C10C10C10C10C10C10C10C10 /* Shopping */ = {
+			isa = PBXGroup;
+			children = (
+				A60A60A60A60A60A60A60A60 /* CreateShoppingItemView.swift */,
+				A80A80A80A80A80A80A80A80 /* ShoppingItemDetailView.swift */,
+				A70A70A70A70A70A70A70A70 /* ShoppingItemRowView.swift */,
+				A50A50A50A50A50A50A50A50 /* ShoppingListView.swift */,
+			);
+			path = Shopping;
+			sourceTree = "<group>";
+		};
+		C20C20C20C20C20C20C20C20 /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				AB0AB0AB0AB0AB0AB0AB0AB0 /* CalendarDayCell.swift */,
+				AA0AA0AA0AA0AA0AA0AA0AA0 /* CalendarGridView.swift */,
+				A90A90A90A90A90A90A90A90 /* CalendarView.swift */,
+				AD0AD0AD0AD0AD0AD0AD0AD0 /* CreateScheduleBlockView.swift */,
+				AC0AC0AC0AC0AC0AC0AC0AC0 /* DayDetailView.swift */,
+				AE0AE0AE0AE0AE0AE0AE0AE0 /* ScheduleBlockRowView.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -308,8 +366,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1500;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 443689DFA15AE4220A712B56 /* Build configuration list for PBXProject "Pup" */;
 			developmentRegion = en;
@@ -386,6 +442,20 @@
 				95513528C1F4831CE916515D /* UserProfile.swift in Sources */,
 				A91FD4A2320727E2800C3153 /* View+Theme.swift in Sources */,
 				E388B4832FCE79C72C2A373A /* ViewModifiers.swift in Sources */,
+				B10B10B10B10B10B10B10B10 /* ShoppingItem.swift in Sources */,
+				B20B20B20B20B20B20B20B20 /* ScheduleBlock.swift in Sources */,
+				B30B30B30B30B30B30B30B30 /* ShoppingViewModel.swift in Sources */,
+				B40B40B40B40B40B40B40B40 /* CalendarViewModel.swift in Sources */,
+				B50B50B50B50B50B50B50B50 /* ShoppingListView.swift in Sources */,
+				B60B60B60B60B60B60B60B60 /* CreateShoppingItemView.swift in Sources */,
+				B70B70B70B70B70B70B70B70 /* ShoppingItemRowView.swift in Sources */,
+				B80B80B80B80B80B80B80B80 /* ShoppingItemDetailView.swift in Sources */,
+				B90B90B90B90B90B90B90B90 /* CalendarView.swift in Sources */,
+				BA0BA0BA0BA0BA0BA0BA0BA0 /* CalendarGridView.swift in Sources */,
+				BB0BB0BB0BB0BB0BB0BB0BB0 /* CalendarDayCell.swift in Sources */,
+				BC0BC0BC0BC0BC0BC0BC0BC0 /* DayDetailView.swift in Sources */,
+				BD0BD0BD0BD0BD0BD0BD0BD0 /* CreateScheduleBlockView.swift in Sources */,
+				BE0BE0BE0BE0BE0BE0BE0BE0 /* ScheduleBlockRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +469,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV3RA32PU6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -544,6 +615,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SV3RA32PU6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

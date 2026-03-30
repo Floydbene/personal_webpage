@@ -45,7 +45,6 @@ struct NotesListView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 8)
-                        .padding(.bottom, 90)
                     }
                     .refreshable {
                         await vm.loadNotes()
