@@ -32,6 +32,9 @@ struct SettingsView: View {
                     // Appearance
                     appearanceSection
 
+                    // Pup
+                    pupSection
+
                     // Notifications
                     if pushNotificationsAvailable {
                         notificationsSection
@@ -41,7 +44,6 @@ struct SettingsView: View {
                     signOutSection
                 }
                 .padding()
-                .padding(.bottom, 90)
             }
             .background(theme.background)
             .navigationTitle("Settings")
@@ -125,6 +127,35 @@ struct SettingsView: View {
                     Text(themeManager.currentTheme.name)
                         .font(.caption)
                         .foregroundStyle(theme.textMuted)
+                    Image(systemName: "chevron.right")
+                        .font(.caption)
+                        .foregroundStyle(theme.textMuted)
+                }
+                .padding(14)
+            }
+            .premiumCard()
+        }
+    }
+
+    // MARK: - Pup Section
+
+    private var pupSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("PUP")
+                .font(.caption)
+                .fontWeight(.semibold)
+                .foregroundStyle(theme.textMuted)
+                .padding(.horizontal, 4)
+
+            NavigationLink {
+                DogAccessView()
+            } label: {
+                HStack {
+                    Image(systemName: "pawprint.fill")
+                        .foregroundStyle(theme.accent)
+                    Text("Pup Rotation")
+                        .foregroundStyle(theme.text)
+                    Spacer()
                     Image(systemName: "chevron.right")
                         .font(.caption)
                         .foregroundStyle(theme.textMuted)

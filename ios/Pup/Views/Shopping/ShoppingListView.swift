@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct TicketsListView: View {
-    @Environment(TicketsViewModel.self) private var vm
+struct ShoppingListView: View {
+    @Environment(ShoppingViewModel.self) private var vm
     @Environment(\.appTheme) private var theme
-    @State private var selectedTicket: Ticket?
+    @State private var selectedItem: ShoppingItem?
     @Namespace private var filterNamespace
 
     var body: some View {
@@ -11,17 +11,16 @@ struct TicketsListView: View {
 
         NavigationStack {
             VStack(spacing: 0) {
-                // Create ticket
-                CreateTicketView { title in
-                    await vm.createTicket(title: title)
+                CreateShoppingItemView { name in
+                    await vm.createItem(name: name)
                 }
                 .padding(.horizontal)
                 .padding(.top, 12)
 
-                // Filter tabs
+                // Filter tabs + cost badge
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
-                        ForEach(TicketFilter.allCases, id: \.self) { filter in
+                        ForEach(ShoppingFilter.allCases, id: \.self) { filter in
                             Button {
                                 withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
                                     vm.activeFilter = filter
@@ -48,10 +47,20 @@ struct TicketsListView: View {
                                     if vm.activeFilter == filter {
                                         Capsule()
                                             .fill(theme.primary.opacity(0.12))
-                                            .matchedGeometryEffect(id: "activeFilter", in: filterNamespace)
+                                            .matchedGeometryEffect(id: "shoppingFilter", in: filterNamespace)
                                     }
                                 }
                             }
+                        }
+
+                        if vm.totalEstimatedCost > 0 {
+                            Text(String(format: "£%.2f", vm.totalEstimatedCost))
+                                .font(.caption2)
+                                .fontWeight(.semibold)
+                                .foregroundStyle(theme.accent)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(theme.accent.opacity(0.12), in: Capsule())
                         }
                     }
                     .padding(.horizontal)
@@ -62,21 +71,21 @@ struct TicketsListView: View {
                     ErrorBanner(message: error) { vm.error = nil }
                 }
 
-                // Ticket list
-                if vm.isLoading && vm.tickets.isEmpty {
+                // Item list
+                if vm.isLoading && vm.items.isEmpty {
                     Spacer()
                     ProgressView()
                         .tint(theme.primary)
                     Spacer()
-                } else if vm.filteredTickets.isEmpty {
+                } else if vm.filteredItems.isEmpty {
                     Spacer()
                     ContentUnavailableView {
-                        Label("No Tickets", systemImage: "ticket")
+                        Label("No Items", systemImage: "cart")
                     } description: {
                         Text(
                             vm.activeFilter == .all
-                            ? "No tickets yet. Create one above to get started!"
-                            : "No \(vm.activeFilter.rawValue.lowercased()) tickets."
+                            ? "No shopping items yet. Add one above!"
+                            : "No \(vm.activeFilter.rawValue.lowercased()) items."
                         )
                     }
                     .foregroundStyle(theme.textMuted)
@@ -84,43 +93,39 @@ struct TicketsListView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 8) {
-                            ForEach(vm.filteredTickets) { ticket in
-                                TicketRowView(
-                                    ticket: ticket,
-                                    displayName: vm.displayName
-                                )
-                                .onTapGesture { selectedTicket = ticket }
+                            ForEach(vm.filteredItems) { item in
+                                ShoppingItemRowView(item: item) {
+                                    await vm.togglePurchased(item: item)
+                                }
+                                .onTapGesture { selectedItem = item }
                             }
                         }
                         .padding(.horizontal)
                     }
                     .refreshable {
-                        await vm.loadTickets()
+                        await vm.loadItems()
                     }
                 }
             }
             .background(theme.background)
-            .navigationTitle("Tickets")
+            .navigationTitle("Shopping")
             .toolbarBackground(theme.cardBackground, for: .navigationBar)
             .toolbarColorScheme(theme.id == "light" ? .light : .dark, for: .navigationBar)
-            .sheet(item: $selectedTicket) { ticket in
-                TicketDetailView(
-                    ticket: ticket,
-                    users: vm.users,
-                    displayName: vm.displayName,
+            .sheet(item: $selectedItem) { item in
+                ShoppingItemDetailView(
+                    item: item,
                     onUpdate: { payload in
-                        await vm.updateTicket(id: ticket.id, fields: payload)
+                        await vm.updateItem(id: item.id, fields: payload)
                     },
                     onDelete: {
-                        await vm.deleteTicket(id: ticket.id)
+                        await vm.deleteItem(id: item.id)
                     }
                 )
                 .presentationDragIndicator(.visible)
                 .presentationCornerRadius(20)
             }
             .task {
-                await vm.loadTickets()
-                await vm.loadUsers()
+                await vm.loadItems()
             }
         }
     }

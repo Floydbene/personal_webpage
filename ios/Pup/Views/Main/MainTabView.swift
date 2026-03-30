@@ -1,106 +1,48 @@
 import SwiftUI
 
-enum Tab: String, CaseIterable {
-    case tickets, notes, pup, settings
-
-    var icon: String {
-        switch self {
-        case .tickets: "ticket"
-        case .notes: "note.text"
-        case .pup: "pawprint"
-        case .settings: "gearshape"
-        }
-    }
-
-    var filledIcon: String {
-        switch self {
-        case .tickets: "ticket"
-        case .notes: "note.text"
-        case .pup: "pawprint.fill"
-        case .settings: "gearshape.fill"
-        }
-    }
-
-    var label: String {
-        switch self {
-        case .tickets: "Tickets"
-        case .notes: "Notes"
-        case .pup: "Pup"
-        case .settings: "Settings"
-        }
-    }
-}
-
 struct MainTabView: View {
     @Environment(\.appTheme) private var theme
-    @State private var selectedTab: Tab = .tickets
-    @Namespace private var tabNamespace
+    @State private var selectedTab: Tab = .calendar
+
+    private enum Tab {
+        case calendar, tickets, shopping, notes, settings
+    }
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            // Content
-            Group {
-                switch selectedTab {
-                case .tickets: TicketsListView()
-                case .notes: NotesListView()
-                case .pup: DogAccessView()
-                case .settings: SettingsView()
+        TabView(selection: $selectedTab) {
+            CalendarView()
+                .tabItem {
+                    Label("Calendar", systemImage: "calendar")
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .tag(Tab.calendar)
 
-            // Floating tab bar
-            floatingTabBar
+            TicketsListView()
+                .tabItem {
+                    Label("Tickets", systemImage: "ticket")
+                }
+                .tag(Tab.tickets)
+
+            ShoppingListView()
+                .tabItem {
+                    Label("Shopping", systemImage: "cart")
+                }
+                .tag(Tab.shopping)
+
+            NotesListView()
+                .tabItem {
+                    Label("Notes", systemImage: "note.text")
+                }
+                .tag(Tab.notes)
+
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape")
+                }
+                .tag(Tab.settings)
         }
+        .tint(theme.primary)
+        .toolbarBackground(theme.cardBackground, for: .tabBar)
+        .toolbarColorScheme(theme.isDark ? .dark : .light, for: .tabBar)
         .sensoryFeedback(.selection, trigger: selectedTab)
-    }
-
-    private var floatingTabBar: some View {
-        HStack(spacing: 0) {
-            ForEach(Tab.allCases, id: \.self) { tab in
-                tabButton(for: tab)
-            }
-        }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 10)
-        .background {
-            Capsule()
-                .fill(.ultraThinMaterial)
-                .shadow(color: theme.cardShadow, radius: 12, y: 4)
-        }
-        .padding(.horizontal, 40)
-        .padding(.bottom, 8)
-    }
-
-    private func tabButton(for tab: Tab) -> some View {
-        let isSelected = selectedTab == tab
-
-        return Button {
-            withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
-                selectedTab = tab
-            }
-        } label: {
-            VStack(spacing: 4) {
-                ZStack {
-                    if isSelected {
-                        Capsule()
-                            .fill(theme.primary.opacity(0.2))
-                            .frame(width: 48, height: 28)
-                            .matchedGeometryEffect(id: "tabIndicator", in: tabNamespace)
-                    }
-
-                    Image(systemName: isSelected ? tab.filledIcon : tab.icon)
-                        .font(.system(size: 16, weight: isSelected ? .semibold : .regular))
-                        .symbolEffect(.bounce, value: isSelected)
-                }
-                .frame(height: 28)
-
-                Text(tab.label)
-                    .font(.system(size: 10, weight: isSelected ? .semibold : .regular))
-            }
-            .foregroundStyle(isSelected ? theme.primary : theme.textMuted)
-            .frame(maxWidth: .infinity)
-        }
-        .buttonStyle(.plain)
     }
 }

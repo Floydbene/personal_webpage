@@ -23,7 +23,6 @@ struct DogAccessView: View {
                     Spacer()
                 }
             }
-            .padding(.bottom, 90)
             .navigationTitle("Pup")
             .toolbarBackground(theme.cardBackground, for: .navigationBar)
             .toolbarColorScheme(theme.id == "light" ? .light : .dark, for: .navigationBar)
