@@ -111,6 +111,9 @@
 
 .si-wordmark__name {
   display: block;
+  width: fit-content;
+  max-width: 100%;
+  transform-origin: top left;
   font-family: var(--font-display);
   font-size: var(--type-display);
   font-weight: 800;
@@ -936,20 +939,26 @@ a.si-filter {
 
 /* ============================================================
    ENTRANCE
-   One orchestrated load. Fast — 55ms steps — because a slow
-   typewriter is the thing that made the old page feel robotic.
+   The name arrives first; the surrounding page follows in place.
    ============================================================ */
 
-.si-enter {
-  animation: si-rise 0.62s var(--ease-out-soft) both;
-  animation-delay: calc(var(--i, 0) * 55ms);
+:root[data-landing-entrance="name"] :is(
+  .site-nav, .si-wordmark__hello, .si-masthead__body, .si-sidebar > .si-filters, .si-main
+) {
+  opacity: 0;
 }
 
-@keyframes si-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
+:root[data-landing-entrance="reveal"] :is(
+  .site-nav, .si-wordmark__hello, .si-masthead__body, .si-sidebar > .si-filters, .si-main
+) {
+  animation: si-entrance-reveal 700ms cubic-bezier(0.25, 1, 0.5, 1) both;
+  /* This requested intro plays even when system motion is reduced. */
+  animation-duration: 700ms !important;
+}
+
+@keyframes si-entrance-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* ============================================================
@@ -1346,10 +1355,6 @@ a.si-filter {
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  .si-enter {
-    animation: none;
-  }
-
   .si-row__detail {
     transition: none;
   }

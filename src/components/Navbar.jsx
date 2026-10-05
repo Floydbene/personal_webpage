@@ -13,7 +13,7 @@ const Navbar = () => {
   useEffect(() => setMenuOpen(false), [pathname]);
 
   return (
-    <Wrapper aria-label="Main navigation" onKeyDown={(event) => {
+    <Wrapper className="site-nav" aria-label="Main navigation" onKeyDown={(event) => {
       if (event.key === "Escape" && menuOpen) {
         event.stopPropagation();
         setMenuOpen(false);

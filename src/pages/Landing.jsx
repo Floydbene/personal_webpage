@@ -4,6 +4,7 @@ import { siteIndex, indexGroups, profile } from "../Data";
 import { useTheme } from "../context/ThemeContext";
 import { themes } from "../themes/themeConfig";
 import Masthead from "../components/Masthead";
+import useLandingEntrance from "../components/useLandingEntrance";
 import IndexRow from "../components/IndexRow";
 import "../components/landing.css";
 
@@ -17,6 +18,7 @@ const Landing = () => {
   const { currentThemeId, compact } = useTheme();
 
   const siteRef = useRef(null);
+  useLandingEntrance(siteRef, searchParams);
   const railRef = useRef(null);
   const railOffsetRef = useRef(0);
   const rowRefs = useRef({});
@@ -343,16 +345,15 @@ const Landing = () => {
 
         <nav
           ref={railRef}
-          className="si-filters si-enter"
+          className="si-filters"
           aria-label="Index"
-          style={{ "--i": 2 }}
         >
           {railLinks}
         </nav>
       </aside>
 
       <main className="si-main">
-        <section className="si-intro si-enter" style={{ "--i": 2 }}>
+        <section className="si-intro">
           <p className="si-intro__label">Selected work · 2019—2026</p>
           <p>
             I started at Princeton in 2019 as an avid rower, with a strong

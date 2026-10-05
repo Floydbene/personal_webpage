@@ -7,7 +7,7 @@ import { profile } from "../Data";
    work of separating the two voices. */
 const Masthead = () => (
   <header className="si-masthead">
-    <h1 className="si-wordmark si-enter" style={{ "--i": 0 }}>
+    <h1 className="si-wordmark">
       <span className="si-wordmark__hello">Hello, my name is</span>
       <span className="si-wordmark__name">
         <span className="si-wordmark__word">Floyd</span>
@@ -16,7 +16,7 @@ const Masthead = () => (
     </h1>
 
     <div className="si-masthead__body">
-      <p className="si-lede si-enter" style={{ "--i": 1 }}>
+      <p className="si-lede">
         {profile.lede.map(({ t, em }, index) =>
           em ? <strong key={index}>{t}</strong> : t
         )}
