@@ -1,0 +1,659 @@
+/* ============================================================
+   INDEX-SH
+   A read-only shell over the CV, floating over the page as a
+   movable, resizable window with an editor's tab strip on top and
+   no scrim. Open by default as the site's opening experience;
+   the craft is still tabular alignment and a real
+   scale, not green-on-black.
+
+   Everything is scoped to .tty.
+   ============================================================ */
+
+.tty {
+  --tty-micro: 0.6875rem;
+  --tty-body: clamp(0.8125rem, 0.78rem + 0.16vw, 0.9375rem);
+  --tty-lead: 1.65;
+
+  --tty-key: 13ch;
+  --tty-gap: 1.25rem;
+  --tty-pad: clamp(0.9rem, 3vw, 1.5rem);
+
+  --tty-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --tty-rule: color-mix(in srgb, var(--theme-border) 78%, transparent);
+  --tty-rule-soft: color-mix(in srgb, var(--theme-border) 42%, transparent);
+  --tty-ground: color-mix(in srgb, var(--theme-background) 95%, transparent);
+
+  /* Placed by JS; these are only what the very first frame renders with. */
+  position: fixed;
+  left: 10vw;
+  top: 10vh;
+  width: 80vw;
+  height: 80vh;
+  z-index: 200;
+
+  border: 1px solid var(--tty-rule);
+  border-radius: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: var(--tty-body);
+  line-height: var(--tty-lead);
+  color: var(--theme-text);
+  /* Reads as lifted off the page rather than welded to an edge. */
+  box-shadow:
+    0 1.75rem 4.5rem color-mix(in srgb, var(--theme-background) 72%, transparent),
+    0 0.4rem 1.25rem color-mix(in srgb, var(--theme-background) 45%, transparent);
+  animation: tty-float 0.22s var(--tty-ease) both;
+}
+
+.tty[data-open="false"] {
+  display: none;
+}
+
+/* Comes forward, rather than sliding in from an edge it no longer has. */
+@keyframes tty-float {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+}
+
+/* While a gesture is live, nothing inside should select or take a hover. */
+.tty[data-dragging] {
+  animation: none;
+  user-select: none;
+}
+
+.tty[data-dragging="move"] .tty__bar {
+  cursor: grabbing;
+}
+
+/* --- the frame ---------------------------------------------- */
+
+.tty__frame {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 100%;
+  border-radius: inherit;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  background: var(--tty-ground);
+  backdrop-filter: blur(18px);
+}
+
+/* A whisper of phosphor. Static, 3px pitch, dark palettes only —
+   any more than this and it stops being a texture and starts being
+   a costume. */
+.tty__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--theme-text) 100%, transparent) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+:root[data-appearance="dark"] .tty__frame::after {
+  opacity: 0.03;
+}
+
+/* --- tab strip ---------------------------------------------- */
+
+.tty__bar {
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+  padding-inline: 0.7rem var(--tty-pad);
+  border-bottom: 1px solid var(--tty-rule-soft);
+  font-size: var(--tty-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--theme-textMuted);
+  /* The strip is the window's drag surface. */
+  cursor: grab;
+  touch-action: none;
+}
+
+/* Two columns of three dots — the standard "this moves" mark, kept to
+   6px so it reads as a texture in the strip, not a control. */
+.tty__grip {
+  flex: none;
+  align-self: center;
+  width: 6px;
+  height: 12px;
+  border-radius: 2px;
+  background-image: radial-gradient(
+    circle at center,
+    var(--theme-textMuted) 0.85px,
+    transparent 1.1px
+  );
+  background-size: 3px 4px;
+  opacity: 0.55;
+  transition: opacity 0.16s var(--tty-ease);
+}
+
+.tty__bar:hover .tty__grip,
+.tty__grip:focus-visible {
+  opacity: 1;
+}
+
+.tty__tabs {
+  display: flex;
+  align-items: stretch;
+  flex: none;
+}
+
+/* The active tab carries a hairline directly under the label, the way a
+   panel tab does — not a filled chip. */
+.tty__tab {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.1rem;
+  font-weight: 600;
+  color: var(--theme-text);
+  border-bottom: 1px solid var(--theme-primary);
+  margin-bottom: -1px;
+}
+
+.tty__meta {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-transform: none;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tty__meta strong {
+  color: var(--theme-primary);
+  font-weight: 600;
+}
+
+.tty__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex: none;
+}
+
+.tty__action {
+  appearance: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: none;
+  border-radius: 3px;
+  background: none;
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: var(--theme-textMuted);
+  transition:
+    color 0.16s var(--tty-ease),
+    background-color 0.16s var(--tty-ease);
+}
+
+.tty__action:hover,
+.tty__action:focus-visible {
+  color: var(--theme-text);
+  background: color-mix(in srgb, var(--theme-text) 9%, transparent);
+}
+
+/* --- scrollback --------------------------------------------- */
+
+.tty__pane {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.9rem var(--tty-pad);
+  scrollbar-width: thin;
+  scrollbar-color: var(--tty-rule) transparent;
+}
+
+.tty__log {
+  display: grid;
+  gap: 0.05rem;
+}
+
+.tty-line {
+  /* pre-wrap keeps the tree glyphs and the indented lists intact while still
+     wrapping long prose at the pane edge. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--theme-text);
+  max-width: 92ch;
+}
+
+.tty-line[data-kind="dim"] {
+  color: var(--theme-textMuted);
+}
+
+.tty-line[data-kind="head"] {
+  color: var(--theme-primary);
+  font-weight: 600;
+}
+
+.tty-line[data-kind="error"] {
+  color: var(--theme-accent);
+}
+
+.tty-line--blank {
+  height: 0.65em;
+}
+
+.tty-rule {
+  height: 1px;
+  max-width: 44ch;
+  margin: 0.45rem 0;
+  background: var(--tty-rule-soft);
+}
+
+/* --- echoed input ------------------------------------------- */
+
+.tty-line--echo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.6ch;
+  margin-top: 0.55rem;
+  color: var(--theme-textSecondary);
+}
+
+.tty-line--echo:first-child {
+  margin-top: 0;
+}
+
+.tty-line__prompt {
+  color: color-mix(in srgb, var(--theme-primary) 70%, var(--theme-textMuted));
+  white-space: pre;
+}
+
+/* --- the aligned key/value column --------------------------- */
+
+.tty-line--kv {
+  display: grid;
+  grid-template-columns: minmax(0, var(--tty-key)) minmax(0, 1fr);
+  gap: 0 var(--tty-gap);
+  align-items: baseline;
+  max-width: 92ch;
+}
+
+/* Usage strings and file paths need a wider first column than a label does. */
+.tty-line--kv[data-wide="true"] {
+  --tty-key: 26ch;
+}
+
+/* Resume headlines: the date rail stays quiet, the role carries the weight. */
+.tty-line--kv[data-strong="true"] {
+  margin-top: 0.35rem;
+}
+
+.tty-line--kv[data-strong="true"] .tty-line__key {
+  color: var(--theme-textSecondary);
+}
+
+.tty-line--kv[data-strong="true"] .tty-line__value {
+  color: var(--theme-primary);
+  font-weight: 600;
+}
+
+.tty-line__key {
+  /* Sizes and indices are padded in the command layer, so the whitespace has
+     to survive to the screen for the column to line up. */
+  white-space: pre;
+  font-variant-numeric: tabular-nums;
+  color: var(--theme-textMuted);
+  overflow-wrap: normal;
+}
+
+.tty-line__value {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--theme-text);
+}
+
+/* --- tree --------------------------------------------------- */
+
+.tty-line--branch {
+  white-space: pre;
+  overflow-wrap: normal;
+}
+
+/* The spine stays quiet so the eye follows the names, not the glyphs. */
+.tty-line__spine {
+  color: var(--tty-rule);
+}
+
+.tty-line--branch [data-type="dir"] {
+  color: var(--theme-primary);
+  font-weight: 600;
+}
+
+/* --- links -------------------------------------------------- */
+
+.tty-link {
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  justify-self: start;
+  font: inherit;
+  text-align: left;
+  color: var(--theme-primary);
+  text-decoration: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--theme-primary) 35%, transparent);
+  transition:
+    color 0.18s var(--tty-ease),
+    border-color 0.18s var(--tty-ease);
+}
+
+.tty-link:hover,
+.tty-link:focus-visible {
+  color: var(--theme-text);
+  border-color: var(--theme-text);
+}
+
+/* --- directory listings ------------------------------------- */
+
+.tty-listing {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem 2.5ch;
+  max-width: 92ch;
+}
+
+.tty-listing__item {
+  appearance: none;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--theme-text);
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.16s var(--tty-ease),
+    border-color 0.16s var(--tty-ease);
+}
+
+.tty-listing__item[data-type="dir"] {
+  color: var(--theme-primary);
+  font-weight: 600;
+}
+
+.tty-listing__item:disabled {
+  cursor: default;
+  color: var(--theme-textMuted);
+}
+
+.tty-listing__item:not(:disabled):hover,
+.tty-listing__item:focus-visible {
+  border-color: currentColor;
+}
+
+/* --- the live prompt ---------------------------------------- */
+
+.tty__input {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75ch;
+  padding: 0.7rem var(--tty-pad);
+  border-top: 1px solid var(--tty-rule-soft);
+  background: color-mix(in srgb, var(--theme-primary) 4%, transparent);
+}
+
+.tty__prompt {
+  flex: none;
+  white-space: pre;
+  font-weight: 600;
+  color: var(--theme-primary);
+  /* The one place the amber is allowed to actually glow. */
+  text-shadow: 0 0 1.4rem
+    color-mix(in srgb, var(--theme-primary) 30%, transparent);
+}
+
+.tty__field {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.tty__field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  color: var(--theme-text);
+  caret-color: var(--theme-primary);
+}
+
+.tty__field input[data-empty="true"] {
+  caret-color: transparent;
+}
+
+.tty__field input:focus {
+  outline: none;
+}
+
+/* Shown only on an empty prompt, where the native caret is easy to miss. */
+.tty__caret {
+  position: absolute;
+  left: 0;
+  top: 0.12em;
+  width: 1ch;
+  height: 1.05em;
+  background: var(--theme-primary);
+  opacity: 0.7;
+  animation: tty-blink 1.1s step-end infinite;
+  pointer-events: none;
+}
+
+@keyframes tty-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* --- footer ------------------------------------------------- */
+
+.tty__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.5rem var(--tty-pad);
+  border-top: 1px solid var(--tty-rule-soft);
+  background: color-mix(in srgb, var(--theme-text) 3%, transparent);
+  font-size: var(--tty-micro);
+  color: var(--theme-textMuted);
+}
+
+.tty__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tty__quick button {
+  appearance: none;
+  cursor: pointer;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid var(--tty-rule-soft);
+  border-radius: 999px;
+  background: none;
+  font: inherit;
+  color: var(--theme-textSecondary);
+  transition:
+    color 0.16s var(--tty-ease),
+    border-color 0.16s var(--tty-ease);
+}
+
+.tty__quick button:hover,
+.tty__quick button:focus-visible {
+  color: var(--theme-primary);
+  border-color: var(--theme-primary);
+}
+
+.tty__hint {
+  margin: 0 0 0 auto;
+  letter-spacing: 0.06em;
+}
+
+.tty__hint kbd {
+  font: inherit;
+  padding: 0.05em 0.35em;
+  border: 1px solid var(--tty-rule-soft);
+  border-radius: 3px;
+  color: var(--theme-textSecondary);
+}
+
+/* --- resize handles ----------------------------------------- */
+
+/* Invisible hit areas straddling each edge, so the grab zone is bigger
+   than the 1px border it sits on. */
+.tty__resize {
+  position: absolute;
+  z-index: 5;
+  touch-action: none;
+}
+
+.tty__resize[data-dir="n"],
+.tty__resize[data-dir="s"] {
+  left: 0.75rem;
+  right: 0.75rem;
+  height: 9px;
+  cursor: ns-resize;
+}
+
+.tty__resize[data-dir="e"],
+.tty__resize[data-dir="w"] {
+  top: 0.75rem;
+  bottom: 0.75rem;
+  width: 9px;
+  cursor: ew-resize;
+}
+
+.tty__resize[data-dir="n"] { top: -5px; }
+.tty__resize[data-dir="s"] { bottom: -5px; }
+.tty__resize[data-dir="e"] { right: -5px; }
+.tty__resize[data-dir="w"] { left: -5px; }
+
+.tty__resize[data-dir="ne"],
+.tty__resize[data-dir="nw"],
+.tty__resize[data-dir="se"],
+.tty__resize[data-dir="sw"] {
+  width: 16px;
+  height: 16px;
+}
+
+.tty__resize[data-dir="nw"] { top: -5px; left: -5px; cursor: nwse-resize; }
+.tty__resize[data-dir="se"] { bottom: -5px; right: -5px; cursor: nwse-resize; }
+.tty__resize[data-dir="ne"] { top: -5px; right: -5px; cursor: nesw-resize; }
+.tty__resize[data-dir="sw"] { bottom: -5px; left: -5px; cursor: nesw-resize; }
+
+/* Only the bottom-right corner is drawn — one discoverable mark is
+   enough to say the whole frame is resizable. */
+.tty__resize[data-dir="se"]::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid var(--tty-rule);
+  border-bottom: 1px solid var(--tty-rule);
+  border-bottom-right-radius: 2px;
+  transition: border-color 0.16s var(--tty-ease);
+}
+
+.tty__resize[data-dir="se"]:hover::after,
+.tty__resize[data-dir="se"]:focus-visible::after {
+  border-color: var(--theme-primary);
+}
+
+.tty :focus-visible,
+.tty__resize:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* --- viewport ----------------------------------------------- */
+
+/* On a phone the window takes nearly the whole screen, edge dragging is
+   too fiddly to offer, the hint row goes, and the key/value pairs stack
+   instead of holding a column that no longer fits. */
+@media (max-width: 47.99rem) {
+  .tty {
+    --tty-key: 9ch;
+    --tty-gap: 0.9rem;
+  }
+
+  .tty__resize:not([data-dir="n"]) {
+    display: none;
+  }
+
+  .tty__meta {
+    display: none;
+  }
+
+  .tty__hint {
+    display: none;
+  }
+
+  .tty-line--kv,
+  .tty-line--kv[data-wide="true"] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .tty-line__key {
+    color: var(--theme-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tty {
+    animation: none;
+  }
+
+  .tty__caret {
+    animation: none;
+  }
+}
+
+.tty__prompt {
+  max-width: 65%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+:root[data-page="resume"] .tty__frame::after { opacity: 0; }
+
+@media (max-width: 767px) {
+  .tty { --tty-micro: 0.75rem; --tty-body: 0.875rem; }
+  .tty__action { width: 2.75rem; height: 2.75rem; }
+  .tty__quick button, .tty-listing__item { min-height: 2.75rem; }
+  .tty__prompt { max-width: 45%; }
+  .tty__grip { width: 1.25rem; height: 1.25rem; }
+  .tty__input { min-height: 3rem; }
+}

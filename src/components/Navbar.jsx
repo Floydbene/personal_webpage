@@ -1,78 +1,72 @@
-import { useState, useRef } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { FaBars, FaTimes, FaEllipsisH, FaPaw, FaPalette } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import Wrapper from '../assets/wrappers/Navbar';
-import { useAuth } from '../context/AuthContext';
-import api from '../lib/api';
+import Settings from './Settings';
+import { useShell } from '../context/ShellContext';
 
 const Navbar = () => {
-  const { user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
-  const tapCount = useRef(0);
-  const tapTimer = useRef(null);
-
-  const { data: dogAccess } = useQuery({
-    queryKey: ['dog-access'],
-    queryFn: async () => {
-      const { data } = await api.get('/api/dog/access');
-      return data;
-    },
-    enabled: !!user,
-    staleTime: 60 * 1000,
-  });
-
-  const handleLogoTap = () => {
-    if (user) return;
-    tapCount.current += 1;
-    if (tapCount.current === 3) {
-      tapCount.current = 0;
-      clearTimeout(tapTimer.current);
-      navigate('/login');
-      return;
-    }
-    clearTimeout(tapTimer.current);
-    tapTimer.current = setTimeout(() => {
-      tapCount.current = 0;
-    }, 600);
-  };
+  const { isOpen: shellOpen, toggleShell } = useShell();
+  const menuButtonRef = useRef(null);
+  const { pathname } = useLocation();
+  useEffect(() => setMenuOpen(false), [pathname]);
 
   return (
-    <Wrapper>
+    <Wrapper aria-label="Main navigation" onKeyDown={(event) => {
+      if (event.key === "Escape" && menuOpen) {
+        event.stopPropagation();
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    }}>
       <div className="nav-center">
         <div className="nav-top">
-          <span className="logo" onClick={handleLogoTap}>floyd benedikter</span>
+          <NavLink to="/" className="logo" onClick={() => setMenuOpen(false)}>
+            floyd<span className="logo-dim">.benedikter</span>
+          </NavLink>
           <button
+            type="button"
+            ref={menuButtonRef}
             className="hamburger"
+            aria-controls="main-navigation"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-        <div className={`nav-links ${menuOpen ? 'show' : ''}`}>
+        <div id="main-navigation" className={`nav-links ${menuOpen ? 'show' : ''}`}>
           <NavLink to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
-            About me
+            home
+          </NavLink>
+          <NavLink to="/posts" className="nav-link" onClick={() => setMenuOpen(false)}>
+            posts
           </NavLink>
           <NavLink to="/resume" className="nav-link" onClick={() => setMenuOpen(false)}>
-            Resume
+            resume
           </NavLink>
-          <NavLink to="/themes" className="nav-link" onClick={() => setMenuOpen(false)}>
-            <FaPalette style={{ marginRight: '0.35rem', verticalAlign: 'middle' }} />
-            Themes
-          </NavLink>
-          {dogAccess?.hasAccess && (
-            <NavLink to="/dog" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Your pup">
-              <FaPaw />
-            </NavLink>
-          )}
-          {user && (
-            <NavLink to="/admin" className="dots-btn" onClick={() => setMenuOpen(false)} aria-label="Open tickets">
-              <FaEllipsisH />
-            </NavLink>
-          )}
+
+          <span className="nav-divider" aria-hidden="true" />
+
+          {/* Appearance controls stay separate from the primary CLI action. */}
+          <div className="nav-controls">
+            <Settings />
+          </div>
         </div>
+        <button
+          type="button"
+          className="nav-cli"
+          aria-expanded={shellOpen}
+          aria-controls="portfolio-cli"
+          onClick={() => {
+            setMenuOpen(false);
+            toggleShell();
+          }}
+        >
+          <span aria-hidden="true">&gt;_</span> CLI
+        </button>
       </div>
     </Wrapper>
   );

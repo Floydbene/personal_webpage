@@ -1,35 +1,22 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   HomeLayout,
   Landing,
   Error,
   Resume,
+  Posts,
+  Post,
   SinglePageError,
-  Login,
-  Tickets,
-  ThemesPage,
 } from "./pages";
-import Dog from "./pages/Dog";
 import CachingRS from "./pages/CachingRS";
 import CryptoRS from "./pages/CryptoRS";
-import ProtectedRoute from "./components/ProtectedRoute";
 import { ThemeProvider } from "./context/ThemeContext";
-import { AuthProvider } from "./context/AuthContext";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-    },
-  },
-});
+import { ShellProvider } from "./context/ShellContext";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomeLayout />,
+    element: <ShellProvider><HomeLayout /></ShellProvider>,
     errorElement: <Error />,
     children: [
       {
@@ -41,6 +28,22 @@ const router = createBrowserRouter([
         path: "resume",
         element: <Resume />,
         errorElement: <SinglePageError />,
+      },
+      {
+        path: "posts",
+        errorElement: <SinglePageError />,
+        children: [
+          {
+            index: true,
+            element: <Posts />,
+            errorElement: <SinglePageError />,
+          },
+          {
+            path: ":slug",
+            element: <Post />,
+            errorElement: <SinglePageError />,
+          },
+        ],
       },
       {
         path: "research",
@@ -58,44 +61,14 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "login",
-        element: <Login />,
-        errorElement: <SinglePageError />,
-      },
-      {
-        path: "themes",
-        element: <ThemesPage />,
-        errorElement: <SinglePageError />,
-      },
-      {
-        path: "dog",
-        element: <Dog />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <ProtectedRoute />,
-    children: [
-      {
-        index: true,
-        element: <Tickets />,
-      },
     ],
   },
 ]);
 
-const App = () => {
-  return (
-    <ThemeProvider>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  );
-};
+const App = () => (
+  <ThemeProvider>
+    <RouterProvider router={router} />
+  </ThemeProvider>
+);
+
 export default App;
