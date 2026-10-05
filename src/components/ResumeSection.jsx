@@ -1,55 +1,28 @@
-import React from "react";
-
-const ResumeSection = ({ info }) => {
-  const subtitles = info.subtitles;
-  return (
-    <section className="section">
-      <h3 className="res-section-title">{info.title}</h3>
-      <div className="section-content">
-        {subtitles.map((subtitle) => {
-          return (
-            <section className="subsection" key={subtitle.subtitle}>
-              <div>
-                <h4
-                  className="subsection-title"
-                  style={{ textTransform: "initial" }}
-                >
-                  {subtitle.subtitle}
-                </h4>
-                {subtitle.imgUrl ? (
-                  <img
-                    src={subtitle.imgUrl}
-                    onClick={() => window.open(subtitle.imgLink, "_blank")}
-                    style={{
-                      height: "100px",
-                      margin: "1rem 0rem",
-                      cursor: "pointer",
-                    }}
-                  ></img>
-                ) : (
-                  <></>
-                )}
-              </div>
-
-              <div className="subsection-content">
-                {subtitle.title ? (
-                  <>
-                    <h4 className="subsection-subtitle">{subtitle.title}</h4>
-                    <h5 className="subsection-subtitle">
-                      {subtitle.timeFrame}
-                    </h5>
-                  </>
-                ) : (
-                  <></>
-                )}
-                {subtitle.text}
-              </div>
-            </section>
-          );
-        })}
-      </div>
-    </section>
-  );
-};
+const ResumeSection = ({ info }) => (
+  <section className="section" aria-labelledby={`resume-section-${info.id}`}>
+    <h2 className="res-section-title" id={`resume-section-${info.id}`}>{info.title}</h2>
+    <div className="section-content">
+      {info.subtitles.map((subtitle) => (
+        <section className="subsection" key={subtitle.subtitle}>
+          <div className="subsection-identity">
+            <h3 className="subsection-title">{subtitle.subtitle}</h3>
+            {subtitle.imgUrl && (
+              subtitle.imgLink ? (
+                <a className="subsection-logo-link" href={subtitle.imgLink} target="_blank" rel="noreferrer" aria-label={`${subtitle.subtitle} website (opens in a new tab)`}>
+                  <img className="subsection-logo" src={subtitle.imgUrl} alt="" loading="lazy" />
+                </a>
+              ) : <img className="subsection-logo" src={subtitle.imgUrl} alt="" loading="lazy" />
+            )}
+          </div>
+          <div className="subsection-content">
+            {subtitle.title && <p className="subsection-subtitle subsection-role">{subtitle.title}</p>}
+            {subtitle.timeFrame && <p className="subsection-subtitle subsection-timeframe">{subtitle.timeFrame}</p>}
+            {subtitle.text}
+          </div>
+        </section>
+      ))}
+    </div>
+  </section>
+);
 
 export default ResumeSection;

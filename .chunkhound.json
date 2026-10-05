@@ -1,0 +1,12 @@
+{
+  "embedding": {
+    "provider": "openai",
+    "model": "qwen3-embedding",
+    "base_url": "http://localhost:11434/v1",
+    "rerank_model": "qwen3-reranker",
+    "rerank_format": "cohere"
+  },
+  "llm": {
+    "provider": "claude-code-cli"
+  }
+}

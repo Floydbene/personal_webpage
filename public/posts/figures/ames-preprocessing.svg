@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="660" viewBox="0 0 1100 660" role="img" aria-labelledby="title desc">
+  <title id="title">Learn from training data. Apply the same rules to both sets.</title>
+  <desc id="desc">Training observations fit numeric imputation and scaling, ordered quality encoding, and nominal one-hot encoding. One fitted procedure then transforms training and test observations. Test observations do not inform the fitting step.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#74501d" stroke-width="1.5"/></marker></defs>
+  <rect width="1100" height="660" fill="#fbf7ef"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#302719">
+    <text x="48" y="56" font-size="32" font-weight="700">Learn once. Apply consistently.</text>
+    <text x="48" y="92" font-size="20" fill="#625441">The fitting step receives training observations only.</text>
+    <rect x="365" y="128" width="370" height="60" fill="#ead8b5"/>
+    <text x="550" y="165" text-anchor="middle" font-size="23" font-weight="700">Training observations</text>
+    <g stroke="#74501d" stroke-width="2" fill="none" marker-end="url(#arrow)">
+      <path d="M550 188V215H209V247"/><path d="M550 188V247"/><path d="M550 188V215H891V247"/>
+    </g>
+    <g fill="none" stroke="#bba989"><rect x="48" y="255" width="322" height="119"/><rect x="389" y="255" width="322" height="119"/><rect x="730" y="255" width="322" height="119"/></g>
+    <g font-size="23" font-weight="700"><text x="70" y="292">Numeric</text><text x="411" y="292">Ordered quality</text><text x="752" y="292">Nominal</text></g>
+    <g font-size="20" fill="#625441"><text x="70" y="328">Median imputation</text><text x="70" y="356">+ standardisation</text><text x="411" y="328">Absence + ranked codes</text><text x="411" y="356">+ standardisation</text><text x="752" y="328">One-hot encoding</text><text x="752" y="356">+ rare-category grouping</text></g>
+    <g stroke="#74501d" stroke-width="2" fill="none"><path d="M209 374V408H891V374"/><path d="M550 374V432" marker-end="url(#arrow)"/></g>
+    <rect x="320" y="440" width="460" height="58" fill="#302719"/>
+    <text x="550" y="476" fill="#fbf7ef" text-anchor="middle" font-size="23" font-weight="700">One fitted preprocessing procedure</text>
+    <g stroke="#74501d" stroke-width="2" fill="none" marker-end="url(#arrow)"><path d="M550 498V524H285V550"/><path d="M550 498V524H815V550"/></g>
+    <g font-size="23" font-weight="700"><text x="285" y="582" text-anchor="middle">Transform training observations</text><text x="815" y="582" text-anchor="middle">Transform test observations</text></g>
+    <text x="550" y="628" text-anchor="middle" font-size="19" fill="#625441">Reuse the learned values. Do not fit again on the test set.</text>
+  </g>
+</svg>

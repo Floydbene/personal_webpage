@@ -1,0 +1,253 @@
+/* ============================================================
+   NAV CONTROLS — the settings tray
+   Density, palette and the shell live behind one trigger. The
+   panel borrows the index's language: mono micro labels, hairline
+   rules, no filled chrome.
+   ============================================================ */
+
+.settings {
+  position: relative;
+  flex: none;
+}
+
+.settings__trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--theme-border) 75%, transparent);
+  border-radius: 0.25rem;
+  background: none;
+  cursor: pointer;
+  font: 500 0.75rem var(--font-mono);
+  color: var(--theme-textMuted);
+  transition:
+    color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.settings__trigger:hover,
+.settings__trigger:focus-visible {
+  color: var(--theme-primary);
+  border-color: var(--theme-primary);
+}
+
+.settings__trigger[aria-expanded="true"] {
+  color: var(--theme-background);
+  background: var(--theme-primary);
+  border-color: var(--theme-primary);
+}
+
+/* --- the panel ---------------------------------------------- */
+
+.settings__panel {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  z-index: 120;
+  width: min(21rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 6rem);
+  overflow-y: auto;
+  display: grid;
+  gap: 0.9rem;
+  padding: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--theme-border) 80%, transparent);
+  border-radius: 0.6rem;
+  background: var(--theme-cardBackground);
+  box-shadow: 0 1.25rem 3rem
+    color-mix(in srgb, var(--theme-background) 62%, transparent);
+  animation: settings-in 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  text-align: left;
+}
+
+@keyframes settings-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.settings__group {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.settings__group + .settings__group {
+  padding-top: 0.85rem;
+  border-top: 1px solid color-mix(in srgb, var(--theme-border) 45%, transparent);
+}
+
+.settings__label {
+  margin: 0 0 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--theme-textMuted);
+}
+
+.settings__palettes {
+  display: grid;
+  gap: 0.15rem;
+}
+
+/* --- rows --------------------------------------------------- */
+
+.settings__row {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--theme-textSecondary);
+  transition:
+    background-color 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.settings__row:hover,
+.settings__row:focus-visible {
+  background: color-mix(in srgb, var(--theme-primary) 9%, transparent);
+  color: var(--theme-text);
+}
+
+.settings__row[aria-pressed="true"] {
+  color: var(--theme-text);
+}
+
+.settings__rowText {
+  display: grid;
+  gap: 0.1rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.settings__rowText small {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  color: var(--theme-textMuted);
+  text-wrap: pretty;
+}
+
+.settings__row kbd {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  padding: 0.1em 0.45em;
+  border: 1px solid color-mix(in srgb, var(--theme-border) 80%, transparent);
+  border-radius: 3px;
+  color: var(--theme-textMuted);
+}
+
+/* --- the density switch ------------------------------------- */
+
+.settings__switch {
+  position: relative;
+  flex: none;
+  width: 1.85rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--theme-border) 85%, transparent);
+  background: color-mix(in srgb, var(--theme-text) 6%, transparent);
+  transition:
+    background-color 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Transform only, so the knob never triggers layout. */
+.settings__switch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--theme-textMuted);
+  transform: translate(0, -50%);
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.settings__row[aria-pressed="true"] .settings__switch {
+  background: var(--theme-primary);
+  border-color: var(--theme-primary);
+}
+
+.settings__row[aria-pressed="true"] .settings__switch::after {
+  background: var(--theme-background);
+  transform: translate(0.78rem, -50%);
+}
+
+/* --- palette chips ------------------------------------------ */
+
+/* Each chip is a tiny picture of its palette: ground, ink, accent. */
+.swatch__chip {
+  display: block;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    var(--chip-ink) 0deg 120deg,
+    var(--chip-accent) 120deg 200deg,
+    var(--chip-bg) 200deg 360deg
+  );
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--theme-text) 25%, transparent);
+  transition: box-shadow 0.24s ease;
+}
+
+.settings__row[aria-pressed="true"] .swatch__chip {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--theme-text) 30%, transparent),
+    0 0 0 2px var(--theme-cardBackground),
+    0 0 0 3.5px var(--theme-text);
+}
+
+.settings :focus-visible,
+.settings__trigger:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* In the stacked mobile menu the trigger sits at the left edge, so a
+   right-anchored panel would hang off the screen. */
+@media (max-width: 767px) {
+  .settings__panel {
+    left: 0;
+    right: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings__panel {
+    animation: none;
+  }
+
+  .settings__switch,
+  .settings__switch::after {
+    transition: none;
+  }
+}
