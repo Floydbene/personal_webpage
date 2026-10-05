@@ -1,85 +1,54 @@
-import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
-import { MdOutlineAlternateEmail } from "react-icons/md";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useLayoutEffect } from "react";
 import ResumeSection from "../components/ResumeSection";
-import { resumeData } from "../Data";
-import { useTheme } from "../context/ThemeContext";
+import { profile, resumeData } from "../Data";
+
+const resumeLinks = [
+  { label: "Email", href: `mailto:${profile.email}` },
+  { label: "GitHub", href: profile.github },
+  { label: "LinkedIn", href: profile.linkedin },
+];
 
 const Resume = () => {
-  const { isDarkMode } = useTheme();
+  useLayoutEffect(() => {
+    document.documentElement.dataset.page = "resume";
 
-  const copyEmail = () => {
-    toast.success("Copied email to clipboard", {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-    navigator.clipboard.writeText("floyd.benedikter@gmail.com");
-  };
+    return () => {
+      if (document.documentElement.dataset.page === "resume") {
+        delete document.documentElement.dataset.page;
+      }
+    };
+  }, []);
 
   return (
     <>
-      <div className="resume fade-in-quick">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "2rem",
-          }}
-        >
-          <h1 className="resume-title">Forward Deployed Software Engineer</h1>
-        </div>
+      <main className="resume">
+        <header className="resume-header">
+          <p className="resume-kicker">{profile.name} / Curriculum vitae</p>
+          <h1 className="resume-title">{profile.role}</h1>
+        </header>
         {resumeData.map((datapoint) => {
           return <ResumeSection info={datapoint} key={datapoint.id} />;
         })}
 
-        {/* <hr style={{ marginTop: '10vw' }}></hr> */}
-      </div>
-      <section className="section">
-        <h3 className="res-section-title">contact me</h3>
+      <section className="section resume-contact">
+        <h2 className="res-section-title">contact</h2>
         <div className="section-content">
-          <section className="subsection-social">
-            <div
-              className="subsection-content hover"
-              onClick={() =>
-                window.open("https://www.linkedin.com/in/floydbenedikter/")
-              }
-              style={{ margin: "0 auto" }}
-            >
-              <FaLinkedin />
-            </div>
-
-            <div
-              className="subsection-content hover"
-              onClick={() => window.open("https://github.com/Floydbene")}
-              style={{ margin: "0 auto" }}
-            >
-              <FaGithub />
-            </div>
-            <div
-              className="subsection-content hover"
-              onClick={() => window.open("https://www.floydbenedikter.com")}
-              style={{ margin: "0 auto" }}
-            >
-              <FaGlobe />
-            </div>
-            <div
-              className="subsection-content hover"
-              onClick={() => copyEmail()}
-              style={{ margin: "0 auto" }}
-            >
-              <MdOutlineAlternateEmail />
-            </div>
-          </section>
+          <nav className="resume-links" aria-label="Contact links">
+            {resumeLinks.map((link) => (
+              <a
+                key={link.href}
+                className="resume-link"
+                href={link.href}
+                target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={link.href.startsWith("mailto:") ? undefined : "noreferrer"}
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </section>
+      </main>
     </>
   );
 };

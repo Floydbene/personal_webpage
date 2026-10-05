@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { themes, applyTheme, getThemeById } from "../themes/themeConfig";
+import {
+  themes,
+  applyTheme,
+  getThemeById,
+  DEFAULT_THEME_ID,
+  DEFAULT_COMPACT,
+} from "../themes/themeConfig";
 
 const ThemeContext = createContext();
 
@@ -12,10 +18,16 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  // Default to Dark+ theme
   const [currentThemeId, setCurrentThemeId] = useState(() => {
     const saved = localStorage.getItem("themeId");
-    return saved || "darkPlus";
+    // Palettes were replaced wholesale — anything stored from the old set
+    // (darkPlus, dracula, nordDark, …) no longer resolves, so fall through.
+    return saved && themes[saved] ? saved : DEFAULT_THEME_ID;
+  });
+
+  const [compact, setCompactState] = useState(() => {
+    const saved = localStorage.getItem("uiCompact");
+    return saved === null ? DEFAULT_COMPACT : saved === "true";
   });
 
   const currentTheme = getThemeById(currentThemeId);
@@ -25,12 +37,18 @@ export const ThemeProvider = ({ children }) => {
     applyTheme(currentTheme);
   }, [currentThemeId, currentTheme]);
 
+  useEffect(() => {
+    localStorage.setItem("uiCompact", String(compact));
+    document.documentElement.dataset.compact = String(compact);
+  }, [compact]);
+
   const setTheme = (themeId) => {
-    setCurrentThemeId(themeId);
+    if (themes[themeId]) setCurrentThemeId(themeId);
   };
 
-  // Legacy compatibility - check if current theme is dark
-  const isDarkMode = currentThemeId !== "light";
+  const setCompact = (next) => setCompactState(Boolean(next));
+
+  const toggleCompact = () => setCompactState((current) => !current);
 
   return (
     <ThemeContext.Provider
@@ -38,8 +56,11 @@ export const ThemeProvider = ({ children }) => {
         currentTheme,
         currentThemeId,
         setTheme,
-        isDarkMode, // For backward compatibility
         themes,
+        compact,
+        setCompact,
+        toggleCompact,
+        isDarkMode: currentTheme.appearance !== "light",
       }}
     >
       {children}
